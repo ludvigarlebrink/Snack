@@ -17,6 +17,12 @@ class SKETCH_API SketchInternal
 
 private:
 
+    struct Vertex
+    {
+        glm::vec3 position;
+        glm::vec4 color;
+    };
+
     struct LineVertex
     {
         glm::vec3 position;
