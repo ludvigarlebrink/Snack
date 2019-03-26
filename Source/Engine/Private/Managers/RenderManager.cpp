@@ -66,6 +66,17 @@ Transform* RenderManager::PickMesh(const glm::vec3& direction, const glm::vec3& 
 void RenderManager::RenderSceneToTexture(const glm::mat4& viewProjection)
 {
     m_meshShader->Use();
+    int32 lightCount = 0;
+    for (auto directionalLight : m_directionalLightComponents)
+    {
+        glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
+        m_meshShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+        m_meshShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_meshShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        ++lightCount;
+    }
+    m_meshShader->SetIntSlow("directionalLightCount", lightCount);
+
     for (auto meshComponent : m_meshComponents)
     {
         Mesh* mesh = meshComponent->GetMesh();
