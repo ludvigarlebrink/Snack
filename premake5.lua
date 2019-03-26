@@ -145,6 +145,9 @@ workspace "SpyHunterEngine"
 
     -- Copy files.
     filter { "system:windows" }
+        os.execute("mkdir \"Builds/Debug\"")
+        os.execute("mkdir \"Builds/Release\"")
+
         -- SDL
         os.copyfile("ThirdParty/SDL/Lib/Win64/SDL2.dll", "Builds/Debug/SDL2.dll")
         os.copyfile("ThirdParty/SDL/Lib/Win64/SDL2.dll", "Builds/Release/SDL2.dll")
