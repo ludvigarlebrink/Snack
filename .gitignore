@@ -1,0 +1,36 @@
+# Ignore all files by default, but scan all directories
+*
+!*/
+
+# C/C++ source files
+!*.c
+!*.cc
+!*.cpp
+!*.h
+!*.hpp
+!*.inl
+
+# Other files
+!*.lua
+!*.py
+!*.md
+!*.txt
+!*.htm
+!*.html
+!*.css
+!*.js
+!*.png
+!.git*
+
+# Special files
+!premake5.exe
+
+# Third party binaries
+!ThirdParty/SDL/Lib/Win32/*
+!ThirdParty/SDL/Lib/Win64/*
+!ThirdParty/freetype/Lib/Win32/*
+!ThirdParty/freetype/Lib/Win64/*
+
+# Engine files
+!Source/Main/Data/**
+!Source/Main/EditorData/**
