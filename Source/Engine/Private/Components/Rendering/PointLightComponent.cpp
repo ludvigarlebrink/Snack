@@ -1,6 +1,7 @@
 #include "Components/Rendering/PointLightComponent.hpp"
 #include"SketchInclude.hpp"
 #include "Manager.hpp"
+#include "SketchInclude.hpp"
 
 namespace spy
 {
@@ -32,6 +33,7 @@ f32 PointLightComponent::GetIntensity() const
 void PointLightComponent::OnEditorInspector()
 {
     BaseComponent::OnEditorInspector();
+    Sketch::FloatField("Intensity", m_intensity);
 }
 #endif
 

@@ -7,6 +7,7 @@
 #include "Components/Rendering/SkinnedMeshComponent.hpp"
 #include "Components/Rendering/SpotlightComponent.hpp"
 #include "FileSystem.hpp"
+#include "UtilsInclude.hpp"
 #include "RenderCoreInclude.hpp"
 #include "Transform.hpp"
 
@@ -28,36 +29,16 @@ RenderWindow* RenderManager::GetRenderWindow()
     return m_renderWindow;
 }
 
-Transform* RenderManager::PickMesh(const glm::vec3& direction, const glm::vec3& origin)
+Transform* RenderManager::PickMesh(const glm::vec3& origin, const glm::vec3& direction)
 {
     std::vector<MeshComponent*> hits;
     for (auto meshComponent : m_meshComponents)
     {
-        glm::vec3 center = meshComponent->GetTransform()->GetWorldPosition();
-        glm::vec3 l = center - origin;
-        f32 s = glm::dot(l, direction);
-        f32 l2 = glm::dot(l, l);
-        f32 r = meshComponent->GetSphereRadius();
-        f32 r2 = r * r;
-
-        // Miss.
-        if (s < 0 && l2 > r2)
+        Intersection::RayHitData rayHitData;
+        if (Intersection::RayVsSphere(origin, direction, meshComponent->GetTransform()->GetWorldPosition(), meshComponent->GetSphereRadius(), rayHitData))
         {
-            continue;
+            return meshComponent->GetTransform();
         }
-
-        f32 s2 = s * s;
-        f32 m2 = l2 - s2;
-
-        // Miss.
-        if (m2 > r2)
-        {
-            continue;
-        }
-
-        // std::cout << "HIT!\n";
-        // hits.push_back(meshComponent);
-        return meshComponent->GetTransform();
     }
 
     return nullptr;
@@ -65,7 +46,22 @@ Transform* RenderManager::PickMesh(const glm::vec3& direction, const glm::vec3& 
 
 void RenderManager::RenderSceneToTexture(const glm::mat4& viewProjection)
 {
+    m_renderWindow->EnableBlend(false);
+    m_renderWindow->EnableCullFace(true);
+    m_renderWindow->EnableDepthTest(true);
+
     m_meshShader->Use();
+    int32 lightCount = 0;
+    for (auto directionalLight : m_directionalLightComponents)
+    {
+        glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
+        m_meshShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+        m_meshShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_meshShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        ++lightCount;
+    }
+    m_meshShader->SetIntSlow("DirectionalLightCount", lightCount);
+
     for (auto meshComponent : m_meshComponents)
     {
         Mesh* mesh = meshComponent->GetMesh();
