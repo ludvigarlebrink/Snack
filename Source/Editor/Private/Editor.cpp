@@ -2,6 +2,7 @@
 #include "EditorWindows/AssetBrowserWindow.hpp"
 #include "EditorWindows/GameWindow.hpp"
 #include "EditorWindows/InspectorWindow.hpp"
+#include "EditorWindows/MaterialWindow.hpp"
 #include "EditorWindows/SceneGraphWindow.hpp"
 #include "EditorWindows/SceneWindow.hpp"
 #include "EditorWindows/ScriptEditorWindow.hpp"
@@ -187,6 +188,11 @@ void Editor::DrawMainMenu()
             if (SketchMenu::Item("Particle Editor", "Ctrl+7"))
             {
                 m_editorWindowManager->OpenWindow<ScriptEditorWindow>();
+            }
+
+            if (SketchMenu::Item("Material", "Ctrl+8"))
+            {
+                m_editorWindowManager->OpenWindow<MaterialWindow>();
             }
 
             SketchMenu::End();
