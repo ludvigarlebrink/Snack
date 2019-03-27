@@ -3,6 +3,7 @@
 #include "BaseTypes.hpp"
 #include "Engine.hpp"
 #include "Manager.hpp"
+#include "Material.hpp"
 #include "Transform.hpp"
 
 // Components
