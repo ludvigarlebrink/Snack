@@ -1,4 +1,5 @@
 #include "Components/Rendering/PointLightComponent.hpp"
+#include"SketchInclude.hpp"
 #include "Manager.hpp"
 
 namespace spy
