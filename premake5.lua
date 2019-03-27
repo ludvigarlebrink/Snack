@@ -34,6 +34,10 @@ function LinkFreeType()
     filter {}
 end
 
+function IncludeRapidJSON()
+    includedirs "ThirdParty/rapidjson"
+end
+
 function UseUtils()
     includedirs { "Source/Utils/Public" }
     defines { "UTILS_API=__declspec(dllimport)" }
@@ -87,6 +91,7 @@ function UseEngine()
     includedirs { "Source/Engine/Public" }
     defines { "ENGINE_API=__declspec(dllimport)" }
 
+    IncludeRapidJSON()
     UseSketch()
     
     filter { "kind:not StaticLib" }
