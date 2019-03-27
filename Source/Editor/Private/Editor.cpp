@@ -70,6 +70,10 @@ void Editor::SetUp()
     m_editorWindowManager->OpenWindow<InspectorWindow>();
     m_editorWindowManager->OpenWindow<SceneWindow>();
     m_editorWindowManager->OpenWindow<SceneGraphWindow>();
+
+    Material material;
+    material.SetColor("Poop", glm::vec4(0.1f, 1.0f, 0.0f, 1.0f));
+    material.Save("Data/SomeShit.mt");
 }
 
 void Editor::TearDown()
