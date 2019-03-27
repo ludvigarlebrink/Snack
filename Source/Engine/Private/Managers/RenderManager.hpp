@@ -16,7 +16,7 @@ public:
 
     RenderWindow* GetRenderWindow() override;
 
-    Transform* PickMesh(const glm::vec3& direction, const glm::vec3& origin) override;
+    Transform* PickMesh(const glm::vec3& origin, const glm::vec3& direction) override;
 
     void RenderSceneToTexture(const glm::mat4& viewProjection) override;
 

@@ -23,16 +23,14 @@ private:
         glm::vec4 color;
     };
 
-    struct LineVertex
-    {
-        glm::vec3 position;
-        glm::vec4 color;
-    };
-
     struct GizmoDrawData
     {
-        std::vector<LineVertex> lines;
-        std::vector<LineVertex> linesOverdrawn;
+        std::vector<Vertex> vertices;
+        std::vector<Vertex> verticesOverdrawn;
+        std::vector<Vertex> lines;
+        std::vector<Vertex> linesOverdrawn;
+        std::vector<uint32> elements;
+        std::vector<uint32> elementsOverdrawn;
         std::vector<uint32> lineElements;
         std::vector<uint32> lineElementsOverdrawn;
     };
@@ -63,8 +61,8 @@ private:
     static Shader* m_shader;
     static Texture* m_fontTexture;
 
-    static Mesh* m_gizmoLineMesh;
-    static Shader* m_gizmoLineShader;
+    static Mesh* m_gizmoMesh;
+    static Shader* m_gizmoShader;
     static GizmoDrawData m_gizmoDrawData;
 };
 } // namespace spy

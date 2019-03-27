@@ -10,12 +10,12 @@ uniform struct DirectionalLight
 	vec3 direction;
 	vec3 color;
 	float intensity;
-} directionalLights[4];
+} DirectionalLights[4];
 
-int directionalLightCount;
+uniform int DirectionalLightCount;
 
 void main()
 {
-	vec3 finalColor = directionalLights[0].color * dot(normalize(Normal_FS_in), directionalLights[0].direction);
+	vec3 finalColor = DirectionalLights[0].color * dot(normalize(Normal_FS_in), DirectionalLights[0].direction);
     FragColor = vec4(clamp(finalColor, vec3(0.0), vec3(1.0)), 1.0);
 }

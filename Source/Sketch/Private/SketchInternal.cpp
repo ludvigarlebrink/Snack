@@ -12,8 +12,8 @@ Mesh* SketchInternal::m_mesh = nullptr;
 Shader* SketchInternal::m_shader = nullptr;
 Texture* SketchInternal::m_fontTexture = nullptr;
 
-Mesh* SketchInternal::m_gizmoLineMesh = nullptr;
-Shader* SketchInternal::m_gizmoLineShader = nullptr;
+Mesh* SketchInternal::m_gizmoMesh = nullptr;
+Shader* SketchInternal::m_gizmoShader = nullptr;
 SketchInternal::GizmoDrawData SketchInternal::m_gizmoDrawData;
 
 void SketchInternal::NewFrame(RenderWindow* renderWindow)
@@ -110,20 +110,37 @@ void SketchInternal::Render(RenderWindow* renderWindow)
 
 void SketchInternal::RenderGizmos(RenderWindow* renderWindow, const glm::mat4& viewProjection)
 {
-    m_gizmoLineShader->Use();
-    m_gizmoLineShader->SetMat4Slow("ViewProjection", viewProjection);
-    m_gizmoLineMesh->SetVertexSubData(m_gizmoDrawData.lines.data(), m_gizmoDrawData.lines.size(), 0);
-    m_gizmoLineMesh->SetElementSubData(m_gizmoDrawData.lineElements.data(), m_gizmoDrawData.lineElements.size(), 0);
-    m_gizmoLineMesh->Render(Mesh::Mode::LINES, m_gizmoDrawData.lineElements.size());
+    m_gizmoShader->Use();
+    renderWindow->EnableCullFace(false);
+    renderWindow->EnableBlend(true);
+    renderWindow->SetBlendFunction(RenderWindow::BlendFactor::SOURCE_ALPHA, RenderWindow::BlendFactor::ONE_MINUS_SOURCE_ALPHA);
+    m_gizmoShader->SetMat4Slow("ViewProjection", viewProjection);
+
+    m_gizmoMesh->SetVertexSubData(m_gizmoDrawData.vertices.data(), m_gizmoDrawData.vertices.size(), 0);
+    m_gizmoMesh->SetElementSubData(m_gizmoDrawData.elements.data(), m_gizmoDrawData.elements.size(), 0);
+    m_gizmoMesh->Render(Mesh::Mode::TRIANGLES, m_gizmoDrawData.elements.size());
+
+    m_gizmoMesh->SetVertexSubData(m_gizmoDrawData.lines.data(), m_gizmoDrawData.lines.size(), 0);
+    m_gizmoMesh->SetElementSubData(m_gizmoDrawData.lineElements.data(), m_gizmoDrawData.lineElements.size(), 0);
+    m_gizmoMesh->Render(Mesh::Mode::LINES, m_gizmoDrawData.lineElements.size());
 
     // Overdrawn.
     renderWindow->ClearDepthBuffer();
-    m_gizmoLineMesh->SetVertexSubData(m_gizmoDrawData.linesOverdrawn.data(), m_gizmoDrawData.linesOverdrawn.size(), 0);
-    m_gizmoLineMesh->SetElementSubData(m_gizmoDrawData.lineElementsOverdrawn.data(), m_gizmoDrawData.lineElementsOverdrawn.size(), 0);
-    m_gizmoLineMesh->Render(Mesh::Mode::LINES, m_gizmoDrawData.lineElementsOverdrawn.size());
-    
+
+    m_gizmoMesh->SetVertexSubData(m_gizmoDrawData.verticesOverdrawn.data(), m_gizmoDrawData.verticesOverdrawn.size(), 0);
+    m_gizmoMesh->SetElementSubData(m_gizmoDrawData.elementsOverdrawn.data(), m_gizmoDrawData.elementsOverdrawn.size(), 0);
+    m_gizmoMesh->Render(Mesh::Mode::TRIANGLES, m_gizmoDrawData.elementsOverdrawn.size());
+
+    m_gizmoMesh->SetVertexSubData(m_gizmoDrawData.linesOverdrawn.data(), m_gizmoDrawData.linesOverdrawn.size(), 0);
+    m_gizmoMesh->SetElementSubData(m_gizmoDrawData.lineElementsOverdrawn.data(), m_gizmoDrawData.lineElementsOverdrawn.size(), 0);
+    m_gizmoMesh->Render(Mesh::Mode::LINES, m_gizmoDrawData.lineElementsOverdrawn.size());
+
+    m_gizmoDrawData.vertices.clear();
+    m_gizmoDrawData.verticesOverdrawn.clear();
     m_gizmoDrawData.lineElements.clear();
     m_gizmoDrawData.lines.clear();
+    m_gizmoDrawData.elements.clear();
+    m_gizmoDrawData.elementsOverdrawn.clear();
     m_gizmoDrawData.linesOverdrawn.clear();
     m_gizmoDrawData.lineElementsOverdrawn.clear();
 }
@@ -325,22 +342,23 @@ void SketchInternal::SetUpGizmos()
         "}\n\0";
 
     // Setup shader.
-    m_gizmoLineShader = new Shader();
-    m_gizmoLineShader->LoadShaderFromString(vertexShader, Shader::Type::VERTEX_SHADER);
-    m_gizmoLineShader->LoadShaderFromString(fragmentShader, Shader::Type::FRAGMENT_SHADER);
-    m_gizmoLineShader->LinkProgram();
+    m_gizmoShader = new Shader();
+    m_gizmoShader->LoadShaderFromString(vertexShader, Shader::Type::VERTEX_SHADER);
+    m_gizmoShader->LoadShaderFromString(fragmentShader, Shader::Type::FRAGMENT_SHADER);
+    m_gizmoShader->LinkProgram();
+
+    static const int32 reserveSize = 65536;
 
     // Setup vertex array.
-    m_gizmoLineMesh = new Mesh();
-    static const int32 reserveSize = 65536;
-    m_gizmoLineMesh->Reserve(reserveSize, sizeof(LineVertex), reserveSize, Mesh::Optimization::DYNAMIC_DRAW);
+    m_gizmoMesh = new Mesh();
+    m_gizmoMesh->Reserve(reserveSize, sizeof(Vertex), reserveSize, Mesh::Optimization::DYNAMIC_DRAW);
     
     int32 offset = 0;
-    m_gizmoLineMesh->SetAttribPtr(0, Mesh::Type::VEC3, offset);
+    m_gizmoMesh->SetAttribPtr(0, Mesh::Type::VEC3, offset);
     offset += sizeof(glm::vec3);
-    m_gizmoLineMesh->SetAttribPtr(1, Mesh::Type::VEC4, offset);
+    m_gizmoMesh->SetAttribPtr(1, Mesh::Type::VEC4, offset);
 
-    m_gizmoLineMesh->EnableAttribute(0);
-    m_gizmoLineMesh->EnableAttribute(1);
+    m_gizmoMesh->EnableAttribute(0);
+    m_gizmoMesh->EnableAttribute(1);
 }
 } // namespace spy
