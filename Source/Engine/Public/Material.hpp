@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include <unordered_map>
+#include <vector>
 #include <string>
 
 namespace spy
@@ -25,9 +26,11 @@ public:
     
     ~Material();
 
-    glm::vec4 GetColor(const std::string& uniform);
+    glm::vec4 GetColor(const std::string& id);
 
-    Texture* GetTexture(const std::string& uniform);
+    std::vector<std::string> GetIds();
+
+    Texture* GetTexture(const std::string& id);
     
     bool Load(const std::string& filename);
     

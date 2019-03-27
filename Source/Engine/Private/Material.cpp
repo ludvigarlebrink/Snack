@@ -16,6 +16,36 @@ Material::~Material()
 {
 }
 
+glm::vec4 Material::GetColor(const std::string & id)
+{
+    auto itr = m_textures.find(id);
+    if (itr != m_textures.end())
+    {
+        return itr->second.color;
+    }
+    return glm::vec4(1.0, 1.0, 1.0, 1.0);
+}
+
+std::vector<std::string> Material::GetIds()
+{
+    std::vector<std::string> ids = std::vector<std::string>();
+    for (auto itr = m_textures.begin(); itr != m_textures.end(); ++itr) 
+    {
+        ids.push_back(itr->first);
+    }
+    return ids;
+}
+
+Texture * Material::GetTexture(const std::string & id)
+{
+    auto itr = m_textures.find(id);
+    if (itr != m_textures.end())
+    {
+        return itr->second.texture;
+    }
+    return nullptr;
+}
+
 bool Material::Load(const std::string& filename)
 {
     std::ifstream f(filename);
@@ -34,9 +64,9 @@ bool Material::Load(const std::string& filename)
     return true;
 }
 
-Texture* Material::LoadTexture(const std::string& filename, const std::string& uniform)
+Texture* Material::LoadTexture(const std::string& filename, const std::string& id)
 {
-    return LoadTexture(filename, uniform, glm::vec4(1.0, 1.0, 1.0, 1.0));
+    return LoadTexture(filename, id, glm::vec4(1.0, 1.0, 1.0, 1.0));
 }
 
 Texture* Material::LoadTexture(const std::string& filename, const std::string& id, const glm::vec4& color)
@@ -77,16 +107,16 @@ bool Material::Save(const std::string& filename)
     return true;
 }
 
-void Material::SetColor(const std::string& uniform, const glm::vec4& color)
+void Material::SetColor(const std::string& id, const glm::vec4& color)
 {
-    auto itr = m_textures.find(uniform);
+    auto itr = m_textures.find(id);
     if (itr != m_textures.end())
     {
         itr->second.color = color;
         return;
     }
 
-    m_textures.insert({ uniform, { "", nullptr, color } });
+    m_textures.insert({ id, { "", nullptr, color } });
 }
 
 void Material::SetTexture(const std::string& id, Texture* texture)
