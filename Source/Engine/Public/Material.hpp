@@ -24,6 +24,10 @@ public:
     Material();
     
     ~Material();
+
+    glm::vec4 GetColor(const std::string& uniform);
+
+    Texture* GetTexture(const std::string& uniform);
     
     bool Load(const std::string& filename);
     
