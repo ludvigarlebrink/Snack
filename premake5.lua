@@ -34,8 +34,8 @@ function LinkFreeType()
     filter {}
 end
 
-function IncludeRapidJSON()
-    includedirs "ThirdParty/rapidjson"
+function IncludeCereal()
+    includedirs "ThirdParty/cereal/Include"
 end
 
 function UseUtils()
@@ -91,7 +91,7 @@ function UseEngine()
     includedirs { "Source/Engine/Public" }
     defines { "ENGINE_API=__declspec(dllimport)" }
 
-    IncludeRapidJSON()
+    IncludeCereal()
     UseSketch()
     
     filter { "kind:not StaticLib" }
@@ -230,6 +230,7 @@ project "Engine"
     }
     includedirs { "Source/Engine/Public" }
 
+    IncludeCereal()
     UseSketch()
 
 project "Editor"
