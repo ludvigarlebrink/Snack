@@ -28,7 +28,7 @@ bool Material::Load(const std::string& filename)
     std::stringstream ss;
     ss << f.rdbuf();
     {
-        cereal::JSONOutputArchive ar(ss);
+        cereal::JSONInputArchive ar(ss);
     }
 
     return true;
@@ -51,17 +51,35 @@ bool Material::Save(const std::string& filename)
     std::stringstream ss;
     {
         cereal::JSONOutputArchive ar(ss);
-        for (auto t : m_textures)
+        ar.setNextName("info");
+        ar.startNode();
         {
-            ar(cereal::make_nvp("id", t.first));
-            if (t.second.texture)
+            ar(cereal::make_nvp("type", std::string("material")));
+        }
+
+        ar.finishNode();
+        if (!m_textures.empty())
+        {
+            ar.setNextName("textures");
+            ar.startNode();
+            ar.makeArray();
+            for (auto t : m_textures)
             {
-                ar(cereal::make_nvp("texture", t.second.filename));
+                ar.startNode();
+                {
+                    ar(cereal::make_nvp("id", t.first));
+                    if (t.second.texture)
+                    {
+                        ar(cereal::make_nvp("texture", t.second.filename));
+                    }
+                    ar(cereal::make_nvp("rColor", t.second.color.r));
+                    ar(cereal::make_nvp("gColor", t.second.color.g));
+                    ar(cereal::make_nvp("bColor", t.second.color.b));
+                    ar(cereal::make_nvp("aColor", t.second.color.a));
+                }
+                ar.finishNode();
             }
-            ar(cereal::make_nvp("rColor", t.second.color.r));
-            ar(cereal::make_nvp("gColor", t.second.color.g));
-            ar(cereal::make_nvp("bColor", t.second.color.b));
-            ar(cereal::make_nvp("aColor", t.second.color.a));
+            ar.finishNode();
         }
     }
 
