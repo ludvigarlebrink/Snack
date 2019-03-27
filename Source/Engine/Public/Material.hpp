@@ -12,6 +12,7 @@ private:
     
     struct TextureProperty 
     {
+        std::string filename;
         Texture* texture;
         glm::vec4 color;
     };
@@ -21,6 +22,10 @@ public:
     Material();
     
     ~Material();
+
+    glm::vec4 GetColor(const std::string& uniform);
+
+    Texture* GetTexture(const std::string& uniform);
     
     Texture* LoadTexture(const std::string& filename, const std::string& uniform);
     
