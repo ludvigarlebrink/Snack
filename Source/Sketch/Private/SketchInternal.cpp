@@ -167,7 +167,7 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
 
     // Vertex shader source.
     static const char* vertexShader = 
-        "#version 450 core\n"
+        "#version 440 core\n"
         "layout (location = 0) in vec2 Position;\n"
         "layout (location = 1) in vec2 UV;\n"
         "layout (location = 2) in vec4 Color;\n"
@@ -183,7 +183,7 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
 
     // Fragment shader source.
     static const char* fragmentShader =
-        "#version 450 core\n"
+        "#version 440 core\n"
         "in vec2 Frag_UV;\n"
         "in vec4 Frag_Color;\n"
         "uniform sampler2D Texture;\n"
@@ -320,7 +320,7 @@ void SketchInternal::SetUpGizmos()
 {
     // Vertex shader source.
     static const char* vertexShader =
-        "#version 450 core\n"
+        "#version 440 core\n"
         "layout (location = 0) in vec3 Position_VS_in;\n"
         "layout (location = 1) in vec4 Color_VS_in;\n"
         "uniform mat4 ViewProjection;\n"
@@ -333,7 +333,7 @@ void SketchInternal::SetUpGizmos()
 
     // Fragment shader source.
     static const char* fragmentShader =
-        "#version 450 core\n"
+        "#version 440 core\n"
         "layout (location = 0) out vec4 FragColor;\n"
         "in vec4 Color_FS_in;\n"
         "void main()\n"
