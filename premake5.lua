@@ -76,6 +76,17 @@ function UseRenderCore()
     filter {}
 end
 
+function UseShadeRaid()
+    include { "Source/ShadeRaid/Public" }
+    defines { "SHADE_RAID_API=__declspec(dllimport)" }
+
+    UseRenderCore()
+
+    filter { "kind:not StaticLib" }
+        links { "ShadeRaid" }
+    filter {}
+end
+
 function UseSketch()
     includedirs { "Source/Sketch/Public" }
     defines { "SKETCH_API=__declspec(dllimport)" }
@@ -206,6 +217,18 @@ project "RenderCore"
     IncludeSTB()
 
     UsePlatform()
+
+project "ShadeRaid"
+    kind "SharedLib"
+    location "Source/ShadeRaid"
+    defines { "SHADE_RAID_API=__declspec(dllexport)" }
+    files {
+        "Source/ShadeRaid/**.hpp",
+        "Source/ShadeRaid/**.cpp"
+    }
+    includedirs { "Source/ShadeRaid/Public" }
+
+    UseRenderCore()
 
 project "Sketch"
     kind "SharedLib"
