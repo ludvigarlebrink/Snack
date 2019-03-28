@@ -25,13 +25,5 @@ private:
     void SetUp();
 
     void TearDown();
-
-private:
-
-    int32 m_height;
-    int32 m_width;
-
-    Texture* m_texture;
-    Framebuffer* m_framebuffer;
 };
 }// namespace spy
