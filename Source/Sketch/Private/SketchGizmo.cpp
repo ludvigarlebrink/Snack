@@ -165,4 +165,75 @@ void SketchGizmo::LineOverdrawn(const glm::vec3& p0, glm::vec3& p1, const glm::v
     SketchInternal::m_gizmoDrawData.linesOverdrawn.push_back(line[0]);
     SketchInternal::m_gizmoDrawData.linesOverdrawn.push_back(line[1]);
 }
+void SketchGizmo::Quad(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
+{
+    Quad(p0, p1, p2, p3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+}
+
+void SketchGizmo::Quad(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec4& color)
+{
+    SketchInternal::Vertex vertices[4];
+    vertices[0].position = p0;
+    vertices[1].position = p1;
+    vertices[2].position = p2;
+    vertices[3].position = p3;
+
+    vertices[0].color = color;
+    vertices[1].color = color;
+    vertices[2].color = color;
+    vertices[3].color = color;
+
+    uint32 element = SketchInternal::m_gizmoDrawData.vertices.size();
+
+    // Triangle 1.
+    SketchInternal::m_gizmoDrawData.elements.push_back(element);
+    SketchInternal::m_gizmoDrawData.elements.push_back(element + 1u);
+    SketchInternal::m_gizmoDrawData.elements.push_back(element + 2u);
+
+    // Triangle 2.
+    SketchInternal::m_gizmoDrawData.elements.push_back(element + 2u);
+    SketchInternal::m_gizmoDrawData.elements.push_back(element + 3u);
+    SketchInternal::m_gizmoDrawData.elements.push_back(element);
+
+    SketchInternal::m_gizmoDrawData.vertices.push_back(vertices[0]);
+    SketchInternal::m_gizmoDrawData.vertices.push_back(vertices[1]);
+    SketchInternal::m_gizmoDrawData.vertices.push_back(vertices[2]);
+    SketchInternal::m_gizmoDrawData.vertices.push_back(vertices[3]);
+}
+
+void SketchGizmo::QuadOverdrawn(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
+{
+    QuadOverdrawn(p0, p1, p2, p3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+}
+
+void SketchGizmo::QuadOverdrawn(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec4& color)
+{
+    SketchInternal::Vertex vertices[4];
+    vertices[0].position = p0;
+    vertices[1].position = p1;
+    vertices[2].position = p2;
+    vertices[3].position = p3;
+
+    vertices[0].color = color;
+    vertices[1].color = color;
+    vertices[2].color = color;
+    vertices[3].color = color;
+
+    uint32 element = SketchInternal::m_gizmoDrawData.verticesOverdrawn.size();
+
+    // Triangle 1.
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 1u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 2u);
+
+    // Triangle 2.
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 2u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 3u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element);
+
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[0]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[1]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[2]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[3]);
+}
 } // namespace spy

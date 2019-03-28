@@ -118,6 +118,50 @@ void SceneWindow::OnDraw(f32 deltaTime)
             m_depthStencil->SetData(m_width, m_height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
         }
 
+        if (!m_cameraMode && SketchEvent::IsPointerOverWindow() && SketchEvent::ButtonDown(Button::RIGHT))
+        {
+            m_cameraMode = true;
+            m_pointerGlobalPosition = SketchEvent::GetPointerGlobalPosition();
+        }
+        else if (m_cameraMode && SketchEvent::ButtonDown(Button::RIGHT))
+        {
+            m_cameraMode = false;
+        }
+
+        if (m_cameraMode)
+        {
+            glm::vec2 pointerDelta = SketchEvent::GetPointerGlobalPosition() - m_pointerGlobalPosition;
+            SketchEvent::WrapPointerGlobal(m_pointerGlobalPosition);
+            SketchEvent::ShowPointer(false);
+
+            m_rotation.x -= pointerDelta.y * m_rotateSpeed * deltaTime;
+            m_rotation.x = Mathf::Clamp(-89.0f, 89.0f, m_rotation.x);
+            m_rotation.y -= pointerDelta.x * m_rotateSpeed * deltaTime;
+
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), m_position);
+            model = glm::rotate(model, glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+            model = glm::rotate(model, glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+            model = glm::rotate(model, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+
+            if (SketchEvent::KeyRepeat(Key::W))
+            {
+                m_position -= glm::vec3(model[2]) * m_moveSpeed * deltaTime;
+            }
+            else if (SketchEvent::KeyRepeat(Key::S))
+            {
+                m_position += glm::vec3(model[2]) * m_moveSpeed * deltaTime;
+            }
+
+            if (SketchEvent::KeyRepeat(Key::A))
+            {
+                m_position -= glm::vec3(model[0]) * m_moveSpeed * deltaTime;
+            }
+            else if (SketchEvent::KeyRepeat(Key::D))
+            {
+                m_position += glm::vec3(model[0]) * m_moveSpeed * deltaTime;
+            }
+        }
+
         if (m_isGridEnabled)
         {
             DrawGrid();
@@ -176,50 +220,6 @@ void SceneWindow::DrawGrid()
 
 void SceneWindow::DrawScene(f32 deltaTime)
 {
-    if (!m_cameraMode && SketchEvent::IsPointerOverWindow() && SketchEvent::ButtonDown(Button::RIGHT))
-    {
-        m_cameraMode = true;
-        m_pointerGlobalPosition = SketchEvent::GetPointerGlobalPosition();
-    }
-    else if (m_cameraMode && SketchEvent::ButtonDown(Button::RIGHT))
-    {
-        m_cameraMode = false;
-    }
-
-    if (m_cameraMode)
-    {
-        glm::vec2 pointerDelta = SketchEvent::GetPointerGlobalPosition() - m_pointerGlobalPosition;
-        SketchEvent::WrapPointerGlobal(m_pointerGlobalPosition);
-        SketchEvent::ShowPointer(false);
-
-        m_rotation.x -= pointerDelta.y * m_rotateSpeed * deltaTime;
-        m_rotation.x = Mathf::Clamp(-89.0f, 89.0f, m_rotation.x);
-        m_rotation.y -= pointerDelta.x * m_rotateSpeed * deltaTime;
-
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), m_position);
-        model = glm::rotate(model, glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::rotate(model, glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::rotate(model, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-
-        if (SketchEvent::KeyRepeat(Key::W))
-        {
-            m_position -= glm::vec3(model[2]) * m_moveSpeed * deltaTime;
-        }
-        else if (SketchEvent::KeyRepeat(Key::S))
-        {
-            m_position += glm::vec3(model[2]) * m_moveSpeed * deltaTime;
-        }
-
-        if (SketchEvent::KeyRepeat(Key::A))
-        {
-            m_position -= glm::vec3(model[0]) * m_moveSpeed * deltaTime;
-        }
-        else if (SketchEvent::KeyRepeat(Key::D))
-        {
-            m_position += glm::vec3(model[0]) * m_moveSpeed * deltaTime;
-        }
-    }
-
     glm::mat4 projectionMatrix = glm::perspective(m_fieldOfView, static_cast<f32>(m_width) / static_cast<f32>(m_height), 0.1f, 1000.0f);
 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), m_position);
@@ -260,7 +260,7 @@ void SceneWindow::MoveMode()
         glm::vec3 position = glm::vec3(model[3]);
         f32 distance = glm::distance(position, m_position);
         glm::vec3 dir = glm::normalize(position - m_position);
-        position -= dir * (distance - 8.0f);
+        position -= dir * (distance - 5.0f);
 
         glm::vec4 xColor = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
         glm::vec4 yColor = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -269,6 +269,10 @@ void SceneWindow::MoveMode()
         glm::vec4 xPanColor = glm::vec4(1.0f, 0.0f, 0.0f, 0.42f);
         glm::vec4 yPanColor = glm::vec4(0.0f, 1.0f, 0.0f, 0.42f);
         glm::vec4 zPanColor = glm::vec4(0.0f, 0.0f, 1.0f, 0.42f);
+
+        glm::vec4 xPanColorQuad = glm::vec4(1.0f, 0.0f, 0.0f, 0.16f);
+        glm::vec4 yPanColorQuad = glm::vec4(0.0f, 1.0f, 0.0f, 0.16f);
+        glm::vec4 zPanColorQuad = glm::vec4(0.0f, 0.0f, 1.0f, 0.16f);
 
         glm::vec3 xAabbMin = glm::vec3(0.0f, -0.025f, -0.025f);
         glm::vec3 xAabbMax = glm::vec3(1.0f, 0.025f, 0.025f);
@@ -336,20 +340,30 @@ void SceneWindow::MoveMode()
         SketchGizmo::LineOverdrawn(position, glm::normalize(glm::vec3(model[1])) + position, yColor);
         SketchGizmo::LineOverdrawn(position, glm::normalize(glm::vec3(model[2])) + position, zColor);
 
-        SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[1])) * 0.25f + position,
-            glm::normalize(glm::vec3(model[1])) * 0.25f + glm::normalize(glm::vec3(model[2])) * 0.25f + position, xPanColor);
-        SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[2])) * 0.25f + position,
-            glm::normalize(glm::vec3(model[1])) * 0.25f + glm::normalize(glm::vec3(model[2])) * 0.25f + position, xPanColor);
+        {
+            SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[1])) * 0.25f + position,
+                glm::normalize(glm::vec3(model[1])) * 0.25f + glm::normalize(glm::vec3(model[2])) * 0.25f + position, xPanColor);
+            SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[2])) * 0.25f + position,
+                glm::normalize(glm::vec3(model[1])) * 0.25f + glm::normalize(glm::vec3(model[2])) * 0.25f + position, xPanColor);
+        }
 
-        SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[2])) * 0.25f + position,
-            glm::normalize(glm::vec3(model[2])) * 0.25f + glm::normalize(glm::vec3(model[0])) * 0.25f + position, yPanColor);
-        SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[0])) * 0.25f + position,
-            glm::normalize(glm::vec3(model[2])) * 0.25f + glm::normalize(glm::vec3(model[0])) * 0.25f + position, yPanColor);
+        {
+            SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[2])) * 0.25f + position,
+                glm::normalize(glm::vec3(model[2])) * 0.25f + glm::normalize(glm::vec3(model[0])) * 0.25f + position, yPanColor);
+            SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[0])) * 0.25f + position,
+                glm::normalize(glm::vec3(model[2])) * 0.25f + glm::normalize(glm::vec3(model[0])) * 0.25f + position, yPanColor);
+        }
 
-        SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[0])) * 0.25f + position,
-            glm::normalize(glm::vec3(model[0])) * 0.25f + glm::normalize(glm::vec3(model[1])) * 0.25f + position, zPanColor);
-        SketchGizmo::LineOverdrawn(glm::normalize(glm::vec3(model[1])) * 0.25f + position,
-            glm::normalize(glm::vec3(model[0])) * 0.25f + glm::normalize(glm::vec3(model[1])) * 0.25f + position, zPanColor);
+        {
+            glm::vec3 p0 = position;
+            glm::vec3 p1 = glm::normalize(glm::vec3(model[0])) * 0.25f + position;
+            glm::vec3 p2 = glm::normalize(glm::vec3(model[1])) * 0.25f + position;
+            glm::vec3 p3 = glm::normalize(glm::vec3(model[0])) * 0.25f + glm::normalize(glm::vec3(model[1])) * 0.25f + position;
+
+            SketchGizmo::LineOverdrawn(p1, p3, zPanColor);
+            SketchGizmo::LineOverdrawn(p2, p3, zPanColor);
+            SketchGizmo::QuadOverdrawn(p0, p2, p3, p1, zPanColorQuad);
+        }
     }
 }
 
@@ -365,7 +379,7 @@ void SceneWindow::RotateMode()
         glm::vec3 center = model[3];
         f32 distance = glm::distance(center, m_position);
         glm::vec3 dir = glm::normalize(center - m_position);
-        center -= dir * (distance - 8.0f);
+        center -= dir * (distance - 5.0f);
 
         glm::vec4 xColor = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
         glm::vec4 yColor = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);

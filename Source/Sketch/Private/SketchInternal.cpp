@@ -215,7 +215,10 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
     m_mesh->EnableAttribute(2);
 
     // Create font texture.
-    io.Fonts->AddFontFromFileTTF("EditorData/Fonts/Cousine-Regular.ttf", 16.0f);
+    ImFontConfig fontConfig;
+    fontConfig.OversampleH = 3;
+    fontConfig.OversampleV = 3;
+    io.Fonts->AddFontFromFileTTF("EditorData/Fonts/Cousine-Regular.ttf", 16.0f, &fontConfig);
 
     uchar* pixels = nullptr;
     int32 width = 0;
