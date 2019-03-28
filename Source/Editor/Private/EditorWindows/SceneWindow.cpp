@@ -301,31 +301,35 @@ void SceneWindow::MoveMode()
         glm::vec3 rayWorld = glm::vec3(viewInverse * rayEye);
         rayWorld = glm::normalize(rayWorld);
 
+        glm::mat4 rayModel = model;
+        rayModel[3].x = position.x;
+        rayModel[3].y = position.y;
+        rayModel[3].z = position.z;
         Intersection::RayHitData rayHitData;
-        if (Intersection::RayVsOBB(m_position, rayWorld, xAabbMin, xAabbMax, model, rayHitData) ||
-            Intersection::RayVsOBB(m_position, rayWorld, xAabbMinHandle, xAabbMaxHandle, model, rayHitData))
+        if (Intersection::RayVsOBB(m_position, rayWorld, xAabbMin, xAabbMax, rayModel, rayHitData) ||
+            Intersection::RayVsOBB(m_position, rayWorld, xAabbMinHandle, xAabbMaxHandle, rayModel, rayHitData))
         {
             xColor = glm::vec4(1.0f, 0.82f, 0.82f, 1.0f);
         }
-        else if (Intersection::RayVsOBB(m_position, rayWorld, yAabbMin, yAabbMax, model, rayHitData) ||
-            Intersection::RayVsOBB(m_position, rayWorld, yAabbMinHandle, yAabbMaxHandle, model, rayHitData))
+        else if (Intersection::RayVsOBB(m_position, rayWorld, yAabbMin, yAabbMax, rayModel, rayHitData) ||
+            Intersection::RayVsOBB(m_position, rayWorld, yAabbMinHandle, yAabbMaxHandle, rayModel, rayHitData))
         {
             yColor = glm::vec4(0.82f, 1.0f, 0.82f, 1.0f);
         }
-        else if (Intersection::RayVsOBB(m_position, rayWorld, zAabbMin, zAabbMax, model, rayHitData) ||
-            Intersection::RayVsOBB(m_position, rayWorld, zAabbMinHandle, zAabbMaxHandle, model, rayHitData))
+        else if (Intersection::RayVsOBB(m_position, rayWorld, zAabbMin, zAabbMax, rayModel, rayHitData) ||
+            Intersection::RayVsOBB(m_position, rayWorld, zAabbMinHandle, zAabbMaxHandle, rayModel, rayHitData))
         {
             zColor = glm::vec4(0.82f, 0.82f, 1.0f, 1.0f);
         }
 
         // Has to be normalized due to scaling.
-        SketchGizmo::Cone(glm::normalize(glm::vec3(model[0])) + position, glm::normalize(glm::vec3(model[0])),
+        SketchGizmo::ConeOverdrawn(glm::normalize(glm::vec3(model[0])) + position, glm::normalize(glm::vec3(model[0])),
             glm::normalize(glm::vec3(model[1])), 0.12f, 0.25f, xColor);
 
-        SketchGizmo::Cone(glm::normalize(glm::vec3(model[1])) + position, glm::normalize(glm::vec3(model[1])),
+        SketchGizmo::ConeOverdrawn(glm::normalize(glm::vec3(model[1])) + position, glm::normalize(glm::vec3(model[1])),
             glm::normalize(glm::vec3(model[2])), 0.12f, 0.25f, yColor);
 
-        SketchGizmo::Cone(glm::normalize(glm::vec3(model[2])) + position, glm::normalize(glm::vec3(model[2])),
+        SketchGizmo::ConeOverdrawn(glm::normalize(glm::vec3(model[2])) + position, glm::normalize(glm::vec3(model[2])),
             glm::normalize(glm::vec3(model[0])), 0.12f, 0.25f, zColor);
 
         SketchGizmo::LineOverdrawn(position, glm::normalize(glm::vec3(model[0])) + position, xColor);
@@ -359,6 +363,9 @@ void SceneWindow::RotateMode()
         model[1] = glm::vec4(glm::normalize(glm::vec3(model[1])), model[1][3]);
         model[2] = glm::vec4(glm::normalize(glm::vec3(model[2])), model[2][3]);
         glm::vec3 center = model[3];
+        f32 distance = glm::distance(center, m_position);
+        glm::vec3 dir = glm::normalize(center - m_position);
+        center -= dir * (distance - 8.0f);
 
         glm::vec4 xColor = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
         glm::vec4 yColor = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
