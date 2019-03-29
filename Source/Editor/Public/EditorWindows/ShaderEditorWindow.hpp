@@ -4,18 +4,20 @@
 
 namespace spy
 {
-class EDITOR_API ScriptEditorWindow final : public EditorWindow
+class EDITOR_API ShaderEditorWindow final : public EditorWindow
 {
 public:
 
-    ScriptEditorWindow();
+    ShaderEditorWindow();
 
-    ~ScriptEditorWindow();
+    ~ShaderEditorWindow();
 
     std::string GetTitle() override;
 
-protected:
-
     void OnDraw(f32 deltaTime) override;
+
+private:
+
+
 };
 } // namespace spy

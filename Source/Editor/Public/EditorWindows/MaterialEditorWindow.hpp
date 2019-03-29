@@ -6,13 +6,13 @@
 
 namespace spy
 {
-class EDITOR_API MaterialWindow final : public EditorWindow
+class EDITOR_API MaterialEditorWindow final : public EditorWindow
 {
 public:
 
-    MaterialWindow();
+    MaterialEditorWindow();
 
-    ~MaterialWindow();
+    ~MaterialEditorWindow();
 
     std::string GetTitle() override;
 
