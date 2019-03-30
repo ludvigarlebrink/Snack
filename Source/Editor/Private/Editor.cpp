@@ -71,8 +71,6 @@ void Editor::SetUp()
     m_editorWindowManager->OpenWindow<InspectorWindow>();
     m_editorWindowManager->OpenWindow<SceneWindow>();
     m_editorWindowManager->OpenWindow<SceneGraphWindow>();
-
-    Material material;
 }
 
 void Editor::TearDown()
