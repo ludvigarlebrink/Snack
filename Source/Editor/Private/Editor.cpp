@@ -193,14 +193,14 @@ void Editor::DrawMainMenu()
                 m_editorWindowManager->OpenWindow<ScriptEditorWindow>();
             }
 
-            if (SketchMenu::Item("Shader Editor"))
-            {
-                m_editorWindowManager->OpenWindow<ShaderEditorWindow>();
-            }
-
             if (SketchMenu::Item("Material Editor"))
             {
                 m_editorWindowManager->OpenWindow<MaterialEditorWindow>();
+            }
+
+            if (SketchMenu::Item("Shader Editor"))
+            {
+                m_editorWindowManager->OpenWindow<ShaderEditorWindow>();
             }
 
             SketchMenu::End();

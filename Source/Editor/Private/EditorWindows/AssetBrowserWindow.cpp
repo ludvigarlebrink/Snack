@@ -109,6 +109,38 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                         }
                     }
                 }
+
+                if (SketchPopup::BeginContext(fileInfo.name + fileInfo.extension))
+                {
+                    if (fileInfo.extension == ".scene")
+                    {
+                        SketchMenu::Item("Open");
+                        Sketch::Seperator();
+                    }
+                    else if (fileInfo.extension == ".mat")
+                    {
+                        SketchMenu::Item("Open");
+                        Sketch::Seperator();
+                    }
+                    else if (fileInfo.extension == ".shader")
+                    {
+                        SketchMenu::Item("Open");
+                        Sketch::Seperator();
+                    }
+
+                    if (SketchMenu::Item("Delete"))
+                    {
+
+                    }
+                    
+                    if (SketchMenu::Item("Rename"))
+                    {
+
+                    }
+
+                    SketchPopup::End();
+                }
+
             }
         }
     }
@@ -143,7 +175,10 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             Sketch::Seperator();
             SketchPopup::MenuItemOpenPopup("Scene", "Create Scene");
             SketchPopup::MenuItemOpenPopup("Lua Script", "Create Lua Script");
+            SketchPopup::MenuItemOpenPopup("Material", "Create Material");
+            SketchPopup::MenuItemOpenPopup("Shader", "Create Shader");
             SketchPopup::MenuItemOpenPopup("Text File", "Create Text File");
+
 
             static std::string inputText = "";
             if (SketchPopup::Dialog("Create Folder", "Folder Name:", "Create", "Cancel", inputText))
@@ -167,6 +202,20 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
                 inputText.clear();
                 m_refresh = true;
             }
+            else if (SketchPopup::Dialog("Create Material", "Material Name:", "Create", "Cancel", inputText))
+            {
+                std::string filepath = folderNode->GetRelativePath() + inputText + ".mat";
+                FileSystem::CreateFile(filepath);
+                inputText.clear();
+                m_refresh = true;
+            }
+            else if (SketchPopup::Dialog("Create Shader", "Shader Name:", "Create", "Cancel", inputText))
+            {
+                std::string filepath = folderNode->GetRelativePath() + inputText + ".shader";
+                FileSystem::CreateFile(filepath);
+                inputText.clear();
+                m_refresh = true;
+            }
             else if (SketchPopup::Dialog("Create Text File", "File Name:", "Create", "Cancel", inputText))
             {
                 std::string filepath = folderNode->GetRelativePath() + inputText + ".txt";
@@ -182,7 +231,6 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             folderNode->GetRelativePath() != FileSystem::GetRelativeEditorDataPath())
         {
             SketchPopup::MenuItemOpenPopup("Rename", "Rename Folder");
-
 
             SketchPopup::MenuItemOpenPopup("Delete", "Delete Folder");
             if (SketchPopup::DialogYesNo("Delete Folder", "Are you sure?\nThis will delete this folder all\nof its subfolders permanently."))
