@@ -17,16 +17,6 @@ class SceneSelectTool;
 
 class EDITOR_API SceneWindow final : public EditorWindow
 {
-private:
-
-    enum class Mode
-    {
-        SELECT,
-        MOVE,
-        ROTATE,
-        SCALE
-    };
-
 public:
 
     SceneWindow();
@@ -47,12 +37,6 @@ private:
 
     void DrawScene(f32 deltaTime);
 
-    void RotateMode();
-
-    void ScaleMode();
-
-    void SelectMode();
-
     void SetUp();
 
     void TearDown();
@@ -67,7 +51,6 @@ private:
     int32 m_height;
     int32 m_width;
     uint32 m_selectedShadingMode;
-    Mode m_mode;
 
     ISceneTool* m_activeSceneTool;
     SceneMoveTool* m_moveTool;

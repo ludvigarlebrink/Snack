@@ -2,6 +2,8 @@
 
 #include "ISceneTool.hpp"
 
+#include <glm/glm.hpp>
+
 namespace spy
 {
 class SceneSelectTool final : public ISceneTool

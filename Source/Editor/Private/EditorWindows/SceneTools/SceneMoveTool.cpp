@@ -66,7 +66,7 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
         pointerCoords.y = 1.0f - (2.0f * pointerCoords.y) / static_cast<f32>(data.height);
 
         glm::vec4 rayClip = glm::vec4(pointerCoords.x, pointerCoords.y, -1.0f, 1.0f);
-        glm::vec4 rayEye = glm::inverse(data.projectionMatrix) * rayClip;
+        glm::vec4 rayEye = glm::inverse(data.projection) * rayClip;
         rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
         glm::vec3 rayWorld = glm::vec3(data.viewInverse * rayEye);
         rayWorld = glm::normalize(rayWorld);

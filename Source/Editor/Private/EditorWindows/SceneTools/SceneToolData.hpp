@@ -13,7 +13,7 @@ struct SceneToolData
     int32 width;
     int32 height;
     glm::vec3 cameraPosition;
-    glm::mat4 projectionMatrix;
+    glm::mat4 projection;
     glm::mat4 viewInverse;
 };
 } // namespace spy
