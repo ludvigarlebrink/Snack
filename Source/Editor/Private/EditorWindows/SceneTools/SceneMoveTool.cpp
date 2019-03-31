@@ -313,6 +313,16 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
             }
         }
 
+        // Recalucate widgets.
+        model = transform->GetWorldMatrix();
+        xAxis = glm::normalize(glm::vec3(model[0]));
+        yAxis = glm::normalize(glm::vec3(model[1]));
+        zAxis = glm::normalize(glm::vec3(model[2]));
+        widgetPosition = glm::vec3(model[3]);
+        distance = glm::distance(widgetPosition, data.cameraPosition);
+        dir = glm::normalize(widgetPosition - data.cameraPosition);
+        widgetPosition -= dir * (distance - 5.0f);
+
         Draw(xAxis, yAxis, zAxis, widgetPosition);
     }
 }
@@ -320,7 +330,6 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
 void SceneMoveTool::Draw(const glm::vec3& xAxis, const glm::vec3& yAxis, const glm::vec3& zAxis, const glm::vec3& position)
 {
     glm::vec3 p0 = position;
-
     {
         glm::vec3 p1 = yAxis * 0.25f + position;
         glm::vec3 p2 = zAxis * 0.25f + position;
