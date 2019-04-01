@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Components/BaseComponent.hpp"
+#include "Material.hpp"
 
 #include <glm/glm.hpp>
 
@@ -45,6 +46,18 @@ public:
 
     std::string GetComponentID() override;
 
+    Material* GetMaterial() const;
+
+    void SetMaterial(Material* material);
+
+    void SetMaterial(std::string path);
+
+#ifdef SPY_EDITOR
     void OnEditorInspector() override;
+#endif
+
+private:
+    
+    Material* m_material;
 };
 } // namespace spy

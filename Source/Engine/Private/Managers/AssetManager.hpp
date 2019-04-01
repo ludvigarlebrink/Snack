@@ -17,10 +17,13 @@ public:
 
     void DestroyTexture(const std::string& filename) override;
 
+    Material* GetDefaultMaterial() override;
+
     Texture* LoadTexture(const std::string& filename) override;
 
 private:
 
     std::unordered_map<std::string, std::pair<int32, Texture*>> m_textures;
+    Material* m_defaultMaterial;
 };
 } // namespace spy

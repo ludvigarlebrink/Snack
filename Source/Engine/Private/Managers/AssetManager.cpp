@@ -7,6 +7,8 @@ namespace spy
 {
 AssetManager::AssetManager()
 {
+    m_defaultMaterial = new Material();
+    m_defaultMaterial->SetColor("Base", { 1.0, 1.0, 1.0, 1.0 });
 }
 
 AssetManager::~AssetManager()
@@ -25,6 +27,11 @@ void AssetManager::DestroyTexture(const std::string& filename)
             m_textures.erase(filename);
         }
     }
+}
+
+Material* AssetManager::GetDefaultMaterial()
+{
+    return m_defaultMaterial;
 }
 
 Texture* AssetManager::LoadTexture(const std::string& filename)

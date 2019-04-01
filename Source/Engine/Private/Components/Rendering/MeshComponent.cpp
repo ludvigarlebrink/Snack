@@ -177,6 +177,7 @@ MeshComponent::MeshComponent(Transform* transform)
     m_mesh->EnableAttribute(2);
     m_mesh->EnableAttribute(3);
 
+    m_material = Manager::Asset()->GetDefaultMaterial();
     m_sphereRadius = glm::length(glm::vec3(0.5f, 0.5f, 0.5f));
     m_aabbMax = glm::vec3(0.5f, 0.5f, 0.5f);
     m_aabbMin = glm::vec3(-0.5f, -0.5f, -0.5f);
@@ -194,6 +195,11 @@ std::string MeshComponent::GetComponentID()
     return typeid(MeshComponent).name();
 }
 
+Material* MeshComponent::GetMaterial() const
+{
+    return m_material;
+}
+
 Mesh* MeshComponent::GetMesh() const
 {
     return m_mesh;
@@ -205,6 +211,16 @@ f32 MeshComponent::GetSphereRadius() const
     f32 maxScale = Mathf::Max(scale.x, scale.y);
     maxScale = Mathf::Max(maxScale, scale.z);
     return m_sphereRadius * maxScale;
+}
+
+void MeshComponent::SetMaterial(Material * material)
+{
+    m_material = material;
+}
+
+void MeshComponent::SetMaterial(std::string path)
+{
+    //TODO (maybe?)
 }
 
 #ifdef SPY_EDITOR
