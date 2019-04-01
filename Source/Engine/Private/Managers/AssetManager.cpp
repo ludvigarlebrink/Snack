@@ -34,6 +34,22 @@ Material* AssetManager::GetDefaultMaterial()
     return m_defaultMaterial;
 }
 
+Material * AssetManager::LoadMaterial(const std::string & filename)
+{
+    auto itr = m_materials.find(filename);
+    if (itr != m_materials.end())
+    {
+        itr->second.first++;
+        return itr->second.second;
+    }
+
+    Material* pMaterial = new Material();
+    //TODO actually load the material
+    //pMaterial->LoadFromFile(FileSystem::GetRelativeDataPath(filename), Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
+    m_materials.insert({ filename, std::pair<int32, Material*>(1, pMaterial) });
+    return pMaterial;
+}
+
 Texture* AssetManager::LoadTexture(const std::string& filename)
 {
     auto itr = m_textures.find(filename);

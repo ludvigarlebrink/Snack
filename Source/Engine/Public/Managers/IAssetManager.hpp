@@ -19,6 +19,8 @@ public:
 
     virtual Material* GetDefaultMaterial() = 0;
 
+    virtual Material* LoadMaterial(const std::string& filename) = 0;
+
     virtual Texture* LoadTexture(const std::string& filename) = 0;
 };
 } // namespace spy
