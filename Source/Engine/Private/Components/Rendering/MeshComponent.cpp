@@ -1,10 +1,11 @@
 #include "Components\Rendering\MeshComponent.hpp"
 #include "Manager.hpp"
 #include "Mathf.hpp"
-#include "Transform.hpp"
+#include "Rendering/StaticVertex.hpp"
 #ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
 #endif
+#include "Transform.hpp"
 
 namespace spy
 {
@@ -17,7 +18,7 @@ MeshComponent::MeshComponent(Transform* transform)
     Manager::Render()->RegisterMeshComponent(this);
 
     // @todo Hack!
-    Vertex vertices[24];
+    StaticVertex vertices[24];
 
     vertices[0].position = glm::vec3(-0.5f, 0.5f, 0.5f);
     vertices[1].position = glm::vec3(-0.5f, -0.5f, 0.5f);
@@ -154,7 +155,7 @@ MeshComponent::MeshComponent(Transform* transform)
     };
 
     m_mesh = new Mesh();
-    m_mesh->SetData(vertices, 24, sizeof(Vertex), elements, 36, Mesh::Optimization::STATIC_DRAW);
+    m_mesh->SetData(vertices, 24, sizeof(StaticVertex), elements, 36, Mesh::Optimization::STATIC_DRAW);
     int32 offset = 0;
 
     // Position.

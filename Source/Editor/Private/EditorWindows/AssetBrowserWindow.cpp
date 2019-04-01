@@ -40,7 +40,7 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
     {
         std::string filename = SketchEvent::DropFilename();
         std::string extension = filename.substr(filename.find_last_of('.'));
-        if (extension == ".obj")
+        if (extension == ".obj" || extension == ".fbx")
         {
             ModelImporterWindow* modelImporter = EditorManager::Window()->OpenWindow<ModelImporterWindow>();
             modelImporter->SetFile(filename);

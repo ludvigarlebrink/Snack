@@ -1,4 +1,4 @@
-#include "EditorWindows\ModelImporterWindow.hpp"
+#include "EditorWindows/ModelImporterWindow.hpp"
 #include "EngineInclude.hpp"
 #include "RenderCoreInclude.hpp"
 #include "SketchInclude.hpp"
@@ -56,7 +56,6 @@ void ModelImporterWindow::OnDraw(f32 deltaTime)
 void ModelImporterWindow::ImportObj()
 {
     // Converting it to our format.
-
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> normals;
     std::vector<glm::vec2> textureCoordianates;
@@ -64,7 +63,7 @@ void ModelImporterWindow::ImportObj()
     ObjParser objParser;
     if (objParser.Parse(m_source, positions, normals, textureCoordianates, elements))
     {
-        std::vector<MeshComponent::Vertex> vertices(positions.size());
+        std::vector<StaticVertex> vertices(positions.size());
         for (int32 i = 0; i < positions.size(); ++i)
         {
             vertices[i].position = positions[i];

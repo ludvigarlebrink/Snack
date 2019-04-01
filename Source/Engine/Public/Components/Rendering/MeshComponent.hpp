@@ -2,7 +2,7 @@
 
 #include "Components/BaseComponent.hpp"
 #include "Mesh.hpp"
-#include "Material.hpp"
+#include "Rendering/Material.hpp"
 
 #include <glm/glm.hpp>
 
@@ -13,31 +13,6 @@ namespace spy
  */
 class MeshComponent final : public BaseComponent
 {
-public:
-
-    struct Vertex
-    {
-        /**
-         * @brief Position of the vertex.
-         */
-        glm::vec3 position;
-
-        /**
-         * @brief Normal of the vertex.
-         */
-        glm::vec3 normal;
-
-        /**
-         * @brief Tangent of the vertex.
-         */
-        glm::vec3 tangent;
-
-        /**
-         * @brief Texture coordiantes of the vertex.
-         */
-        glm::vec2 textureCoordinate;
-    };
-
 public:
 
     MeshComponent(Transform* transform);

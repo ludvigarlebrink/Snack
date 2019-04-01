@@ -1,14 +1,15 @@
 #pragma once
 
 #include "BaseTypes.hpp"
-#include "RenderCoreForward.hpp"
 #include "Mesh.hpp"
-#include "Material.hpp"
+#include "RenderCoreForward.hpp"
 
 #include <string>
 
 namespace spy
 {
+class Material;
+
 class ENGINE_API IAssetManager
 {
 public:
