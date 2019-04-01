@@ -33,6 +33,8 @@ public:
 
     static bool ButtonUp(Button button);
 
+    static bool CloseRequest();
+
     static glm::vec2 GetPointerDelta();
 
     static glm::vec2 GetPointerGlobalPosition();
@@ -79,5 +81,7 @@ private:
     static Button m_buttonsUp[KEY_COUNT];
     static int32 m_buttonDownCount;
     static int32 m_buttonUpCount;
+
+    static bool m_wantsToClose;
 };
 } // namespace spy

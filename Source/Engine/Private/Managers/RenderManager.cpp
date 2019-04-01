@@ -143,7 +143,7 @@ void RenderManager::RegisterSpotlightComponent(SpotlightComponent* spotlightComp
 
 void RenderManager::SetUp()
 {
-    m_renderWindow = new RenderWindow("Spy Editor", 1920, 1080);
+    m_renderWindow = new RenderWindow("Snack Editor", 1280, 720);
 
     m_meshShader = new Shader();
     m_meshShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/DefaultMesh.vs.glsl"), Shader::Type::VERTEX_SHADER);
