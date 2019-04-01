@@ -35,7 +35,7 @@ public:
         /**
          * @brief Texture coordiantes of the vertex.
          */
-        glm::vec2 textureCoordinates;
+        glm::vec2 textureCoordinate;
     };
 
 public:

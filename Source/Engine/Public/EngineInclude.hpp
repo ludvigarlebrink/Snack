@@ -11,4 +11,5 @@
 #include "Components/Input/InputComponent.hpp"
 #include "Components/Rendering/CameraComponent.hpp"
 #include "Components/Rendering/PointLightComponent.hpp"
+#include "Components/Rendering/MeshComponent.hpp"
 
