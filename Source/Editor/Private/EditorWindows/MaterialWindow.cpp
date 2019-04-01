@@ -6,10 +6,7 @@
 namespace spy
 {
     MaterialWindow::MaterialWindow()
-        : m_height(50)
-        , m_width(50)
-        , m_texture(nullptr)
-        , m_framebuffer(nullptr)
+        : m_material(nullptr)
     {
         SetUp();
     }
@@ -26,24 +23,28 @@ namespace spy
 
     void MaterialWindow::OnDraw(f32 deltaTime)
     {
-        Sketch::Button("Materials");
+        glm::vec4 color(0.00,0.00,0.00,0.00);
+        glm::vec4 texture(0.00, 0.00, 0.00, 0.00);
+        Sketch::Vec4Field("Color",color);
+        if (m_material)
+        {
+            m_material->SetColor("Test", color);
+        }
+        //test.SetColor
+        Sketch::Vec4Field("Texture",texture);
     }
 
     void MaterialWindow::SetUp()
     {
-        m_texture = new Texture();
-        m_texture->SetData(m_width, m_height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
-
-        m_framebuffer = new Framebuffer();
-        m_framebuffer->AttachTexture(0, m_texture);
+      
     }
 
     void MaterialWindow::TearDown()
     {
-        delete m_texture;
-        m_texture = nullptr;
-        delete m_framebuffer;
-        m_framebuffer = nullptr;
+        //delete m_texture;
+        //m_texture = nullptr;
+        //delete m_framebuffer;
+        //m_framebuffer = nullptr;
     }
 }
 
