@@ -3,6 +3,7 @@
 #include "BaseTypes.hpp"
 #include "RenderCoreForward.hpp"
 #include "Mesh.hpp"
+#include "Material.hpp"
 
 #include <string>
 
@@ -15,6 +16,8 @@ public:
     virtual ~IAssetManager() = default;
 
     virtual void DestroyTexture(const std::string& filename) = 0;
+
+    virtual Material* GetDefaultMaterial() = 0;
 
     virtual Texture* LoadTexture(const std::string& filename) = 0;
 };

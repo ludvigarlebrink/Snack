@@ -3,6 +3,7 @@
 #include "BaseTypes.hpp"
 #include "EditorWindow.hpp"
 #include "RenderCoreForward.hpp"
+#include "EngineForward.hpp"
 
 namespace spy
 {
