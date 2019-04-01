@@ -2,10 +2,11 @@
 #include "EditorWindows/AssetBrowserWindow.hpp"
 #include "EditorWindows/GameWindow.hpp"
 #include "EditorWindows/InspectorWindow.hpp"
-#include "EditorWindows/MaterialWindow.hpp"
+#include "EditorWindows/MaterialEditorWindow.hpp"
 #include "EditorWindows/SceneGraphWindow.hpp"
 #include "EditorWindows/SceneWindow.hpp"
 #include "EditorWindows/ScriptEditorWindow.hpp"
+#include "EditorWindows/ShaderEditorWindow.hpp"
 #include "EngineInclude.hpp"
 #include "Managers/EditorSceneManager.hpp"
 #include "Managers/EditorWindowManager.hpp"
@@ -180,19 +181,24 @@ void Editor::DrawMainMenu()
                 m_editorWindowManager->OpenWindow<AssetBrowserWindow>();
             }
 
-            if (SketchMenu::Item("Script Editor", "Ctrl+6"))
+            if (SketchMenu::Item("Script Editor"))
             {
                 m_editorWindowManager->OpenWindow<ScriptEditorWindow>();
             }
 
-            if (SketchMenu::Item("Particle Editor", "Ctrl+7"))
+            if (SketchMenu::Item("Particle Editor"))
             {
                 m_editorWindowManager->OpenWindow<ScriptEditorWindow>();
             }
 
-            if (SketchMenu::Item("Material", "Ctrl+8"))
+            if (SketchMenu::Item("Material Editor"))
             {
-                m_editorWindowManager->OpenWindow<MaterialWindow>();
+                m_editorWindowManager->OpenWindow<MaterialEditorWindow>();
+            }
+
+            if (SketchMenu::Item("Shader Editor"))
+            {
+                m_editorWindowManager->OpenWindow<ShaderEditorWindow>();
             }
 
             SketchMenu::End();

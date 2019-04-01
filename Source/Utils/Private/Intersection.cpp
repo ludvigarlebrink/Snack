@@ -137,6 +137,26 @@ bool Intersection::RayVsOBB(const glm::vec3& origin, const glm::vec3& direction,
     return true;
 }
 
+bool Intersection::RayVsPlane(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& normal, const glm::vec3& point, RayHitData& hit)
+{
+    f32 demon = glm::dot(normal, direction);
+    if (glm::abs(demon) > 0.0001f)
+    {
+        f32 t = glm::dot(point - origin, normal) / demon;
+        if (t >= 0.0001f)
+        {
+            hit.tMin = t;
+            hit.tMax = t;
+            hit.normal = normal;
+            hit.point = origin + t * direction;
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool Intersection::RayVsSphere(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& center, f32 radius, RayHitData& hit)
 {
     glm::vec3 l = center - origin;

@@ -1,6 +1,5 @@
 #include "Components/Input/InputComponent.hpp"
 #include "SketchInclude.hpp"
-#include "InputSystem.hpp"
 
 namespace spy
 {

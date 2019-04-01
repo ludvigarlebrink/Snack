@@ -34,8 +34,8 @@ function LinkFreeType()
     filter {}
 end
 
-function IncludeRapidJSON()
-    includedirs "ThirdParty/rapidjson"
+function IncludeCereal()
+    includedirs "ThirdParty/cereal/Include"
 end
 
 function UseUtils()
@@ -76,6 +76,17 @@ function UseRenderCore()
     filter {}
 end
 
+function UseShadeRaid()
+    include { "Source/ShadeRaid/Public" }
+    defines { "SHADE_RAID_API=__declspec(dllimport)" }
+
+    UseRenderCore()
+
+    filter { "kind:not StaticLib" }
+        links { "ShadeRaid" }
+    filter {}
+end
+
 function UseSketch()
     includedirs { "Source/Sketch/Public" }
     defines { "SKETCH_API=__declspec(dllimport)" }
@@ -91,7 +102,7 @@ function UseEngine()
     includedirs { "Source/Engine/Public" }
     defines { "ENGINE_API=__declspec(dllimport)" }
 
-    IncludeRapidJSON()
+    IncludeCereal()
     UseSketch()
     
     filter { "kind:not StaticLib" }
@@ -207,6 +218,18 @@ project "RenderCore"
 
     UsePlatform()
 
+project "ShadeRaid"
+    kind "SharedLib"
+    location "Source/ShadeRaid"
+    defines { "SHADE_RAID_API=__declspec(dllexport)" }
+    files {
+        "Source/ShadeRaid/**.hpp",
+        "Source/ShadeRaid/**.cpp"
+    }
+    includedirs { "Source/ShadeRaid/Public" }
+
+    UseRenderCore()
+
 project "Sketch"
     kind "SharedLib"
     location "Source/Sketch"
@@ -230,6 +253,7 @@ project "Engine"
     }
     includedirs { "Source/Engine/Public" }
 
+    IncludeCereal()
     UseSketch()
 
 project "Editor"

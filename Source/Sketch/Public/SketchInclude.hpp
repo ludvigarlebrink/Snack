@@ -6,6 +6,7 @@
 #include "SketchEvent.hpp"
 #include "SketchGizmo.hpp"
 #include "SketchMenu.hpp"
+#include "SketchNode.hpp"
 #include "SketchPopup.hpp"
 #include "SketchTree.hpp"
 #include "SketchWindow.hpp"

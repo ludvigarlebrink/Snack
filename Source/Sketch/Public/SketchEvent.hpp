@@ -17,7 +17,7 @@ class SKETCH_API SketchEvent
 
 private:
 
-    enum class KeyState
+    enum class State
     {
         NONE,
         DOWN,
@@ -33,9 +33,11 @@ public:
 
     static bool ButtonUp(Button button);
 
-    static glm::vec2 GetPointerPosition();
+    static glm::vec2 GetPointerDelta();
 
     static glm::vec2 GetPointerGlobalPosition();
+    
+    static glm::vec2 GetPointerPosition();
 
     static bool IsPointerOverWindow();
 
@@ -47,13 +49,14 @@ public:
 
     static bool ModRepeat(Mod mod);
 
-
     static void ShowPointer(bool show);
 
     static void WrapPointerGlobal(const glm::vec2& position);
 
 private:
 
+    static Button GetButton(int32 button);
+    
     static Key GetKey(int32 key);
 
     static void UpdateEvents();
@@ -63,11 +66,18 @@ private:
 private:
 
     static const int32 KEY_COUNT = 512;
+    static const int32 BUTTON_COUNT = 5;
 
-    static KeyState m_keys[KEY_COUNT];
+    static State m_keys[KEY_COUNT];
     static Key m_keysDown[KEY_COUNT];
     static Key m_keysUp[KEY_COUNT];
-    static int32 m_keysDownCount;
-    static int32 m_keysUpCount;
+    static int32 m_keyDownCount;
+    static int32 m_keyUpCount;
+
+    static State m_buttons[BUTTON_COUNT];
+    static Button m_buttonsDown[KEY_COUNT];
+    static Button m_buttonsUp[KEY_COUNT];
+    static int32 m_buttonDownCount;
+    static int32 m_buttonUpCount;
 };
 } // namespace spy

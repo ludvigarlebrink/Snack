@@ -4,7 +4,7 @@
 
 namespace spy
 {
-class ScriptEditorWindow final : public EditorWindow
+class EDITOR_API ScriptEditorWindow final : public EditorWindow
 {
 public:
 

@@ -8,7 +8,7 @@
 
 namespace spy
 {
-class AssetBrowserWindow final : public EditorWindow
+class EDITOR_API AssetBrowserWindow final : public EditorWindow
 {
 public:
 

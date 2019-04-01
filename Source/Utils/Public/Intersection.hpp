@@ -21,6 +21,9 @@ public:
 public:
 
     static bool RayVsOBB(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& aabbMin, const glm::vec3& aabbMax, const glm::mat4& modelMatrix, RayHitData& hit);
+    
+    static bool RayVsPlane(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& normal, const glm::vec3& point, RayHitData& hit);
+
     static bool RayVsSphere(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& center, f32 radius, RayHitData& hit);
 };
 } // namespace spy
