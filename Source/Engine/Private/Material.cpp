@@ -154,4 +154,9 @@ void Material::SetTexture(const std::string& id, Texture* texture, const glm::ve
 
     m_textures.insert({ id, { "", texture, color } });
 }
+
+void Material::SetMaterial()
+{
+
+}
 } // namespace spy
