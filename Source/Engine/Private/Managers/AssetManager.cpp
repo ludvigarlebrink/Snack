@@ -44,8 +44,7 @@ Material * AssetManager::LoadMaterial(const std::string & filename)
     }
 
     Material* pMaterial = new Material();
-    //TODO actually load the material
-    //pMaterial->LoadFromFile(FileSystem::GetRelativeDataPath(filename), Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
+    pMaterial->Load(FileSystem::GetRelativeDataPath(filename));
     m_materials.insert({ filename, std::pair<int32, Material*>(1, pMaterial) });
     return pMaterial;
 }
