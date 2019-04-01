@@ -30,6 +30,8 @@ public:
 
     std::vector<std::string> GetIds();
 
+    Shader* GetShader();
+
     Texture* GetTexture(const std::string& id);
     
     bool Load(const std::string& filename);
@@ -47,6 +49,8 @@ public:
 
     void SetColor(const std::string& id, const glm::vec4& color);
 
+    void SetShader(Shader* shader);
+
     void SetTexture(const std::string& id, Texture* texture);
 
     void SetTexture(const std::string& id, Texture* texture, const glm::vec4& color);
@@ -54,5 +58,6 @@ public:
 private:
     
     std::unordered_map<std::string, TextureProperty> m_textures;
+    Shader* m_shader;
 };
 } // namespace spy

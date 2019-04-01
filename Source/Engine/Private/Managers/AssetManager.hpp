@@ -19,11 +19,14 @@ public:
 
     Material* GetDefaultMaterial() override;
 
+    Material* LoadMaterial(const std::string& filename) override;
+
     Texture* LoadTexture(const std::string& filename) override;
 
 private:
 
     std::unordered_map<std::string, std::pair<int32, Texture*>> m_textures;
+    std::unordered_map<std::string, std::pair<int32, Material*>> m_materials;
     Material* m_defaultMaterial;
 };
 } // namespace spy

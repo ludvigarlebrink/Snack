@@ -36,6 +36,11 @@ std::vector<std::string> Material::GetIds()
     return ids;
 }
 
+Shader * Material::GetShader()
+{
+    return m_shader;
+}
+
 Texture * Material::GetTexture(const std::string & id)
 {
     auto itr = m_textures.find(id);
@@ -135,6 +140,11 @@ void Material::SetColor(const std::string& id, const glm::vec4& color)
     }
 
     m_textures.insert({ id, { "", nullptr, color } });
+}
+
+void Material::SetShader(Shader * shader)
+{
+    m_shader = shader;
 }
 
 void Material::SetTexture(const std::string& id, Texture* texture)

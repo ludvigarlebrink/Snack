@@ -59,7 +59,7 @@ bool RenderWindow::Create(const std::string& title, int32 width, int32 height)
     m_windowWidth = width;
     m_windowHeight = height;
 
-    m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+    m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if (!m_window)
     {
         return false;
