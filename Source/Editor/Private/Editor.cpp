@@ -75,6 +75,15 @@ void Editor::SetUp()
     m_editorWindowManager->OpenWindow<InspectorWindow>();
     m_editorWindowManager->OpenWindow<SceneWindow>();
     m_editorWindowManager->OpenWindow<SceneGraphWindow>();
+
+    std::vector<glm::vec3> positions;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> textureCoordinates;
+    std::vector<uint32> elements;
+    if (ObjParser::Parse("Data/cube.obj", positions, normals, textureCoordinates, elements))
+    {
+
+    }
 }
 
 void Editor::TearDown()
