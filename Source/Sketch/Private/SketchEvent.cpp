@@ -15,7 +15,10 @@ Button SketchEvent::m_buttonsUp[KEY_COUNT];
 int32 SketchEvent::m_buttonDownCount = 0;
 int32 SketchEvent::m_buttonUpCount = 0;
 
-bool SketchEvent::m_wantsToClose = false;
+bool SketchEvent::m_closeRequest = false;
+bool SketchEvent::m_dropFile = false;
+
+std::string SketchEvent::m_filename = "";
 
 bool SketchEvent::ButtonDown(Button button)
 {
@@ -46,7 +49,17 @@ bool SketchEvent::ButtonUp(Button button)
 
 bool SketchEvent::CloseRequest()
 {
-    return m_wantsToClose;
+    return m_closeRequest;
+}
+
+bool SketchEvent::DropFile()
+{
+    return m_dropFile;
+}
+
+std::string SketchEvent::DropFilename()
+{
+    return m_filename;
 }
 
 glm::vec2 SketchEvent::GetPointerDelta()
@@ -291,7 +304,9 @@ void SketchEvent::UpdateEvents()
     }
     m_buttonUpCount = 0;
 
-    m_wantsToClose = false;
+    m_closeRequest = false;
+    m_dropFile = false;
+    m_filename = "";
 }
 
 void SketchEvent::ProcessEvent(SDL_Event* event)
@@ -344,7 +359,13 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
     }
     case SDL_QUIT:
     {
-        m_wantsToClose = true;
+        m_closeRequest = true;
+        break;
+    }
+    case SDL_DROPFILE:
+    {
+        m_filename = event->drop.file;
+        m_dropFile = true;
         break;
     }
     default:
