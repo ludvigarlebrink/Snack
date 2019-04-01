@@ -51,7 +51,6 @@ void Editor::Run()
         
         SketchInternal::Render(renderWindow);
         renderWindow->Present();
-
     }
 }
 
