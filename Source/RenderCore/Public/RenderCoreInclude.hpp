@@ -4,6 +4,7 @@
 #include "Framebuffer.hpp"
 #include "FullScreenQuad.hpp"
 #include "Mesh.hpp"
+#include "ObjParser.hpp"
 #include "Renderbuffer.hpp"
 #include "RenderWindow.hpp"
 #include "Shader.hpp"
