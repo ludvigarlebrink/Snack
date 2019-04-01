@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseTypes.hpp"
+#include "EngineForward.hpp"
 #include "EditorWindow.hpp"
 #include "RenderCoreForward.hpp"
 #include "EngineForward.hpp"
@@ -28,6 +29,7 @@ private:
     void TearDown();
 
 private:
+
     Material* m_material;
 };
 }// namespace spy
