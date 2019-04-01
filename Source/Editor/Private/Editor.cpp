@@ -46,8 +46,12 @@ void Editor::Run()
         DrawMainMenu();
         SketchWindow::BaseDockSpace();
         editorWindowManager->Tick(deltaTime);
+
+        isRunning = !SketchEvent::CloseRequest();
+        
         SketchInternal::Render(renderWindow);
         renderWindow->Present();
+
     }
 }
 

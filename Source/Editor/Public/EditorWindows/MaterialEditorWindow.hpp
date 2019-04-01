@@ -25,5 +25,8 @@ private:
     void SetUp();
 
     void TearDown();
+
+private:
+    Material* m_material;
 };
 }// namespace spy

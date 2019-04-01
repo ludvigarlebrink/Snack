@@ -15,6 +15,8 @@ Button SketchEvent::m_buttonsUp[KEY_COUNT];
 int32 SketchEvent::m_buttonDownCount = 0;
 int32 SketchEvent::m_buttonUpCount = 0;
 
+bool SketchEvent::m_wantsToClose = false;
+
 bool SketchEvent::ButtonDown(Button button)
 {
     if (m_buttons[static_cast<int32>(button)] == State::DOWN)
@@ -40,6 +42,11 @@ bool SketchEvent::ButtonUp(Button button)
         return true;
     }
     return false;
+}
+
+bool SketchEvent::CloseRequest()
+{
+    return m_wantsToClose;
 }
 
 glm::vec2 SketchEvent::GetPointerDelta()
@@ -283,6 +290,8 @@ void SketchEvent::UpdateEvents()
         m_buttons[static_cast<int32>(m_buttonsUp[i])] = State::NONE;
     }
     m_buttonUpCount = 0;
+
+    m_wantsToClose = false;
 }
 
 void SketchEvent::ProcessEvent(SDL_Event* event)
@@ -331,6 +340,11 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
             m_buttonsUp[m_buttonUpCount] = button;
             ++m_buttonUpCount;
         }
+        break;
+    }
+    case SDL_QUIT:
+    {
+        m_wantsToClose = true;
         break;
     }
     default:
