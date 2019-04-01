@@ -47,7 +47,7 @@ void ModelImporterWindow::OnDraw(f32 deltaTime)
         }
         else if (extension == ".fbx")
         {
-
+            // @todo fbx support.
         }
     }
 }
