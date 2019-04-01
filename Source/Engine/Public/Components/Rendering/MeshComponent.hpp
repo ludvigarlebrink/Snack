@@ -2,6 +2,7 @@
 
 #include "Components/BaseComponent.hpp"
 #include "Mesh.hpp"
+#include "Material.hpp"
 
 #include <glm/glm.hpp>
 
@@ -45,9 +46,15 @@ public:
 
     std::string GetComponentID() override;
 
+    Material* GetMaterial() const;
+
     Mesh* GetMesh() const;
 
     f32 GetSphereRadius() const;
+
+    void SetMaterial(Material* material);
+
+    void SetMaterial(std::string path);
 
 #ifdef SPY_EDITOR
     void OnEditorGizmo() override;
@@ -58,6 +65,7 @@ public:
 private:
 
     Mesh* m_mesh;
+    Material* m_material;
     f32 m_sphereRadius;
     glm::vec3 m_aabbMax;
     glm::vec3 m_aabbMin;

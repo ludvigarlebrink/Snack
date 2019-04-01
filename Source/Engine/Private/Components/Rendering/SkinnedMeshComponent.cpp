@@ -19,6 +19,21 @@ std::string SkinnedMeshComponent::GetComponentID()
     return typeid(SkinnedMeshComponent).name();
 }
 
+Material* SkinnedMeshComponent::GetMaterial() const
+{
+    return m_material;
+}
+
+void SkinnedMeshComponent::SetMaterial(Material * material)
+{
+    m_material = material;
+}
+
+void SkinnedMeshComponent::SetMaterial(std::string path)
+{
+    // TODO maybe?
+}
+
 #ifdef SPY_EDITOR
 void SkinnedMeshComponent::OnEditorInspector()
 {
