@@ -5,6 +5,7 @@
 #include <cereal/archives/json.hpp>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 
 namespace spy
 {
@@ -29,7 +30,7 @@ glm::vec4 Material::GetColor(const std::string& id)
 std::vector<std::string> Material::GetIds()
 {
     std::vector<std::string> ids = std::vector<std::string>();
-    for (auto itr = m_textures.begin(); itr != m_textures.end(); ++itr) 
+    for (auto itr = m_textures.begin(); itr != m_textures.end(); ++itr)
     {
         ids.push_back(itr->first);
     }
@@ -64,8 +65,36 @@ bool Material::Load(const std::string& filename)
     ss << f.rdbuf();
     {
         cereal::JSONInputArchive ar(ss);
-    }
 
+        int size = 0;
+        while (const char* name = ar.getNodeName()) {
+            ar.startNode();
+            if (std::strcmp(name, "textures_size") == 0) {
+                ar(cereal::make_nvp("size", size));
+            }
+            else if (std::strcmp(name, "textures") == 0)
+            {
+                ar.startNode();
+                std::string id;
+                ar(cereal::make_nvp("id", id));
+
+                std::string texturename;
+                name = ar.getNodeName();
+                if (std::strcmp(name, "texture") == 0) {
+                    ar(cereal::make_nvp("texture", texturename));
+                }
+
+                glm::vec4 color;
+                ar(cereal::make_nvp("rColor", color.r));
+                ar(cereal::make_nvp("gColor", color.g));
+                ar(cereal::make_nvp("bColor", color.b));
+                ar(cereal::make_nvp("aColor", color.a));
+                LoadTexture(texturename, id, color);
+                ar.finishNode();
+            }
+            ar.finishNode();
+        }
+    }
     return true;
 }
 
@@ -95,6 +124,12 @@ bool Material::Save(const std::string& filename)
         ar.finishNode();
         if (!m_textures.empty())
         {
+            ar.setNextName("textures_size");
+            ar.startNode();
+            {
+                ar(cereal::make_nvp("size", m_textures.size()));
+            }
+            ar.finishNode();
             ar.setNextName("textures");
             ar.startNode();
             ar.makeArray();
