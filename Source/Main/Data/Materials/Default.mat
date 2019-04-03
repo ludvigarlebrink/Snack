@@ -1,0 +1,17 @@
+{
+    "info": {
+        "type": "material"
+    },
+    "textures_size": {
+        "size": 1
+    },
+    "textures": [
+        {
+            "id": "Base",
+            "rColor": 1.0,
+            "gColor": 1.0,
+            "bColor": 1.0,
+            "aColor": 1.0
+        }
+    ]
+}
