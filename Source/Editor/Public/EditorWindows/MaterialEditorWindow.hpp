@@ -3,6 +3,8 @@
 #include "BaseTypes.hpp"
 #include "EngineForward.hpp"
 #include "EditorWindow.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "RenderCoreForward.hpp"
 #include "EngineForward.hpp"
 
@@ -28,8 +30,12 @@ private:
 
     void TearDown();
 
+    void SetColor(const glm::vec4& color);
+
 private:
 
     Material* m_material;
+
+    glm::vec4 m_color;
 };
 }// namespace spy
