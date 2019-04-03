@@ -1,4 +1,4 @@
-#include "Material.hpp"
+#include "Rendering/Material.hpp"
 #include "Manager.hpp"
 
 #include <cereal/cereal.hpp>
@@ -16,7 +16,7 @@ Material::~Material()
 {
 }
 
-glm::vec4 Material::GetColor(const std::string & id)
+glm::vec4 Material::GetColor(const std::string& id)
 {
     auto itr = m_textures.find(id);
     if (itr != m_textures.end())
@@ -36,12 +36,12 @@ std::vector<std::string> Material::GetIds()
     return ids;
 }
 
-Shader * Material::GetShader()
+Shader* Material::GetShader()
 {
     return m_shader;
 }
 
-Texture * Material::GetTexture(const std::string & id)
+Texture* Material::GetTexture(const std::string& id)
 {
     auto itr = m_textures.find(id);
     if (itr != m_textures.end())

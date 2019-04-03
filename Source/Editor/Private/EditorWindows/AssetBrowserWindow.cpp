@@ -1,4 +1,7 @@
 #include "EditorWindows/AssetBrowserWindow.hpp"
+#include "EditorManager.hpp"
+#include "EditorWindows/ModelImporterWindow.hpp"
+#include "EditorWindows/TextureImporterWindow.hpp"
 #include "PlatformInclude.hpp"
 #include "SketchInclude.hpp"
 
@@ -31,6 +34,23 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
     {
         Refresh();
         m_refresh = false;
+    }
+
+    if (SketchEvent::DropFile())
+    {
+        std::string filename = SketchEvent::DropFilename();
+        std::string extension = filename.substr(filename.find_last_of('.'));
+        if (extension == ".obj" || extension == ".fbx")
+        {
+            ModelImporterWindow* modelImporter = EditorManager::Window()->OpenWindow<ModelImporterWindow>();
+            modelImporter->SetFile(filename);
+        }
+
+        if (extension == ".png" || extension == ".bmp" || extension == ".jpg" || extension == ".jpeg")
+        {
+            TextureImporterWindow* textureImporter = EditorManager::Window()->OpenWindow<TextureImporterWindow>();
+
+        }
     }
 
     SketchWindow::BeginChild("AssetBrowserTreeView", glm::vec2(200.0f, 0.0f));

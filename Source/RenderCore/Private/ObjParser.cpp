@@ -5,6 +5,19 @@
 
 namespace spy
 {
+ObjParser::ObjParser()
+{
+}
+
+ObjParser::~ObjParser()
+{
+}
+
+std::string ObjParser::GetError() const
+{
+    return std::string();
+}
+
 bool ObjParser::Parse(const std::string& filename, std::vector<glm::vec3>& positions, std::vector<glm::vec3>& normals,
     std::vector<glm::vec2>& textureCoordiantes, std::vector<uint32>& elements)
 {

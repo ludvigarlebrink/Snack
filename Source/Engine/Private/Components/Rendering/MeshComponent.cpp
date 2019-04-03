@@ -1,10 +1,11 @@
 #include "Components\Rendering\MeshComponent.hpp"
 #include "Manager.hpp"
 #include "Mathf.hpp"
-#include "Transform.hpp"
+#include "Rendering/StaticVertex.hpp"
 #ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
 #endif
+#include "Transform.hpp"
 
 namespace spy
 {
@@ -17,7 +18,7 @@ MeshComponent::MeshComponent(Transform* transform)
     Manager::Render()->RegisterMeshComponent(this);
 
     // @todo Hack!
-    Vertex vertices[24];
+    StaticVertex vertices[24];
 
     vertices[0].position = glm::vec3(-0.5f, 0.5f, 0.5f);
     vertices[1].position = glm::vec3(-0.5f, -0.5f, 0.5f);
@@ -94,20 +95,20 @@ MeshComponent::MeshComponent(Transform* transform)
     vertices[10].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
     vertices[11].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    vertices[0].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[1].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[2].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[3].textureCoordinates = glm::vec2(0.0f, 1.0f);
+    vertices[0].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[1].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[2].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[3].textureCoordinate = glm::vec2(0.0f, 1.0f);
 
-    vertices[4].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[5].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[6].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[7].textureCoordinates = glm::vec2(0.0f, 1.0f);
+    vertices[4].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[5].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[6].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[7].textureCoordinate = glm::vec2(0.0f, 1.0f);
 
-    vertices[8].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[9].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[10].textureCoordinates = glm::vec2(0.0f, 1.0f);
-    vertices[11].textureCoordinates = glm::vec2(0.0f, 1.0f);
+    vertices[8].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[9].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[10].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[11].textureCoordinate = glm::vec2(0.0f, 1.0f);
 
     uint32 elements[36] = {
         0u,
@@ -154,7 +155,7 @@ MeshComponent::MeshComponent(Transform* transform)
     };
 
     m_mesh = new Mesh();
-    m_mesh->SetData(vertices, 24, sizeof(Vertex), elements, 36, Mesh::Optimization::STATIC_DRAW);
+    m_mesh->SetData(vertices, 24, sizeof(StaticVertex), elements, 36, Mesh::Optimization::STATIC_DRAW);
     int32 offset = 0;
 
     // Position.

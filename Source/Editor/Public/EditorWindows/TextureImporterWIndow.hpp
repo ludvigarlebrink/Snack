@@ -12,6 +12,10 @@ public:
 
     ~TextureImporterWindow();
 
+    std::string GetTitle() override;
+
+    void SetFile(const std::string& filename);
+
 protected:
 
     void OnDraw(f32 deltaTime) override;
