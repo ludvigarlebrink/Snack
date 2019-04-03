@@ -34,6 +34,11 @@ public:
 
     Texture* GetTexture(const std::string& id);
     
+    /**
+     * @brief Load the material.
+     * @param filename File to load from
+     * @ return False, is unsuccessful
+     */
     bool Load(const std::string& filename);
     
     Texture* LoadTexture(const std::string& filename, const std::string& id);
