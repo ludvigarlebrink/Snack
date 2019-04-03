@@ -43,10 +43,10 @@ Material * AssetManager::LoadMaterial(const std::string & filename)
         return itr->second.second;
     }
 
-    Material* pMaterial = new Material();
-    pMaterial->Load(FileSystem::GetRelativeDataPath(filename));
-    m_materials.insert({ filename, std::pair<int32, Material*>(1, pMaterial) });
-    return pMaterial;
+    Material* material = new Material();
+    material->Load(FileSystem::GetRelativeDataPath(filename));
+    m_materials.insert({ filename, std::pair<int32, Material*>(1, material) });
+    return material;
 }
 
 Texture* AssetManager::LoadTexture(const std::string& filename)
