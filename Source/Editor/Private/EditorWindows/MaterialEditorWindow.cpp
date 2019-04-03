@@ -33,10 +33,13 @@ void MaterialEditorWindow::OnDraw(f32 deltaTime)
         MaterialList.push_back("Fabric");
         MaterialList.push_back("Death");
 
-        Sketch::Vec4Field("Color", m_color);
+        
+        Sketch::Text("Textures:");
         for (std::vector<std::string>::iterator it = MaterialList.begin(); it != MaterialList.end(); ++it)
         {
             Sketch::Text(*it);
+            Sketch::SameLine();
+            Sketch::Vec4Field("Color", m_color);
         }
         Sketch::Text("Is this working?!");
     }
