@@ -60,8 +60,6 @@ public:
 
     void SetTexture(const std::string& id, Texture* texture, const glm::vec4& color);
 
-    void SetMaterial();
-
 private:
     
     std::unordered_map<std::string, TextureProperty> m_textures;
