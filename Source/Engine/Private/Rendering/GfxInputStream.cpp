@@ -20,7 +20,7 @@ void GfxInputStream::Close()
     }
 }
 
-bool GfxInputStream::GetStaticMesh(const std::string& name, std::vector<StaticVertex>& vertices, std::vector<uint32>& elements)
+bool GfxInputStream::LoadStaticMesh(const std::string& name, std::vector<StaticVertex>& vertices, std::vector<uint32>& elements)
 {
     if (!m_file.is_open())
     {
@@ -53,11 +53,11 @@ bool GfxInputStream::Open(const std::string& filename)
         return false;
     }
 
-    int32 headerSize = 0;
-    m_file.read(reinterpret_cast<char*>(&headerSize), sizeof(int32));
+    int32 headerCount = 0;
+    m_file.read(reinterpret_cast<char*>(&headerCount), sizeof(int32));
 
-    m_headers.resize(headerSize);
-    m_file.read(reinterpret_cast<char*>(m_headers.data()), sizeof(Header) * headerSize);
+    m_headers.resize(headerCount);
+    m_file.read(reinterpret_cast<char*>(m_headers.data()), sizeof(Header) * headerCount);
 
     return true;
 }
