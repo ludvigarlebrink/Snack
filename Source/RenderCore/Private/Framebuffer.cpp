@@ -47,7 +47,7 @@ void Framebuffer::SetDrawBuffers(uint32* attachments, int32 attachmentCount)
     }
     glDrawBuffers(attachmentCount, a);
     SPY_CHECK_RENDER_ERROR();
-    delete a;
+    delete[] a;
 }
 
 void Framebuffer::Unbind()

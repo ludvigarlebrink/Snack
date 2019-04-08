@@ -55,9 +55,9 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
 {
     if (width != m_gPosition->GetWidth() || height != m_gPosition->GetHeight())
     {
+        m_gPosition->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+        m_gNormal->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
         m_gAlbedo->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
-        m_gNormal->SetData(width, height, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
-        m_gPosition->SetData(width, height, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
         m_depthStencil->SetData(width, height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     }
 
@@ -209,17 +209,18 @@ void RenderManager::DeferredLightingPass()
     m_renderWindow->Clear();
 
     m_lightingPassShader->Use();
-   //int32 lightCount = 0;
-   //for (auto directionalLight : m_directionalLightComponents)
-   //{
-   //    glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
-   //    m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
-   //    m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
-   //    m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
-   //    m_lightingPassShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
-   //    ++lightCount;
-   //}
-   //m_lightingPassShader->SetIntSlow("lightCount", lightCount);
+    int32 lightCount = 0;
+    for (auto directionalLight : m_directionalLightComponents)
+    {
+        glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
+        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
+        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_lightingPassShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        ++lightCount;
+    }
+    m_lightingPassShader->SetIntSlow("lightCount", lightCount);
+    // @todo maybe rename these to GPosition? CaptialCase for uniforms?
     m_lightingPassShader->SetIntSlow("gPosition", 0);
     m_lightingPassShader->SetIntSlow("gNormal", 1);
     m_lightingPassShader->SetIntSlow("gAlbedo", 2);
@@ -240,20 +241,33 @@ void RenderManager::SetUp()
 
     // Deferred rendering.
     m_deferredFrameBuffer = new Framebuffer();
-    m_gAlbedo = new Texture();
-    m_gAlbedo->SetData(200, 200, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
-    m_gNormal = new Texture();
-    m_gNormal->SetData(200, 200, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+
     m_gPosition = new Texture();
-    m_gPosition->SetData(200, 200, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
-    m_depthStencil = new Renderbuffer();
-    m_depthStencil->SetData(200, 200, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
-    m_deferredFrameBuffer->AttachDepthStencil(m_depthStencil);
-    m_deferredFrameBuffer->AttachTexture(0, m_gAlbedo);
-    m_deferredFrameBuffer->AttachTexture(1, m_gPosition);
-    m_deferredFrameBuffer->AttachTexture(2, m_gNormal);
+    m_gPosition->SetData(512, 512, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_gPosition->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_gPosition->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_deferredFrameBuffer->AttachTexture(0, m_gPosition);
+
+    m_gNormal = new Texture();
+    m_gNormal->SetData(512, 512, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_gNormal->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_gNormal->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_deferredFrameBuffer->AttachTexture(1, m_gNormal);
+
+    m_gAlbedo = new Texture();
+    m_gAlbedo->SetData(512, 512, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
+    m_gAlbedo->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_gAlbedo->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_deferredFrameBuffer->AttachTexture(2, m_gAlbedo);
+
+    // Set draw buffers.
     uint32 attachments[3] = { 0, 1, 2 };
     m_deferredFrameBuffer->SetDrawBuffers(attachments, 3);
+
+    // Depth and stencil.
+    m_depthStencil = new Renderbuffer();
+    m_depthStencil->SetData(512, 512, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
+    m_deferredFrameBuffer->AttachDepthStencil(m_depthStencil);
 
     m_geometryPassShader = new Shader();
     m_geometryPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/GeometryPass.vs.glsl"), Shader::Type::VERTEX_SHADER);

@@ -1,4 +1,5 @@
 #include "FullScreenQuad.hpp"
+#include "RenderSM.hpp"
 #include "glad/glad.h"
 
 namespace spy
@@ -15,7 +16,7 @@ FullScreenQuad::~FullScreenQuad()
 
 void FullScreenQuad::Bind()
 {
-    glBindVertexArray(m_vao);
+    RenderSM::BindVertexArray(m_vao);
 }
 
 void FullScreenQuad::Render()

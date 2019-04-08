@@ -5,8 +5,8 @@ layout (location = 1) in vec3 Normal_VS_in;
 layout (location = 2) in vec3 Tangent_VS_in;
 layout (location = 3) in vec2 TextureCoordinates_VS_in;
 
-out vec3 Normal_FS_in;
 out vec2 TextureCoordinates_FS_in;
+out vec3 Normal_FS_in;
 out vec3 WorldPosition_FS_in;
 
 uniform mat4 Model = mat4(1.0);

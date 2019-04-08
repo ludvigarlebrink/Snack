@@ -95,6 +95,21 @@ MeshComponent::MeshComponent(Transform* transform)
     vertices[10].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
     vertices[11].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
 
+    vertices[12].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[13].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[14].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[15].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    vertices[16].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[17].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[18].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[19].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    vertices[20].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[21].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[22].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertices[23].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
+
     vertices[0].textureCoordinate = glm::vec2(0.0f, 1.0f);
     vertices[1].textureCoordinate = glm::vec2(0.0f, 1.0f);
     vertices[2].textureCoordinate = glm::vec2(0.0f, 1.0f);
@@ -109,6 +124,21 @@ MeshComponent::MeshComponent(Transform* transform)
     vertices[9].textureCoordinate = glm::vec2(0.0f, 1.0f);
     vertices[10].textureCoordinate = glm::vec2(0.0f, 1.0f);
     vertices[11].textureCoordinate = glm::vec2(0.0f, 1.0f);
+
+    vertices[12].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[13].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[14].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[15].textureCoordinate = glm::vec2(0.0f, 1.0f);
+
+    vertices[16].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[17].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[18].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[19].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    
+    vertices[20].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[21].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[22].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[24].textureCoordinate = glm::vec2(0.0f, 1.0f);
 
     uint32 elements[36] = {
         0u,

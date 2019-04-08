@@ -215,10 +215,10 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
     m_mesh->EnableAttribute(2);
 
     // Create font texture.
-    ImFontConfig fontConfig;
+    ImFontConfig fontConfig = {};
     fontConfig.OversampleH = 3;
     fontConfig.OversampleV = 3;
-    io.Fonts->AddFontFromFileTTF("EditorData/Fonts/Cousine-Regular.ttf", 12.0f, &fontConfig);
+    io.Fonts->AddFontFromFileTTF("EditorData/Fonts/Inconsolata-Regular.ttf", 14.0f, &fontConfig);
 
     uchar* pixels = nullptr;
     int32 width = 0;
@@ -243,7 +243,7 @@ void SketchInternal::ApplyStyle()
 {
     ImGuiStyle* style = &ImGui::GetStyle();
     ImVec4* colors = style->Colors;
-    colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 0.95f);
+    colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.0f);
     colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
 
     colors[ImGuiCol_WindowBg] = ImVec4(0.13f, 0.12f, 0.12f, 1.00f);
