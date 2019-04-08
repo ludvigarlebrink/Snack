@@ -52,7 +52,7 @@ void SceneWindow::OnDraw(f32 deltaTime)
         "Shaded Wireframe",
     };
 
-    if (SketchCombo::Begin("Shading Combo", alternatives[m_selectedShadingMode], 200.0f))
+    if (SketchCombo::Begin("##Shading Combo", alternatives[m_selectedShadingMode], 200.0f))
     {
         for (uint32 i = 0u; i < alternativeCount; ++i)
         {
