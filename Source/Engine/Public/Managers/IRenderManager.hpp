@@ -34,6 +34,8 @@ public:
 
     virtual Transform* PickMesh(const glm::vec3& direction, const glm::vec3& origin) = 0;
 
+    virtual void RenderScene() = 0;
+
     virtual void RenderSceneToTexture(const glm::mat4& viewProjection) = 0;
 
 protected:
