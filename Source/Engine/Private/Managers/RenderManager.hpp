@@ -18,6 +18,8 @@ public:
 
     Transform* PickMesh(const glm::vec3& origin, const glm::vec3& direction) override;
 
+    void RenderScene() override;
+
     void RenderSceneToTexture(const glm::mat4& viewProjection) override;
 
 protected:
@@ -52,6 +54,8 @@ protected:
 
 private:
 
+    void RenderDeferred(CameraComponent* camera);
+
     void SetUp();
 
     void TearDown();
@@ -61,6 +65,11 @@ private:
     RenderWindow* m_renderWindow;
     Shader* m_meshShader;
     Shader* m_skinnedMeshShader;
+
+    Framebuffer* m_deferredFrameBuffer;
+    Texture* m_gAlbedo;
+    Texture* m_gNormal;
+    Renderbuffer* m_depthStencil;
 
     std::set<CameraComponent*> m_cameraComponents;
     std::set<DirectionalLightComponent*> m_directionalLightComponents;

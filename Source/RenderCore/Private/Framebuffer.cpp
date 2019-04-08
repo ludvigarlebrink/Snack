@@ -37,6 +37,14 @@ void Framebuffer::Bind()
     SPY_CHECK_RENDER_ERROR();
 }
 
+void Framebuffer::SetDrawBuffer(uint32 attachment)
+{
+    Bind();
+    uint32 a = GL_COLOR_ATTACHMENT0 + attachment;
+    glDrawBuffers(1, &a);
+    SPY_CHECK_RENDER_ERROR();
+}
+
 void Framebuffer::Unbind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0u);

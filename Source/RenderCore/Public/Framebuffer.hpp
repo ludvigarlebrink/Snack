@@ -26,6 +26,8 @@ public:
 
     void Bind();
 
+    void SetDrawBuffer(uint32 attachment);
+
     void Unbind();
 
 private:
