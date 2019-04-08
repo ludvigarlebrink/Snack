@@ -26,7 +26,7 @@ public:
 
     void Bind();
 
-    void SetDrawBuffer(uint32 attachment);
+    void SetDrawBuffers(uint32* attachments, int32 attchmentCount);
 
     void Unbind();
 

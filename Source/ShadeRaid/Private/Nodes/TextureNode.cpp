@@ -8,6 +8,6 @@ TextureNode::~TextureNode()
 
 std::string TextureNode::Compile()
 {
-    return "texture(someTexture, uv);"
+    return "texture(someTexture, uv);";
 }
 } // namespace spy

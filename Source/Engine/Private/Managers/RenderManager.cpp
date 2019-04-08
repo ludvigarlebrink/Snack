@@ -230,9 +230,8 @@ void RenderManager::SetUp()
     m_deferredFrameBuffer->AttachTexture(0, m_gAlbedo);
     m_deferredFrameBuffer->AttachTexture(1, m_gPosition);
     m_deferredFrameBuffer->AttachTexture(2, m_gNormal);
-    m_deferredFrameBuffer->SetDrawBuffer(0);
-    m_deferredFrameBuffer->SetDrawBuffer(1);
-    m_deferredFrameBuffer->SetDrawBuffer(2);
+    uint32 attachments[3] = { 0, 1, 2 };
+    m_deferredFrameBuffer->SetDrawBuffers(attachments, 3);
 
     m_geometryPassShader = new Shader();
     m_geometryPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/GeometryPass.vs.glsl"), Shader::Type::VERTEX_SHADER);
