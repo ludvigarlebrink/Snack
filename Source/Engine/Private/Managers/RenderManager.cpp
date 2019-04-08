@@ -56,8 +56,8 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
     if (width != m_gPosition->GetWidth() || height != m_gPosition->GetHeight())
     {
         m_gAlbedo->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
-        m_gNormal->SetData(width, height, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
-        m_gPosition->SetData(width, height, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+        m_gNormal->SetData(width, height, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+        m_gPosition->SetData(width, height, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
         m_depthStencil->SetData(width, height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     }
 
@@ -65,7 +65,7 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
     {
         if (c->GetRenderMode() == CameraComponent::RenderMode::DEFERRED)
         {
-            m_renderWindow->SetViewport(0, 0, width, height);
+            m_renderWindow->SetViewport(0, 0, m_gAlbedo->GetWidth(), m_gAlbedo->GetHeight());
             m_renderWindow->EnableCullFace(true);
             m_renderWindow->EnableDepthTest(true);
             DeferredGeometryPass(c);
@@ -209,17 +209,17 @@ void RenderManager::DeferredLightingPass()
     m_renderWindow->Clear();
 
     m_lightingPassShader->Use();
-    int32 lightCount = 0;
-    for (auto directionalLight : m_directionalLightComponents)
-    {
-        glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
-        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].position", directionalLight->GetTransform()->GetWorldPosition());
-        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
-        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
-        m_lightingPassShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
-        ++lightCount;
-    }
-    m_lightingPassShader->SetIntSlow("lightCount", lightCount);
+   //int32 lightCount = 0;
+   //for (auto directionalLight : m_directionalLightComponents)
+   //{
+   //    glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
+   //    m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
+   //    m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+   //    m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+   //    m_lightingPassShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+   //    ++lightCount;
+   //}
+   //m_lightingPassShader->SetIntSlow("lightCount", lightCount);
     m_lightingPassShader->SetIntSlow("gPosition", 0);
     m_lightingPassShader->SetIntSlow("gNormal", 1);
     m_lightingPassShader->SetIntSlow("gAlbedo", 2);
@@ -243,9 +243,9 @@ void RenderManager::SetUp()
     m_gAlbedo = new Texture();
     m_gAlbedo->SetData(200, 200, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
     m_gNormal = new Texture();
-    m_gNormal->SetData(200, 200, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+    m_gNormal->SetData(200, 200, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
     m_gPosition = new Texture();
-    m_gPosition->SetData(200, 200, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+    m_gPosition->SetData(200, 200, Texture::InternalFormat::RGBA32F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
     m_depthStencil = new Renderbuffer();
     m_depthStencil->SetData(200, 200, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     m_deferredFrameBuffer->AttachDepthStencil(m_depthStencil);

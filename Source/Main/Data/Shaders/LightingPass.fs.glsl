@@ -40,5 +40,5 @@ void main()
 		diffuse /= lightCount;
 	}
     vec3 result = (ambient + diffuse) * Albedo.xyz;
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(FragPos, 1.0);
 }  
