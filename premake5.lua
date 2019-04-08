@@ -38,8 +38,8 @@ function IncludeCereal()
     includedirs "ThirdParty/cereal/Include"
 end
 
-function IncludeSol2()
-    includedirs "ThirdParty/sol2/Include"
+function IncludeSol()
+    includedirs "ThirdParty/sol/Include"
 end
 
 function IncludeLua()
@@ -118,7 +118,7 @@ function UseEngine()
     defines { "ENGINE_API=__declspec(dllimport)" }
 
     IncludeCereal()
-    IncludeSol2()
+    IncludeSol()
     IncludeLua()
     LinkLua()
     UseSketch()
@@ -276,7 +276,7 @@ project "Engine"
     includedirs { "Source/Engine/Public" }
 
     IncludeCereal()
-    IncludeSol2()
+    IncludeSol()
     IncludeLua()
     LinkLua()
     UseSketch()
