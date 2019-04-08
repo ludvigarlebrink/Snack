@@ -39,7 +39,8 @@ void GameWindow::OnDraw(f32 deltaTime)
             m_texture->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
         }
 
-        Manager::Render()->RenderSceneToTexture(m_framebuffer);
+        glm::vec2 windowSize = SketchWindow::GetSize();
+        Manager::Render()->RenderSceneToTexture(m_framebuffer, windowSize.x, windowSize.y);
         Sketch::Image(m_texture, glm::vec2(m_texture->GetWidth(), m_texture->GetHeight()));
     }
     SketchWindow::EndChild();

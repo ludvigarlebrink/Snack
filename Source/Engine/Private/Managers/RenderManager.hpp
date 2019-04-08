@@ -18,7 +18,7 @@ public:
 
     Transform* PickMesh(const glm::vec3& origin, const glm::vec3& direction) override;
 
-    void RenderSceneToTexture(Framebuffer* framebuffer) override;
+    void RenderSceneToTexture(Framebuffer* framebuffer, int32 width, int32 height) override;
 
     void RenderSceneCustomCamera(const glm::mat4& viewProjection) override;
 
