@@ -52,12 +52,29 @@ Transform* RenderManager::PickMesh(const glm::vec3& origin, const glm::vec3& dir
 
 void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer)
 {
-    framebuffer->Bind();
+    for (auto c : m_cameraComponents)
     {
-        m_renderWindow->SetClearColor(glm::vec4(0.08f, 0.08f, 0.12f, 1.0f));
-        m_renderWindow->Clear();
+        if (c->GetRenderMode() == CameraComponent::RenderMode::DEFERRED)
+        {
+            m_renderWindow->SetViewport(0, 0, 200, 200);
+            DeferredGeometryPass(c);
+            framebuffer->Bind();
+            {
+                DeferredLightingPass();
+            }
+            framebuffer->Unbind();
+        }
+        else 
+        {
+            // @todo Render forward.
+            framebuffer->Bind();
+            {
+                m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+                m_renderWindow->Clear();
+            }
+            framebuffer->Unbind();
+        }
     }
-    framebuffer->Unbind();
 }
 
 void RenderManager::RenderSceneCustomCamera(const glm::mat4& viewProjection)
@@ -157,8 +174,37 @@ void RenderManager::RegisterSpotlightComponent(SpotlightComponent* spotlightComp
     m_spotlightComponents.insert(spotlightComponent);
 }
 
-void RenderManager::RenderDeferred(CameraComponent* camera)
+void RenderManager::DeferredGeometryPass(CameraComponent* camera)
 {
+    m_deferredFrameBuffer->Bind();
+    {
+        m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+        m_renderWindow->Clear();
+        m_geometryPassShader->Use();
+        m_geometryPassShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(200, 200) * camera->GetViewMatrix());
+        for (auto m : m_meshComponents)
+        {
+            Mesh* mesh = m->GetMesh();
+            m_geometryPassShader->SetMat4Slow("Model", m->GetTransform()->GetWorldMatrix());
+            mesh->Render(Mesh::Mode::TRIANGLES);
+        }
+    }
+    m_deferredFrameBuffer->Unbind();
+}
+
+void RenderManager::DeferredLightingPass()
+{
+    m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    m_renderWindow->Clear();
+
+    m_lightingPassShader->Use();
+    m_lightingPassShader->SetIntSlow("gPosition", 0);
+    m_lightingPassShader->SetIntSlow("gNormal", 1);
+    m_lightingPassShader->SetIntSlow("gAlbedo", 2);
+    m_gPosition->Bind(0);
+    m_gNormal->Bind(1);
+    m_gAlbedo->Bind(2);
+    m_fullScreenQuad->Render();
 }
 
 void RenderManager::SetUp()
@@ -173,13 +219,13 @@ void RenderManager::SetUp()
     // Deferred rendering.
     m_deferredFrameBuffer = new Framebuffer();
     m_gAlbedo = new Texture();
-    m_gAlbedo->SetData(600, 600, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
+    m_gAlbedo->SetData(200, 200, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
     m_gNormal = new Texture();
-    m_gNormal->SetData(600, 600, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+    m_gNormal->SetData(200, 200, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
     m_gPosition = new Texture();
-    m_gPosition->SetData(600, 600, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+    m_gPosition->SetData(200, 200, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
     m_depthStencil = new Renderbuffer();
-    m_depthStencil->SetData(600, 600, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
+    m_depthStencil->SetData(200, 200, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     m_deferredFrameBuffer->AttachDepthStencil(m_depthStencil);
     m_deferredFrameBuffer->AttachTexture(0, m_gAlbedo);
     m_deferredFrameBuffer->AttachTexture(1, m_gPosition);
@@ -187,6 +233,18 @@ void RenderManager::SetUp()
     m_deferredFrameBuffer->SetDrawBuffer(0);
     m_deferredFrameBuffer->SetDrawBuffer(1);
     m_deferredFrameBuffer->SetDrawBuffer(2);
+
+    m_geometryPassShader = new Shader();
+    m_geometryPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/GeometryPass.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_geometryPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/GeometryPass.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_geometryPassShader->LinkProgram();
+
+    m_lightingPassShader = new Shader();
+    m_lightingPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/LightingPass.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_lightingPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/LightingPass.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_lightingPassShader->LinkProgram();
+
+    m_fullScreenQuad = new FullScreenQuad();
 }
 
 void RenderManager::TearDown()

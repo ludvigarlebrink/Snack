@@ -20,6 +20,7 @@ void FullScreenQuad::Bind()
 
 void FullScreenQuad::Render()
 {
+    Bind();
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

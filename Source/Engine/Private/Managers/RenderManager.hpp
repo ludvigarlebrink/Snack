@@ -54,7 +54,9 @@ protected:
 
 private:
 
-    void RenderDeferred(CameraComponent* camera);
+    void DeferredGeometryPass(CameraComponent* camera);
+
+    void DeferredLightingPass();
 
     void SetUp();
 
@@ -71,6 +73,9 @@ private:
     Texture* m_gAlbedo;
     Texture* m_gNormal;
     Texture* m_gPosition;
+    Shader* m_geometryPassShader;
+    Shader* m_lightingPassShader;
+    FullScreenQuad* m_fullScreenQuad;
 
     std::set<CameraComponent*> m_cameraComponents;
     std::set<DirectionalLightComponent*> m_directionalLightComponents;
