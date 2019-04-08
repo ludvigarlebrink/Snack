@@ -3,9 +3,9 @@
 
 namespace spy
 {
-bool SketchCombo::Begin(const std::string& title, const std::string& previewLabel)
+bool SketchCombo::Begin(const std::string& label, const std::string& previewLabel)
 {
-    return ImGui::BeginCombo((title).c_str(), previewLabel.c_str());
+    return ImGui::BeginCombo(label.c_str(), previewLabel.c_str());
 }
 
 bool SketchCombo::Begin(const std::string& title, const std::string& previewLabel, f32 width)
