@@ -7,6 +7,7 @@
 #include "Components/Rendering/SkinnedMeshComponent.hpp"
 #include "Components/Rendering/SpotlightComponent.hpp"
 #include "FileSystem.hpp"
+#include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 #include "RenderCoreInclude.hpp"
 #include "Transform.hpp"
@@ -50,13 +51,21 @@ Transform* RenderManager::PickMesh(const glm::vec3& origin, const glm::vec3& dir
     return nullptr;
 }
 
-void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer)
+void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, int32 height)
 {
+    if (width != m_gPosition->GetWidth() || height != m_gPosition->GetHeight())
+    {
+        m_gAlbedo->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
+        m_gNormal->SetData(width, height, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+        m_gPosition->SetData(width, height, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+        m_depthStencil->SetData(width, height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
+    }
+
     for (auto c : m_cameraComponents)
     {
         if (c->GetRenderMode() == CameraComponent::RenderMode::DEFERRED)
         {
-            m_renderWindow->SetViewport(0, 0, 200, 200);
+            m_renderWindow->SetViewport(0, 0, width, height);
             DeferredGeometryPass(c);
             framebuffer->Bind();
             {
@@ -181,7 +190,7 @@ void RenderManager::DeferredGeometryPass(CameraComponent* camera)
         m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
         m_renderWindow->Clear();
         m_geometryPassShader->Use();
-        m_geometryPassShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(200, 200) * camera->GetViewMatrix());
+        m_geometryPassShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(m_gPosition->GetWidth(), m_gPosition->GetHeight()) * camera->GetViewMatrix());
         for (auto m : m_meshComponents)
         {
             Mesh* mesh = m->GetMesh();

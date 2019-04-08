@@ -34,7 +34,7 @@ public:
 
     virtual Transform* PickMesh(const glm::vec3& direction, const glm::vec3& origin) = 0;
 
-    virtual void RenderSceneToTexture(Framebuffer* framebuffer) = 0;
+    virtual void RenderSceneToTexture(Framebuffer* framebuffer, int width, int height) = 0;
 
     virtual void RenderSceneCustomCamera(const glm::mat4& viewProjection) = 0;
 
