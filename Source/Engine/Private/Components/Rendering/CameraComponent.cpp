@@ -95,7 +95,7 @@ void CameraComponent::OnEditorInspector()
         selectedRenderMode = "Deferred";
     }
 
-    if (SketchCombo::Begin("Render Mode Combo", selectedRenderMode))
+    if (SketchCombo::Begin("Render Mode", selectedRenderMode))
     {
         if (SketchCombo::Selectable("Forward"))
         {
@@ -121,7 +121,7 @@ void CameraComponent::OnEditorInspector()
         selectedProjection = "Perspective";
     }
 
-    if (SketchCombo::Begin("Projection Combo", selectedProjection))
+    if (SketchCombo::Begin("Projection", selectedProjection))
     {
         if (SketchCombo::Selectable("Orthographic"))
         {

@@ -3,16 +3,16 @@
 
 namespace spy
 {
-bool SketchCombo::Begin(const std::string& id, const std::string& previewLabel)
+bool SketchCombo::Begin(const std::string& title, const std::string& previewLabel)
 {
-    return ImGui::BeginCombo(("##" + id).c_str(), previewLabel.c_str());
+    return ImGui::BeginCombo((title).c_str(), previewLabel.c_str());
 }
 
-bool SketchCombo::Begin(const std::string& id, const std::string& previewLabel, f32 width)
+bool SketchCombo::Begin(const std::string& title, const std::string& previewLabel, f32 width)
 {
     // This code is a bit hacky.
     ImGui::PushItemWidth(width);
-    bool returnVal = ImGui::BeginCombo(("##" + id).c_str(), previewLabel.c_str());
+    bool returnVal = ImGui::BeginCombo(title.c_str(), previewLabel.c_str());
 
     // I do not really know why this works. But it will crash if this is removed.
     if (!returnVal)
