@@ -176,13 +176,17 @@ void RenderManager::SetUp()
     m_gAlbedo->SetData(600, 600, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
     m_gNormal = new Texture();
     m_gNormal->SetData(600, 600, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
+    m_gPosition = new Texture();
+    m_gPosition->SetData(600, 600, Texture::InternalFormat::RGB32F, Texture::Format::RGB, Texture::Type::FLOAT, nullptr);
     m_depthStencil = new Renderbuffer();
     m_depthStencil->SetData(600, 600, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     m_deferredFrameBuffer->AttachDepthStencil(m_depthStencil);
     m_deferredFrameBuffer->AttachTexture(0, m_gAlbedo);
-    m_deferredFrameBuffer->AttachTexture(1, m_gNormal);
+    m_deferredFrameBuffer->AttachTexture(1, m_gPosition);
+    m_deferredFrameBuffer->AttachTexture(2, m_gNormal);
     m_deferredFrameBuffer->SetDrawBuffer(0);
     m_deferredFrameBuffer->SetDrawBuffer(1);
+    m_deferredFrameBuffer->SetDrawBuffer(2);
 }
 
 void RenderManager::TearDown()

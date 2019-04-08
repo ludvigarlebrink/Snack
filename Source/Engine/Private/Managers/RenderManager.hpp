@@ -67,9 +67,10 @@ private:
     Shader* m_skinnedMeshShader;
 
     Framebuffer* m_deferredFrameBuffer;
+    Renderbuffer* m_depthStencil;
     Texture* m_gAlbedo;
     Texture* m_gNormal;
-    Renderbuffer* m_depthStencil;
+    Texture* m_gPosition;
 
     std::set<CameraComponent*> m_cameraComponents;
     std::set<DirectionalLightComponent*> m_directionalLightComponents;
