@@ -38,6 +38,21 @@ function IncludeCereal()
     includedirs "ThirdParty/cereal/Include"
 end
 
+function IncludeSol2()
+    includedirs "ThirdParty/sol2/Include"
+end
+
+function IncludeLua()
+    includedirs "ThirdParty/lua/Include"
+end
+
+function LinkLua()
+    libdirs "ThirdParty/lua/Lib/Win64/"
+    filter { "kind:not StaticLib" }
+        links { "lua53" }
+    filter {}
+end
+
 function UseUtils()
     includedirs { "Source/Utils/Public" }
     defines { "UTILS_API=__declspec(dllimport)" }
@@ -103,6 +118,9 @@ function UseEngine()
     defines { "ENGINE_API=__declspec(dllimport)" }
 
     IncludeCereal()
+    IncludeSol2()
+    IncludeLua()
+    LinkLua()
     UseSketch()
     
     filter { "kind:not StaticLib" }
@@ -171,6 +189,10 @@ workspace "SpyHunterEngine"
         -- FreeType
         os.copyfile("ThirdParty/freetype/Lib/Win64/freetype.dll", "Builds/Debug/freetype.dll")
         os.copyfile("ThirdParty/freetype/Lib/Win64/freetype.dll", "Builds/Release/freetype.dll")
+
+        -- Lua
+        os.copyfile("ThirdParty/lua/Lib/Win64/lua53.dll", "Builds/Debug/lua53.dll")
+        os.copyfile("ThirdParty/lua/Lib/Win64/lua53.dll", "Builds/Release/lua53.dll")
     filter {}
 
 group "Engine"
@@ -254,6 +276,9 @@ project "Engine"
     includedirs { "Source/Engine/Public" }
 
     IncludeCereal()
+    IncludeSol2()
+    IncludeLua()
+    LinkLua()
     UseSketch()
 
 project "Editor"
