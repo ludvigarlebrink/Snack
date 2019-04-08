@@ -1,9 +1,13 @@
 ## ASHAR
+#### IN PROGRESS
+#### DONE
 
 ## CHRIS
-### IN PROGRESS
+#### IN PROGRESS
 * Deferred rendering
 
-### DONE
+#### DONE
 
 ## LUDVIG
+#### IN PROGRESS
+#### DONE
