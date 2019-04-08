@@ -218,7 +218,7 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
     ImFontConfig fontConfig;
     fontConfig.OversampleH = 3;
     fontConfig.OversampleV = 3;
-    io.Fonts->AddFontFromFileTTF("EditorData/Fonts/Cousine-Regular.ttf", 16.0f, &fontConfig);
+    io.Fonts->AddFontFromFileTTF("EditorData/Fonts/Cousine-Regular.ttf", 12.0f, &fontConfig);
 
     uchar* pixels = nullptr;
     int32 width = 0;

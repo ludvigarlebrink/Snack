@@ -10,9 +10,9 @@ class SKETCH_API SketchCombo
 {
 public:
 
-    static bool Begin(const std::string& id, const std::string& previewLabel);
+    static bool Begin(const std::string& label, const std::string& previewLabel);
     
-    static bool Begin(const std::string& id, const std::string& previewLabel, f32 width);
+    static bool Begin(const std::string& label, const std::string& previewLabel, f32 width);
 
     static void End();
 

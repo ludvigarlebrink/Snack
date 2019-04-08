@@ -52,7 +52,7 @@ void SceneWindow::OnDraw(f32 deltaTime)
         "Shaded Wireframe",
     };
 
-    if (SketchCombo::Begin("Shading Combo", alternatives[m_selectedShadingMode], 200.0f))
+    if (SketchCombo::Begin("##Shading Combo", alternatives[m_selectedShadingMode], 200.0f))
     {
         for (uint32 i = 0u; i < alternativeCount; ++i)
         {
@@ -252,7 +252,7 @@ void SceneWindow::DrawScene(f32 deltaTime)
         renderWindow->SetClearColor(glm::vec4(0.42f, 0.42f, 0.58f, 1.0f));
         renderWindow->Clear();
         glm::mat4 viewProjection = projectionMatrix * glm::inverse(model);
-        Manager::Render()->RenderSceneToTexture(viewProjection);
+        Manager::Render()->RenderSceneCustomCamera(viewProjection);
         SketchInternal::RenderGizmos(renderWindow, viewProjection);
     }
     m_framebuffer->Unbind();
