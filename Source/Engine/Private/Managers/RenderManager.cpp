@@ -44,12 +44,11 @@ Transform* RenderManager::PickMesh(const glm::vec3& origin, const glm::vec3& dir
     return nullptr;
 }
 
-void RenderManager::RenderScene() 
+void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer)
 {
-
 }
 
-void RenderManager::RenderSceneToTexture(const glm::mat4& viewProjection)
+void RenderManager::RenderSceneCustomCamera(const glm::mat4& viewProjection)
 {
     m_renderWindow->EnableBlend(false);
     m_renderWindow->EnableCullFace(true);

@@ -252,7 +252,7 @@ void SceneWindow::DrawScene(f32 deltaTime)
         renderWindow->SetClearColor(glm::vec4(0.42f, 0.42f, 0.58f, 1.0f));
         renderWindow->Clear();
         glm::mat4 viewProjection = projectionMatrix * glm::inverse(model);
-        Manager::Render()->RenderSceneToTexture(viewProjection);
+        Manager::Render()->RenderSceneCustomCamera(viewProjection);
         SketchInternal::RenderGizmos(renderWindow, viewProjection);
     }
     m_framebuffer->Unbind();
