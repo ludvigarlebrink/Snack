@@ -74,12 +74,19 @@ CameraComponent::RenderMode CameraComponent::GetRenderMode() const
 
 glm::mat4 CameraComponent::GetViewMatrix() const
 {
-    return glm::inverse(GetTransform()->GetWorldMatrix());
+    glm::mat4 model = GetTransform()->GetWorldMatrix();
+    return glm::lookAt(glm::vec3(model[3]), glm::vec3(model[0]) + glm::vec3(model[3]), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+#ifdef SPY_EDITOR
+void CameraComponent::OnEditorGizmo()
+{
+    glm::mat4 model = GetTransform()->GetWorldMatrix();
+    // @todo
 }
 
 void CameraComponent::OnEditorInspector()
 {
-#ifdef SPY_EDITOR
     BaseComponent::OnEditorInspector();
 
     Sketch::FloatField("Near Plane", m_nearPlane);
@@ -144,8 +151,8 @@ void CameraComponent::OnEditorInspector()
     {
         Sketch::FloatField("Field of View", m_size);
     }
-#endif
 }
+#endif
 
 void CameraComponent::SetFarPlane(f32 farPlane)
 {

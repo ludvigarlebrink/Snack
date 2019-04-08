@@ -66,6 +66,8 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
         if (c->GetRenderMode() == CameraComponent::RenderMode::DEFERRED)
         {
             m_renderWindow->SetViewport(0, 0, width, height);
+            m_renderWindow->EnableCullFace(true);
+            m_renderWindow->EnableDepthTest(true);
             DeferredGeometryPass(c);
             framebuffer->Bind();
             {
