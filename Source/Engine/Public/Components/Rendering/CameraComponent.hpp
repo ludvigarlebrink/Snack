@@ -59,7 +59,11 @@ public:
 
     glm::mat4 GetViewMatrix() const;
 
+#ifdef SPY_EDITOR
+    void OnEditorGizmo() override;
+
     void OnEditorInspector() override;
+#endif
 
     void SetFarPlane(f32 farPlane);
 
