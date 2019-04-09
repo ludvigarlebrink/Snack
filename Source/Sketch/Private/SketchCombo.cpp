@@ -1,7 +1,7 @@
 #include "SketchCombo.hpp"
 #include "imgui/imgui.h"
 
-namespace spy
+namespace snack
 {
 bool SketchCombo::Begin(const std::string& label, const std::string& previewLabel)
 {
@@ -37,4 +37,4 @@ bool SketchCombo::Selectable(const std::string& label, bool isSelected)
 {
     return ImGui::Selectable(label.c_str(), isSelected);
 }
-} // namespace spy
+} // namespace snack

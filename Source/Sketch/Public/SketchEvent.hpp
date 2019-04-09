@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SketchInternal;
 
@@ -92,4 +92,4 @@ private:
 
     static std::string m_filename;
 };
-} // namespace spy
+} // namespace snack

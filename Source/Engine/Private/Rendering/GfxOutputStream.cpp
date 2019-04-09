@@ -1,7 +1,7 @@
 #include "Rendering/GfxOutputStream.hpp"
 #include "UtilsInclude.hpp"
 
-namespace spy
+namespace snack
 {
 GfxOutputStream::GfxOutputStream()
     : m_buffer(nullptr)
@@ -81,4 +81,4 @@ int32 GfxOutputStream::SaveStaticMesh(const std::string& name, int32 parentId, c
 
     return id;
 }
-} // namespace spy
+} // namespace snack

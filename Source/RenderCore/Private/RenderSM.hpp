@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class RenderSM
 {
@@ -26,4 +26,4 @@ private:
     static uint32 m_texture2D;
     static uint32 m_vertexArray;
 };
-} // namespace spy
+} // namespace snack

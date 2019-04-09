@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace spy
+namespace snack
 {
 class ENGINE_API CameraComponent final : public BaseComponent
 {
@@ -90,4 +90,4 @@ private:
     f32 m_farPlane;
     f32 m_size;
 };
-} // namespace spy
+} // namespace snack

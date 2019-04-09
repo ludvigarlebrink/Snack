@@ -1,7 +1,7 @@
 #include "SketchMenu.hpp"
 #include "imgui/imgui.h"
 
-namespace spy
+namespace snack
 {
 bool SketchMenu::Begin(const std::string& title)
 {
@@ -37,4 +37,4 @@ bool SketchMenu::Item(const std::string& label, const std::string& shortcut)
 {
     return ImGui::MenuItem(label.c_str(), shortcut.c_str());
 }
-} // namespace spy
+} // namespace snack

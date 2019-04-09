@@ -3,7 +3,7 @@
 #include "BaseTypes.hpp"
 #include "EngineForward.hpp"
 
-namespace spy
+namespace snack
 {
 class IEditorSceneManager
 {
@@ -21,4 +21,4 @@ public:
 
     virtual void RemoveSelectedTransfrom(int32 index) = 0;
 };
-} // namespace spy
+} // namespace snack

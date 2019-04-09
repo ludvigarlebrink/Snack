@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 AssetBrowserWindow::AssetBrowserWindow()
     : m_refresh(false)
@@ -339,4 +339,4 @@ void AssetBrowserWindow::SetUp()
 void AssetBrowserWindow::TearDown()
 {
 }
-} // namespace spy
+} // namespace snack

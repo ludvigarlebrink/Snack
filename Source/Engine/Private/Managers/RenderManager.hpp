@@ -4,7 +4,7 @@
 
 #include <set>
 
-namespace spy
+namespace snack
 {
 class RenderManager final : public IRenderManager
 {
@@ -85,4 +85,4 @@ private:
     std::set<SkinnedMeshComponent*> m_skinnedMeshComponents;
     std::set<SpotlightComponent*> m_spotlightComponents;
 };
-} // namespace spy
+} // namespace snack

@@ -1,6 +1,6 @@
 #include "Nodes/BaseNode.hpp"
 
-namespace spy
+namespace snack
 {
 BaseNode::~BaseNode()
 {
@@ -10,4 +10,4 @@ BaseNode* BaseNode::Next()
 {
     return m_next;
 }
-} // namespace spy
+} // namespace snack

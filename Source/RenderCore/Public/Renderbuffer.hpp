@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class RENDER_CORE_API Renderbuffer final
 {
@@ -40,4 +40,4 @@ private:
     int32 m_width;
     int32 m_height;
 };
-} // namespace spy
+} // namespace snack

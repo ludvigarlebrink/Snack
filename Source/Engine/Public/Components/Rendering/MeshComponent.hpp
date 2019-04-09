@@ -6,7 +6,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A mesh component.
@@ -45,9 +45,9 @@ private:
     glm::vec3 m_aabbMax;
     glm::vec3 m_aabbMin;
 };
-} // namespace spy
+} // namespace snack
 
 /**
- * @class spy::MeshComponent
+ * @class snack::MeshComponent
  * @ingroup Engine
  */

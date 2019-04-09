@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy 
+namespace snack 
 {
 enum class Key : int32
 {
@@ -71,4 +71,4 @@ enum class Key : int32
     Y,
     Z,
 };
-} // namespace spy
+} // namespace snack

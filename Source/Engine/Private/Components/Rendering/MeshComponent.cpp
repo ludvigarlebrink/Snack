@@ -7,7 +7,7 @@
 #endif
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 MeshComponent::MeshComponent(Transform* transform)
     : BaseComponent(transform)
@@ -299,4 +299,4 @@ void MeshComponent::OnEditorInspector()
 
 }
 #endif
-} // namespace spy
+} // namespace snack

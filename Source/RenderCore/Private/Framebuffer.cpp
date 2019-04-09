@@ -4,7 +4,7 @@
 #include "Texture.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 Framebuffer::Framebuffer()
     : m_fbo(0u)
@@ -69,4 +69,4 @@ void Framebuffer::TearDown()
     SPY_CHECK_RENDER_ERROR();
     m_fbo = 0u;
 }
-} // namespace spy
+} // namespace snack

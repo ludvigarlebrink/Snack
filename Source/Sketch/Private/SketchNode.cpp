@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-namespace spy
+namespace snack
 {
 void SketchNode::Begin(uint64 id)
 {
@@ -219,4 +219,4 @@ void SketchNode::Begin(uint64 id)
     ImGui::PopStyleVar(2);
     ImGui::EndGroup();
 }
-} // namespace spy
+} // namespace snack

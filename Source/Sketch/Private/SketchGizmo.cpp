@@ -1,7 +1,7 @@
 #include "SketchGizmo.hpp"
 #include "SketchInternal.hpp"
 
-namespace spy
+namespace snack
 {
 void SketchGizmo::Cone(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& rightAxis, f32 baseScaling, f32 topScaling)
 {
@@ -529,4 +529,4 @@ void SketchGizmo::QuadOverdrawn(const glm::vec3& p0, const glm::vec3& p1, const 
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[2]);
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[3]);
 }
-} // namespace spy
+} // namespace snack

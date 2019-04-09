@@ -3,7 +3,7 @@
 #include <typeinfo>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class EditorWindow;
 
@@ -39,4 +39,4 @@ T* IEditorWindowManager::OpenWindow()
 
     return editorWindow;
 }
-} // namespace spy
+} // namespace snack

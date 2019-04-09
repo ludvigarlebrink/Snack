@@ -1,7 +1,7 @@
 #include "SketchEvent.hpp"
 #include "imgui/imgui.h"
 
-namespace spy
+namespace snack
 {
 SketchEvent::State SketchEvent::m_keys[KEY_COUNT];
 Key SketchEvent::m_keysDown[KEY_COUNT];
@@ -372,4 +372,4 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
         break;
     }
 }
-} // namespace spy
+} // namespace snack

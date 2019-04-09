@@ -2,7 +2,7 @@
 
 #include "BaseNode.hpp"
 
-namespace spy
+namespace snack
 {
 class FragmentEntryNode final : public BaseNode
 {
@@ -12,4 +12,4 @@ public:
 
     ~FragmentEntryNode();
 };
-} // namespace spy
+} // namespace snack

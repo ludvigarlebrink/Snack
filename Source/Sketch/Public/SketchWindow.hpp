@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchWindow
 {
@@ -31,4 +31,4 @@ public:
 
     static glm::vec2 GetSize();
 };
-} // namespace spy
+} // namespace snack

@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 class BehaviorComponent;
 class BehaviorSystem;
@@ -43,4 +43,4 @@ private:
     IRenderManager* m_renderManager;
     ISceneManager* m_sceneManager;
 };
-} // namespace spy
+} // namespace snack

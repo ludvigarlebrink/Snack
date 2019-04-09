@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchCombo
 {
@@ -20,4 +20,4 @@ public:
 
     static bool Selectable(const std::string& label, bool isSelected);
 };
-} // namespace spy
+} // namespace snack

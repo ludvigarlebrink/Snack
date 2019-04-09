@@ -5,7 +5,7 @@
 #include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 
-namespace spy
+namespace snack
 {
 SceneScaleTool::SceneScaleTool()
 {
@@ -68,4 +68,4 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
 
     }
 }
-} // namespace spy
+} // namespace snack

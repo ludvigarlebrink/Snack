@@ -1,8 +1,8 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 class Engine;
 class Material;
 class Transform;
-} // namespace spy
+} // namespace snack

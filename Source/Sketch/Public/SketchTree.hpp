@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchTree
 {
@@ -20,4 +20,4 @@ public:
 
     static bool LeafNode(const std::string& label, uint64 id, bool isSelected, bool& isClicked);
 };
-} // namespace spy
+} // namespace snack

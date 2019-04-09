@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief Graphic output stream.
@@ -35,4 +35,4 @@ private:
     std::ifstream m_file;
     std::vector<Header> m_headers;
 };
-} // namespace spy
+} // namespace snack

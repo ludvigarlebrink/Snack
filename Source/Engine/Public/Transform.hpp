@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class BaseComponent;
 class SceneManager;
@@ -174,4 +174,4 @@ bool Transform::RemoveComponent()
 {
     return RemoveComponent(typeid(T).name());
 }
-} // namespace spy
+} // namespace snack

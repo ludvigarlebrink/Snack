@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A vertex array.
@@ -211,9 +211,9 @@ T* Mesh::MapForWriting()
 {
     return reinterpret_cast<T*>(MapForWriting());
 }
-} // namespace spy
+} // namespace snack
 
 /**
- * @class spy::VertexArray
+ * @class snack::VertexArray
  * @ingroup RenderCore
  */

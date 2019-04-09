@@ -2,7 +2,7 @@
 
 #include "BaseNode.hpp"
 
-namespace spy
+namespace snack
 {
 class SHADE_RAID_API GeometryEntryNode final : public BaseNode
 {

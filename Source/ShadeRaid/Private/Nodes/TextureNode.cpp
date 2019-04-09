@@ -1,6 +1,6 @@
 #include "Nodes/TextureNode.hpp"
 
-namespace spy
+namespace snack
 {
 TextureNode::~TextureNode()
 {
@@ -10,4 +10,4 @@ std::string TextureNode::Compile()
 {
     return "texture(someTexture, uv);";
 }
-} // namespace spy
+} // namespace snack

@@ -4,7 +4,7 @@
 
 #include <unordered_map>
 
-namespace spy
+namespace snack
 {
 class ClassManager final : public IClassManager
 {
@@ -26,4 +26,4 @@ private:
 
     std::unordered_map<std::string, ComponentInfo> m_componentInfos;
 };
-} // namespace spy
+} // namespace snack

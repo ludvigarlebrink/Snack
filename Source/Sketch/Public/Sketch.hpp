@@ -7,7 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API Sketch
 {
@@ -43,4 +43,4 @@ public:
 
     static bool Vec4Field(const std::string& label, glm::vec4& value);
 };
-} // namespace spy
+} // namespace snack

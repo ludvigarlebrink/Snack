@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class Renderbuffer;
 
@@ -40,4 +40,4 @@ private:
 
     uint32 m_fbo;
 };
-} // namespace spy
+} // namespace snack

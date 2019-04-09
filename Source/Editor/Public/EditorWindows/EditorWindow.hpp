@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class EditorWindowManager;
 
@@ -24,4 +24,4 @@ protected:
 
     virtual void OnDraw(f32 deltaTime);
 };
-} // namespace spy
+} // namespace snack

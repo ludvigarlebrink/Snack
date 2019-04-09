@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 class SHADE_RAID_API Sampler2DVariable
 {
@@ -14,4 +14,4 @@ private:
 
     
 };
-} // namespace spy
+} // namespace snack

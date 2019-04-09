@@ -1,6 +1,6 @@
 #include "Rendering/RenderSettings.hpp"
 
-namespace spy
+namespace snack
 {
 RenderSettings::GBufferSize RenderSettings::m_gAlbedoBufferSize = GBufferSize::U8;
 RenderSettings::GBufferSize RenderSettings::m_gNormalBufferSize = GBufferSize::F32;
@@ -20,4 +20,4 @@ RenderSettings::GBufferSize RenderSettings::GetGPositionBufferSize()
 {
     return m_gPositionBufferSize;
 }
-} // namespace spy
+} // namespace snack

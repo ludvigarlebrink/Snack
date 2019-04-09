@@ -3,7 +3,7 @@
 #include "EditorWindow.hpp"
 #include "EngineForward.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API SceneGraphWindow final : public EditorWindow
 {
@@ -31,4 +31,4 @@ private:
     Transform* m_dragDropSource;
     Transform* m_dragDropTarget;
 };
-} // namespace spy
+} // namespace snack

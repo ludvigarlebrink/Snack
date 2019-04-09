@@ -4,7 +4,7 @@
 #include "EditorWindow.hpp"
 #include "RenderCoreForward.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API GameWindow final : public EditorWindow
 {
@@ -31,4 +31,4 @@ private:
     Texture* m_texture;
     Framebuffer* m_framebuffer;
 };
-} // namespace spy
+} // namespace snack

@@ -7,7 +7,7 @@
 #include <sstream>
 #include <cstring>
 
-namespace spy
+namespace snack
 {
 Material::Material()
 {
@@ -199,4 +199,4 @@ void Material::SetTexture(const std::string& id, Texture* texture, const glm::ve
 
     m_textures.insert({ id, { "", texture, color } });
 }
-} // namespace spy
+} // namespace snack

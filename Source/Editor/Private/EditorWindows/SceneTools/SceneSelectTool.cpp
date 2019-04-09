@@ -5,7 +5,7 @@
 #include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 
-namespace spy
+namespace snack
 {
 SceneSelectTool::SceneSelectTool()
 {
@@ -66,4 +66,4 @@ void SceneSelectTool::OnTick(const SceneToolData& data)
         }
     }
 }
-} // namespace spy
+} // namespace snack

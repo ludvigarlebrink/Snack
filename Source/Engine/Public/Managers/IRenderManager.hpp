@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class CameraComponent;
 class DirectionalLightComponent;
@@ -68,4 +68,4 @@ protected:
 
     virtual void RegisterSpotlightComponent(SpotlightComponent* spotlightComponent) = 0;
 };
-} // namespace spy
+} // namespace snack

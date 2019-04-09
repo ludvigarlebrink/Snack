@@ -3,7 +3,7 @@
 #include "Manager.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 PointLightComponent::PointLightComponent(Transform* transform)
     : BaseComponent(transform)
@@ -41,4 +41,4 @@ void PointLightComponent::SetIntensity(f32 intensity)
 {
     m_intensity = intensity;
 }
-} // namespace spy
+} // namespace snack

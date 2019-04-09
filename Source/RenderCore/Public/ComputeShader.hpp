@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class RENDER_CORE_API ComputeShader
 {
@@ -18,4 +18,4 @@ private:
 
     uint32 m_program;
 };
-} // namespace spy
+} // namespace snack

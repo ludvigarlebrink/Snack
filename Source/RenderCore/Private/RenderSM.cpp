@@ -2,7 +2,7 @@
 #include "RenderError.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 uint32 RenderSM::m_arrayBuffer = 0u;
 uint32 RenderSM::m_elementBuffer = 0u;
@@ -59,4 +59,4 @@ void RenderSM::UseShaderProgram(uint32 shaderProgram)
         m_shaderProgram = shaderProgram;
     }
 }
-} // namespace spy
+} // namespace snack

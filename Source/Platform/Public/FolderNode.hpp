@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class PLATFORM_API FolderNode final
 {

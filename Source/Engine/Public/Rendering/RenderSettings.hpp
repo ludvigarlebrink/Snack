@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 class ENGINE_API RenderSettings
 {
@@ -27,4 +27,4 @@ private:
     static GBufferSize m_gNormalBufferSize;
     static GBufferSize m_gPositionBufferSize;
 };
-} // namespace spy
+} // namespace snack

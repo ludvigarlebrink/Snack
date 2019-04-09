@@ -2,7 +2,7 @@
 #include "RenderError.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 Renderbuffer::Renderbuffer()
     : m_internalFormat(InternalFormat::DEPTH24_STENCIL8)
@@ -58,4 +58,4 @@ void Renderbuffer::TearDown()
 {
     glDeleteRenderbuffers(1, &m_rbo);
 }
-} // namespace spy
+} // namespace snack

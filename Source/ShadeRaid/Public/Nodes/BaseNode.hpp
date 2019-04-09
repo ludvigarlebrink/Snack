@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SHADE_RAID_API BaseNode
 {
@@ -18,4 +18,4 @@ private:
 
     BaseNode* m_next;
 };
-} // namespace spy
+} // namespace snack

@@ -1,6 +1,6 @@
 #include "Manager.hpp"
 
-namespace spy
+namespace snack
 {
 IAssetManager* Manager::m_assetManager = nullptr;
 IClassManager* Manager::m_classManager = nullptr;
@@ -32,4 +32,4 @@ ISceneManager* Manager::Scene()
 {
     return m_sceneManager;
 }
-} // namespace spy
+} // namespace snack

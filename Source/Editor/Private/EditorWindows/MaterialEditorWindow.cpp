@@ -4,7 +4,7 @@
 #include "RenderCoreInclude.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 MaterialEditorWindow::MaterialEditorWindow()
     : m_material(nullptr)
@@ -63,4 +63,4 @@ void MaterialEditorWindow::SetUp()
 void MaterialEditorWindow::TearDown()
 {
 }
-} // namespace spy
+} // namespace snack

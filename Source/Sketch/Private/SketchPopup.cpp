@@ -3,7 +3,7 @@
 #include "imgui/imgui_internal.h"
 #include "imgui/imgui_stdlib.h"
 
-namespace spy
+namespace snack
 {
 bool SketchPopup::BeginContext(const std::string& id)
 {
@@ -130,4 +130,4 @@ void SketchPopup::OpenPopup(const std::string& label)
 {
     ImGui::OpenPopup(label.c_str());
 }
-} // namespace spy
+} // namespace snack

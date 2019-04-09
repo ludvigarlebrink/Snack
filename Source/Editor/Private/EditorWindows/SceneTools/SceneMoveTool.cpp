@@ -5,7 +5,7 @@
 #include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 
-namespace spy
+namespace snack
 {
 SceneMoveTool::SceneMoveTool()
     : m_mode(Mode::NONE)
@@ -368,4 +368,4 @@ void SceneMoveTool::Draw(const glm::vec3& xAxis, const glm::vec3& yAxis, const g
     SketchGizmo::ConeOverdrawn(yAxis + position, yAxis, zAxis, 0.12f, 0.25f, m_yColor);
     SketchGizmo::ConeOverdrawn(zAxis + position, zAxis, xAxis, 0.12f, 0.25f, m_zColor);
 }
-} // namespace spy
+} // namespace snack

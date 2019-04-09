@@ -1,7 +1,7 @@
 #include "Components/Rendering/JointComponent.hpp"
 #include "Manager.hpp"
 
-namespace spy
+namespace snack
 {
 JointComponent::JointComponent(Transform* transform)
     : BaseComponent(transform)
@@ -23,5 +23,5 @@ std::string JointComponent::GetComponentID()
 void JointComponent::OnEditorInspector()
 {
 }
-} // namespace spy
+} // namespace snack
 #endif

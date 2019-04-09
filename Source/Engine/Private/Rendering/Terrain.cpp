@@ -1,6 +1,6 @@
 #include "Rendering/Terrain.hpp"
 
-namespace spy
+namespace snack
 {
 Terrain::Terrain()
 {
@@ -9,4 +9,4 @@ Terrain::Terrain()
 Terrain::~Terrain()
 {
 }
-} // namespace spy
+} // namespace snack

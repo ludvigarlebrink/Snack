@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace spy
+namespace snack
 {
 class ENGINE_API AssetManager final : public IAssetManager
 {
@@ -29,4 +29,4 @@ private:
     std::unordered_map<std::string, std::pair<int32, Material*>> m_materials;
     Material* m_defaultMaterial;
 };
-} // namespace spy
+} // namespace snack

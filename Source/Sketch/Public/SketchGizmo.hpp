@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchGizmo
 {
@@ -44,4 +44,4 @@ public:
 
     static void QuadOverdrawn(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec4& color);
 };
-} // namespace spy
+} // namespace snack

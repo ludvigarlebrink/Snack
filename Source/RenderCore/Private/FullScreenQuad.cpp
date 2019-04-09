@@ -2,7 +2,7 @@
 #include "RenderSM.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 FullScreenQuad::FullScreenQuad()
 {
@@ -59,4 +59,4 @@ void FullScreenQuad::TearDown()
     glDeleteVertexArrays(1, &m_vao);
     glDeleteBuffers(1, &m_vbo);
 }
-} // namespace spy
+} // namespace snack

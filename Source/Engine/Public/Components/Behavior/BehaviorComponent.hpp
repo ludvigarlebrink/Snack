@@ -19,7 +19,7 @@ private:
 #include "Components/BaseComponent.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 class BehaviorSystem;
 
@@ -79,4 +79,4 @@ T* BehaviorComponent::GetComponent()
 {
     return GetTransform()->GetComponent<T>();
 }
-} // namespace spy
+} // namespace snack

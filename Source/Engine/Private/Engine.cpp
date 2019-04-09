@@ -24,7 +24,7 @@
 
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 Engine::Engine()
 {
@@ -81,4 +81,4 @@ void Engine::TearDown()
 {
     // @todo
 }
-} // namespace spy
+} // namespace snack

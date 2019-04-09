@@ -3,7 +3,7 @@
 #include "RenderError.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 Mesh::Mesh()
     : m_vao(0u)
@@ -231,4 +231,4 @@ uint32 Mesh::ToGLOptimization(Optimization optimization)
 
     return GL_STATIC_DRAW;
 }
-} // namespace spy
+} // namespace snack

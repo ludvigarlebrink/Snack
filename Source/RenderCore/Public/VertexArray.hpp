@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class RENDER_CORE_API VertexArray final
 {
@@ -16,4 +16,4 @@ private:
 
     uint32 m_vao;
 };
-} // namespace spy
+} // namespace snack

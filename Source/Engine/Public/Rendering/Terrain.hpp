@@ -2,7 +2,7 @@
 
 #include "RenderCoreForward.hpp"
 
-namespace spy
+namespace snack
 {
 class ENGINE_API Terrain final
 {
@@ -16,4 +16,4 @@ private:
 
 
 };
-} // namespace spy
+} // namespace snack

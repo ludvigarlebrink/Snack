@@ -2,7 +2,7 @@
 
 #include <SDL/SDL.h>
 
-namespace spy
+namespace snack
 {
 Timer::Timer()
 {
@@ -23,4 +23,4 @@ void Timer::Reset()
 {
     m_start = SDL_GetPerformanceCounter();
 }
-} // namespace spy
+} // namespace snack

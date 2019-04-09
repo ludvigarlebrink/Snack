@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class ENGINE_API Material final
 {
@@ -65,4 +65,4 @@ private:
     std::unordered_map<std::string, TextureProperty> m_textures;
     Shader* m_shader;
 };
-} // namespace spy
+} // namespace snack

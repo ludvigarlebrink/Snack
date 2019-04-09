@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchNode
 {
@@ -12,4 +12,4 @@ public:
 
     static void End();
 };
-} // namespace spy
+} // namespace snack

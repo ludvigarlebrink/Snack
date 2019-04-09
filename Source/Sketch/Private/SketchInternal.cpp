@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 Mesh* SketchInternal::m_mesh = nullptr;
 Shader* SketchInternal::m_shader = nullptr;
@@ -364,4 +364,4 @@ void SketchInternal::SetUpGizmos()
     m_gizmoMesh->EnableAttribute(0);
     m_gizmoMesh->EnableAttribute(1);
 }
-} // namespace spy
+} // namespace snack

@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class UTILS_API Timer
 {
@@ -20,4 +20,4 @@ private:
 
     uint64 m_start;
 };
-} // namespace spy
+} // namespace snack

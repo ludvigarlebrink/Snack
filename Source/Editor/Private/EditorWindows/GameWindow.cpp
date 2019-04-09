@@ -3,7 +3,7 @@
 #include "RenderCoreInclude.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 GameWindow::GameWindow()
     : m_texture(nullptr)
@@ -62,4 +62,4 @@ void GameWindow::TearDown()
     delete m_framebuffer;
     m_framebuffer = nullptr;
 }
-} // namespace spy
+} // namespace snack

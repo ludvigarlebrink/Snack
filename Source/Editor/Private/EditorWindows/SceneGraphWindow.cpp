@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 SceneGraphWindow::SceneGraphWindow()
     : m_dragDropReparented(false)
@@ -225,4 +225,4 @@ bool SceneGraphWindow::FindSelectedTransformInChildren(Transform* transform, Tra
 
     return false;
 }
-} // namespace spy
+} // namespace snack

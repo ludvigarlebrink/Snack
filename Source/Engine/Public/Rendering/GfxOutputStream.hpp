@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief Graphic output stream.
@@ -37,4 +37,4 @@ private:
     uint64 m_bufferCapacity;
     uint64 m_bufferIncrement;
 };
-} // namespace spy
+} // namespace snack

@@ -4,7 +4,7 @@
 #include "SketchInclude.hpp"
 #endif
 
-namespace spy
+namespace snack
 {
 SpotlightComponent::SpotlightComponent(Transform* transform)
     : BaseComponent(transform)
@@ -39,4 +39,4 @@ void SpotlightComponent::SetIntensity(f32 intensity)
 {
     m_intensity = intensity;
 }
-} // namespace spy
+} // namespace snack

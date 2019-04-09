@@ -1,6 +1,6 @@
 #include "MathF.hpp"
 
-namespace spy
+namespace snack
 {
 const f32 PI = 3.14159265359f;
 
@@ -55,4 +55,4 @@ uint32 Mathf::UpperPowerOfTwo(uint32 v)
     ++v;
     return v;
 }
-} // namespace spy
+} // namespace snack

@@ -3,7 +3,7 @@
 #include "SketchInclude.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 CameraComponent::CameraComponent(Transform* transform)
     : BaseComponent(transform)
@@ -183,4 +183,4 @@ void CameraComponent::SetSize(f32 size)
 {
     m_size = size;
 }
-} // namespace spy
+} // namespace snack

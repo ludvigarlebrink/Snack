@@ -6,7 +6,7 @@
 #include "Managers/IRenderManager.hpp"
 #include "Managers/ISceneManager.hpp"
 
-namespace spy
+namespace snack
 {
 class Engine;
 
@@ -34,4 +34,4 @@ private:
     static IRenderManager* m_renderManager;
     static ISceneManager* m_sceneManager;
 };
-} // namespace spy
+} // namespace snack

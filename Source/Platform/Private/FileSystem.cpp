@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 
-namespace spy
+namespace snack
 {
 bool FileSystem::CreateFile(const std::string& filename)
 {
@@ -46,4 +46,4 @@ std::string FileSystem::GetRelativeEditorDataPath(const std::string& filename)
 {
     return "EditorData/" + filename;
 }
-} // namespace spy
+} // namespace snack

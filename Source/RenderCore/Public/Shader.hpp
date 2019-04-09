@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A shader program.
@@ -310,9 +310,9 @@ private:
     uint32 m_shaderProgram;
     std::vector<uint32> m_shaders;
 };
-} // namespace spy
+} // namespace snack
 
 /**
- * @class spy::Shader
+ * @class snack::Shader
  * @ingroup RenderCore
  */

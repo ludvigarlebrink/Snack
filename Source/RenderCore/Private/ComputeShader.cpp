@@ -1,7 +1,7 @@
 #include "ComputeShader.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 ComputeShader::ComputeShader()
 {
@@ -15,6 +15,6 @@ ComputeShader::~ComputeShader()
 
 void ComputeShader::Dispatch(uint32 xWorkgroupCount, uint32 yWorkgroupCount, uint32 zWorkgroupCount)
 {
-    glDispatchCompute(xWorkgroupCount, yWorkgroupCount, zWorkgroupCount)
+    glDispatchCompute(xWorkgroupCount, yWorkgroupCount, zWorkgroupCount);
 }
-} // namespace spy
+} // namespace snack

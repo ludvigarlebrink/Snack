@@ -5,7 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
-namespace spy
+namespace snack
 {
 Texture::Texture()
     : m_internalFormat(InternalFormat::RGBA)
@@ -229,4 +229,4 @@ uint32 Texture::ToGLWrapping(Wrapping wrapping)
 
     return GL_CLAMP_TO_EDGE;
 }
-} // namespace spy
+} // namespace snack

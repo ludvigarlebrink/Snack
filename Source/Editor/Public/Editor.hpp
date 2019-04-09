@@ -4,7 +4,7 @@
 #include "EngineForward.hpp"
 #include "EditorManager.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API Editor final
 {
@@ -31,4 +31,4 @@ private:
     IEditorSceneManager* m_editorSceneManager;
     IEditorWindowManager* m_editorWindowManager;
 };
-} // namespace spy
+} // namespace snack

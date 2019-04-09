@@ -7,7 +7,7 @@
 #include <streambuf>
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 Shader::Shader()
     : m_shaderProgram(0u)
@@ -346,4 +346,4 @@ bool Shader::CheckShaderCompileErrors(uint32 shader, const std::string& type)
 
     return true;
 }
-} // namespace spy
+} // namespace snack

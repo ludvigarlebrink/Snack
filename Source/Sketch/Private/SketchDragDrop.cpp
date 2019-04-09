@@ -1,7 +1,7 @@
 #include "SketchDragDrop.hpp"
 #include "imgui/imgui.h"
 
-namespace spy
+namespace snack
 {
 bool SketchDragDrop::AcceptPayload(const std::string& type, SketchDragDrop::Payload& payload)
 {
@@ -55,4 +55,4 @@ void SketchDragDrop::SetPayload(const std::string& type, void* data, uint64 size
 {
     ImGui::SetDragDropPayload(type.c_str(), data, size);
 }
-} // namespace spy
+} // namespace snack

@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchPopup
 {
@@ -34,4 +34,4 @@ public:
 
     static void OpenPopup(const std::string& label);
 };
-} // namespace spy
+} // namespace snack

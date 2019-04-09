@@ -6,7 +6,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class Material;
 
@@ -24,4 +24,4 @@ public:
 
     virtual Texture* LoadTexture(const std::string& filename) = 0;
 };
-} // namespace spy
+} // namespace snack

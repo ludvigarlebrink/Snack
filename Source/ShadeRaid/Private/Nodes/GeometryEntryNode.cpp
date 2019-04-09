@@ -1,6 +1,6 @@
 #include "Nodes/GeometryEntryNode.hpp"
 
-namespace spy
+namespace snack
 {
 GeometryEntryNode::GeometryEntryNode()
 {
@@ -8,4 +8,4 @@ GeometryEntryNode::GeometryEntryNode()
 GeometryEntryNode::~GeometryEntryNode()
 {
 }
-} // namespace spy
+} // namespace snack

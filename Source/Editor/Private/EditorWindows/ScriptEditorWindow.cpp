@@ -1,7 +1,7 @@
 #include "EditorWindows\ScriptEditorWindow.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 ScriptEditorWindow::ScriptEditorWindow()
 {
@@ -22,4 +22,4 @@ void ScriptEditorWindow::OnDraw(f32 deltaTime)
     Sketch::SameLine();
     Sketch::Button("Debug");
 }
-} // namespace spy
+} // namespace snack

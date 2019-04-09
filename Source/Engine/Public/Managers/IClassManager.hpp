@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class BaseComponent;
 class Transform;
@@ -60,4 +60,4 @@ void IClassManager::RegisterComponentUnconstructable(const std::string& name)
 {
     RegisterComponentUnconstructable(typeid(T).name(), name);
 }
-} // namespace spy
+} // namespace snack

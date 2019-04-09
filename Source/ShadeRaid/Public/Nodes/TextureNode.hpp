@@ -2,7 +2,7 @@
 
 #include "BaseNode.hpp"
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A texture node.
@@ -18,4 +18,4 @@ public:
 private:
 
 };
-} // namespace spy
+} // namespace snack

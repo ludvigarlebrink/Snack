@@ -2,7 +2,7 @@
 
 #include "EditorWindow.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API TerrainEditorWindow : public EditorWindow
 {
@@ -22,4 +22,4 @@ private:
 
 
 };
-} // namespace spy
+} // namespace snack

@@ -1,7 +1,7 @@
 #include "EditorSceneManager.hpp"
 #include "EngineInclude.hpp"
 
-namespace spy
+namespace snack
 {
 EditorSceneManager::EditorSceneManager()
 {
@@ -43,4 +43,4 @@ void EditorSceneManager::SetUp()
 void EditorSceneManager::TearDown()
 {
 }
-} // namespace spy
+} // namespace snack

@@ -1,7 +1,7 @@
 #include "SketchWindow.hpp"
 #include "imgui/imgui.h"
 
-namespace spy
+namespace snack
 {
 void SketchWindow::BaseDockSpace()
 {
@@ -78,4 +78,4 @@ glm::vec2 SketchWindow::GetSize()
 {
     return glm::vec2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 }
-} // namespace spy
+} // namespace snack

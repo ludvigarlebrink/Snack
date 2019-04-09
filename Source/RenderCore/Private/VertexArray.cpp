@@ -1,6 +1,6 @@
 #include "VertexArray.hpp"
 
-namespace spy
+namespace snack
 {
 VertexArray::VertexArray()
 {
@@ -9,4 +9,4 @@ VertexArray::VertexArray()
 VertexArray::~VertexArray()
 {
 }
-} // namespace spy
+} // namespace snack

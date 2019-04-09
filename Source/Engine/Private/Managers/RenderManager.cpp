@@ -12,7 +12,7 @@
 #include "RenderCoreInclude.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 RenderManager::RenderManager()
     : m_renderWindow(nullptr)
@@ -286,4 +286,4 @@ void RenderManager::TearDown()
 {
     delete m_renderWindow;
 }
-} // namespace spy
+} // namespace snack

@@ -1,7 +1,7 @@
 #include "SceneManager.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 SceneManager::SceneManager()
     : m_nextInstanceID(0u)
@@ -84,4 +84,4 @@ void SceneManager::TearDown()
         delete m_scene;
     }
 }
-} // namespace spy
+} // namespace snack

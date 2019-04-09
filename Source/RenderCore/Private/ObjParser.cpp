@@ -3,7 +3,7 @@
 #include <sstream>
 #include <fstream>
 
-namespace spy
+namespace snack
 {
 ObjParser::ObjParser()
 {
@@ -71,4 +71,4 @@ bool ObjParser::Parse(const std::string& filename, std::vector<glm::vec3>& posit
         }
     }
 }
-} // namespace spy
+} // namespace snack

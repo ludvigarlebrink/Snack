@@ -3,7 +3,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_stdlib.h"
 
-namespace spy
+namespace snack
 {
 bool Sketch::Button(const std::string& label)
 {
@@ -106,4 +106,4 @@ bool Sketch::Vec4Field(const std::string& label, glm::vec4& value)
     }
     return false;
 }
-} // namespace spy
+} // namespace snack

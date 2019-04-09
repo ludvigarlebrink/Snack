@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief Graphic stream.
@@ -44,4 +44,4 @@ public:
 
     virtual bool Open(const std::string& filename) = 0;
 };
-} // namespace spy
+} // namespace snack

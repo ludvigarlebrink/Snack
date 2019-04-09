@@ -13,7 +13,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 SceneWindow::SceneWindow()
     : m_isGridEnabled(true)
@@ -290,4 +290,4 @@ void SceneWindow::TearDown()
     delete m_framebuffer;
     m_framebuffer = nullptr;
 }
-} // namespace spy
+} // namespace snack

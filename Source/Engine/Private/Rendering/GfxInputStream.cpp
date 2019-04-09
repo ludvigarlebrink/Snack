@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-namespace spy
+namespace snack
 {
 GfxInputStream::GfxInputStream()
 {
@@ -91,4 +91,4 @@ void GfxInputStream::LoadStaticMesh(uint64 location, std::vector<StaticVertex>& 
     elements.resize(elementCount);
     m_file.read(reinterpret_cast<char*>(elements.data()), sizeof(uint32) * elementCount);
 }
-} // namespace spy
+} // namespace snack

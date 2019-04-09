@@ -1,6 +1,6 @@
 #include "EditorWindows\TerrainEditorWindow.hpp"
 
-namespace spy
+namespace snack
 {
 TerrainEditorWindow::TerrainEditorWindow()
 {
@@ -18,4 +18,4 @@ std::string TerrainEditorWindow::GetTitle()
 void TerrainEditorWindow::OnDraw(f32 deltaTime)
 {
 }
-} // namespace spy
+} // namespace snack

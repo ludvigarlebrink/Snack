@@ -1,7 +1,7 @@
 #include "ClassManager.hpp"
 #include "Components/BaseComponent.hpp"
 
-namespace spy
+namespace snack
 {
 BaseComponent* ClassManager::CreateComponent(const std::string& id, Transform* transform)
 {
@@ -46,4 +46,4 @@ void ClassManager::RegisterComponentUnconstructable(const std::string& id, const
     componentInfo.componentConstructor = nullptr;
     m_componentInfos.insert({ id, componentInfo });
 }
-} // namespace spy
+} // namespace snack

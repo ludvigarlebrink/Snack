@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchMenu
 {
@@ -23,4 +23,4 @@ public:
     static bool Item(const std::string& label, const std::string& shortcut);
 
 };
-} // namespace spy
+} // namespace snack

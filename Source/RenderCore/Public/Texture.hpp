@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A texture.
@@ -120,4 +120,4 @@ private:
     Wrapping m_sWrapping;
     Wrapping m_tWrapping;
 };
-} // namespace spy
+} // namespace snack

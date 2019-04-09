@@ -2,7 +2,7 @@
 
 #include "BaseNode.hpp"
 
-namespace spy
+namespace snack
 {
 class SHADE_RAID_API VertexEntryNode final : public BaseNode
 {
@@ -16,4 +16,4 @@ private:
 
 
 };
-} // namespace spy
+} // namespace snack

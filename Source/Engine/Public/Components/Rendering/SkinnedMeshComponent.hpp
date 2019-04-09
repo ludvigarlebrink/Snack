@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class SkinnedMeshComponent final : public BaseComponent
 {
@@ -31,4 +31,4 @@ private:
     
     Material* m_material;
 };
-} // namespace spy
+} // namespace snack

@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class SceneSelectTool final : public ISceneTool
 {
@@ -20,4 +20,4 @@ public:
 
     void OnTick(const SceneToolData& data) override;
 };
-} // namespace spy
+} // namespace snack

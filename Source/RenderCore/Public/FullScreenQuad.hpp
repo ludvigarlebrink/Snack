@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A framebuffer.
@@ -33,4 +33,4 @@ private:
     uint32 m_vao;
     uint32 m_vbo;
 };
-} // namespace spy
+} // namespace snack

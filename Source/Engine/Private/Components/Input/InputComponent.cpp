@@ -1,7 +1,7 @@
 #include "Components/Input/InputComponent.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 InputSystem* InputComponent::m_inputSystem = nullptr;
 
@@ -77,4 +77,4 @@ void InputComponent::RegisterAction(const std::string& id, Key key, Key altKey)
     
     m_actions.insert({ id, action });
 }
-} // namespace spy
+} // namespace snack

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 enum class Mod
 {
@@ -8,4 +8,4 @@ enum class Mod
     CTRL,
     SHIFT,
 };
-} // namespace spy
+} // namespace snack

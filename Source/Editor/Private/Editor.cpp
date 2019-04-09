@@ -15,7 +15,7 @@
 #include "SketchInternal.hpp"
 #include "Timer.hpp"
 
-namespace spy
+namespace snack
 {
 Editor::Editor()
 {
@@ -220,4 +220,4 @@ void Editor::DrawMainMenu()
         SketchMenu::EndMain();
     }
 }
-} // namespace spy
+} // namespace snack

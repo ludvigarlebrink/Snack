@@ -3,7 +3,7 @@
 #include "FileSystem.hpp"
 #include "Texture.hpp"
 
-namespace spy
+namespace snack
 {
 AssetManager::AssetManager()
 {
@@ -63,4 +63,4 @@ Texture* AssetManager::LoadTexture(const std::string& filename)
     m_textures.insert({ filename, std::pair<int32, Texture*>(1, pTexture) });
     return pTexture;
 }
-} // namespace spy
+} // namespace snack
