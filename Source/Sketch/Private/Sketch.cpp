@@ -42,20 +42,20 @@ bool Sketch::ImageButton(Texture* texture, bool flip)
 {
     if (flip)
     {
-        return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+        return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 0);
     }
 
-    return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+    return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 0);
 }
 
 bool Sketch::ImageButton(Texture* texture, bool flip, const glm::vec4& color)
 {
     if (flip)
     {
-        return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), -1, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
+        return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
     }
 
-    return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), -1, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
+    return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
 }
 
 bool Sketch::Selectable(const std::string& label)
