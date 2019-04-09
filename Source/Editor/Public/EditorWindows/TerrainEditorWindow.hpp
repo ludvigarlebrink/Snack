@@ -12,6 +12,12 @@ public:
 
     ~TerrainEditorWindow();
 
+    std::string GetTitle() override;
+
+protected:
+
+    void OnDraw(f32 deltaTime) override;
+
 private:
 
 
