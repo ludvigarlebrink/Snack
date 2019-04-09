@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorWindow.hpp"
+#include "RenderCoreForward.hpp"
 
 namespace snack
 {
@@ -20,6 +21,13 @@ protected:
 
 private:
 
+    void SetUp();
 
+    void TearDown();
+
+private:
+
+    Texture* m_elevationBrushIcon;
+    Texture* m_paintBrushIcon;
 };
 } // namespace snack

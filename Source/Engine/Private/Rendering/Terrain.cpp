@@ -9,4 +9,10 @@ Terrain::Terrain()
 Terrain::~Terrain()
 {
 }
+void Terrain::SetUp()
+{
+}
+void Terrain::TearDown()
+{
+}
 } // namespace snack

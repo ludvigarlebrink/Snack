@@ -2,6 +2,8 @@
 
 #include "RenderCoreForward.hpp"
 
+#include <glm/glm.hpp>
+
 namespace snack
 {
 class ENGINE_API Terrain final
@@ -14,6 +16,12 @@ public:
 
 private:
 
+    void SetUp();
 
+    void TearDown();
+
+private:
+
+    glm::vec2 m_size;
 };
 } // namespace snack

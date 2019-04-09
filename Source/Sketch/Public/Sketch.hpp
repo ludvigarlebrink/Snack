@@ -23,7 +23,11 @@ public:
 
     static bool FloatField(const std::string& label, f32& value, f32 width);
 
-    static void Text(const std::string& text);
+    static void Image(Texture* texture, const glm::vec2& size);
+
+    static bool ImageButton(Texture* texture, bool flip);
+
+    static bool ImageButton(Texture* texture, bool flip, const glm::vec4& color);
 
     static bool Selectable(const std::string& label);
 
@@ -33,9 +37,9 @@ public:
 
     static void Seperator();
 
-    static bool TextField(const std::string& label, std::string& text);
+    static void Text(const std::string& text);
 
-    static void Image(Texture* texture, const glm::vec2& size);
+    static bool TextField(const std::string& label, std::string& text);
  
     static bool Vec2Field(const std::string& label, glm::vec2& value);
 

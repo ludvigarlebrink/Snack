@@ -65,5 +65,10 @@ private:
     Texture* m_texture;
     Renderbuffer* m_depthStencil;
     Framebuffer* m_framebuffer;
+
+    Texture* m_selectToolIcon;
+    Texture* m_moveToolIcon;
+    Texture* m_rotateToolIcon;
+    Texture* m_scaleToolIcon;
 };
 } // namespace snack

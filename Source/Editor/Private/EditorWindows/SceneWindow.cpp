@@ -65,28 +65,28 @@ void SceneWindow::OnDraw(f32 deltaTime)
     }
 
     Sketch::SameLine();
-    if (Sketch::Button("Select Mode"))
+    if (Sketch::ImageButton(m_selectToolIcon, false))
     {
         m_activeSceneTool->OnEnd();
         m_activeSceneTool = m_selectTool;
         m_activeSceneTool->OnBegin();
     }
     Sketch::SameLine();
-    if (Sketch::Button("Move Mode"))
+    if (Sketch::ImageButton(m_moveToolIcon, false))
     {
         m_activeSceneTool->OnEnd();
         m_activeSceneTool = m_moveTool;
         m_activeSceneTool->OnBegin();
     }
     Sketch::SameLine();
-    if (Sketch::Button("Rotate Mode"))
+    if (Sketch::ImageButton(m_rotateToolIcon, false))
     {
         m_activeSceneTool->OnEnd();
         m_activeSceneTool = m_rotateTool;
         m_activeSceneTool->OnBegin();
     }
     Sketch::SameLine();
-    if (Sketch::Button("Scale Mode"))
+    if (Sketch::ImageButton(m_scaleToolIcon, false))
     {
         m_activeSceneTool->OnEnd();
         m_activeSceneTool = m_scaleTool;
@@ -197,7 +197,6 @@ void SceneWindow::OnDraw(f32 deltaTime)
         m_activeSceneTool->OnTick(data);
 
         DrawGizmos();
-
         DrawScene(deltaTime);
     }
     SketchWindow::EndChild();
@@ -279,6 +278,16 @@ void SceneWindow::SetUp()
     m_scaleTool = new SceneScaleTool();
     m_selectTool = new SceneSelectTool();
     m_activeSceneTool = m_selectTool;
+
+    // @todo Set correct path.
+    m_selectToolIcon = new Texture();
+    m_selectToolIcon->LoadFromFile("EditorData/Icons/SelectToolIcon_32.png", Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
+    m_moveToolIcon = new Texture();
+    m_moveToolIcon->LoadFromFile("EditorData/Icons/SelectToolIcon_32.png", Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
+    m_rotateToolIcon = new Texture();
+    m_rotateToolIcon->LoadFromFile("EditorData/Icons/SelectToolIcon_32.png", Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
+    m_scaleToolIcon = new Texture();
+    m_scaleToolIcon->LoadFromFile("EditorData/Icons/SelectToolIcon_32.png", Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
 }
 
 void SceneWindow::TearDown()
