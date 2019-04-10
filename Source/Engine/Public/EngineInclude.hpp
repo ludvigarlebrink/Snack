@@ -18,3 +18,4 @@
 #include "Rendering/Material.hpp"
 #include "Rendering/SkinnedVertex.hpp"
 #include "Rendering/StaticVertex.hpp"
+#include "Rendering/Terrain.hpp"

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorWindow.hpp"
+#include "EngineForward.hpp"
 #include "RenderCoreForward.hpp"
 
 namespace snack
@@ -15,6 +16,8 @@ public:
 
     std::string GetTitle() override;
 
+    void SetTerrain(const std::string& filename);
+
 protected:
 
     void OnDraw(f32 deltaTime) override;
@@ -27,7 +30,10 @@ private:
 
 private:
 
+    Terrain* m_terrain;
     Texture* m_elevationBrushIcon;
     Texture* m_paintBrushIcon;
+
+    std::string m_filename;
 };
 } // namespace snack

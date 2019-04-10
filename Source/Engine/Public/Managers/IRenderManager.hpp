@@ -14,6 +14,7 @@ class MeshComponent;
 class PointLightComponent;
 class SkinnedMeshComponent;
 class SpotlightComponent;
+class TerrainComponent;
 class Transform;
 
 class ENGINE_API IRenderManager
@@ -25,6 +26,7 @@ class ENGINE_API IRenderManager
     friend PointLightComponent;
     friend SkinnedMeshComponent;
     friend SpotlightComponent;
+    friend TerrainComponent;
 
 public:
 
@@ -54,6 +56,8 @@ protected:
 
     virtual void DeregisterSpotlightComponent(SpotlightComponent* spotlightComponent) = 0;
 
+    virtual void DeregisterTerrainComponent(TerrainComponent* terrainComponent) = 0;
+
     virtual void RegisterCameraComponent(CameraComponent* cameraComponent) = 0;
 
     virtual void RegisterDirectionalLightComponent(DirectionalLightComponent* directionalLightComponent) = 0;
@@ -67,5 +71,7 @@ protected:
     virtual void RegisterSkinnedMeshComponent(SkinnedMeshComponent* skinnedMeshComponent) = 0;
 
     virtual void RegisterSpotlightComponent(SpotlightComponent* spotlightComponent) = 0;
+
+    virtual void RegisterTerrainComponent(TerrainComponent* terrainComponent) = 0;
 };
 } // namespace snack

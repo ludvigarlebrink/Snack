@@ -29,6 +29,8 @@ public:
 
     static bool ImageButton(Texture* texture, bool flip, const glm::vec4& color);
 
+    static bool IntField(const std::string& label, int32& value);
+
     static bool Selectable(const std::string& label);
 
     static bool Selectable(const std::string& label, bool isSelected);

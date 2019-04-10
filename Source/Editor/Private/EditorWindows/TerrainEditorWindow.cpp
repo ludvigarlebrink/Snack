@@ -1,11 +1,13 @@
 #include "EditorWindows/TerrainEditorWindow.hpp"
+#include "EngineInclude.hpp"
 #include "RenderCoreInclude.hpp"
 #include "SketchInclude.hpp"
 
 namespace snack
 {
 TerrainEditorWindow::TerrainEditorWindow()
-    : m_elevationBrushIcon(nullptr)
+    : m_terrain(nullptr)
+    , m_elevationBrushIcon(nullptr)
     , m_paintBrushIcon(nullptr)
 {
     SetUp();
@@ -21,11 +23,38 @@ std::string TerrainEditorWindow::GetTitle()
     return "Terrain Editor";
 }
 
+void TerrainEditorWindow::SetTerrain(const std::string& filename)
+{
+    if (m_terrain)
+    {
+        Manager::Asset()->DestroyTerrain(filename);
+    }
+
+    m_terrain = Manager::Asset()->LoadTerrain(filename);
+    m_filename = filename;
+}
+
 void TerrainEditorWindow::OnDraw(f32 deltaTime)
 {
+    if (!m_terrain)
+    {
+        return;
+    }
+
     Sketch::ImageButton(m_elevationBrushIcon, false, glm::vec4(0.8f, 0.8f, 1.0f, 1.0f));
     Sketch::SameLine();
     Sketch::ImageButton(m_paintBrushIcon, false, glm::vec4(0.8f, 0.8f, 1.0f, 1.0f));
+
+    int32 width = m_terrain->GetSize();
+    if (Sketch::IntField("Size", width))
+    {
+        m_terrain->SetSize(width);
+    }
+
+    if (Sketch::Button("Save"))
+    {
+        m_terrain->Save(m_filename);
+    }
 }
 
 void TerrainEditorWindow::SetUp()
