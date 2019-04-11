@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class PLATFORM_API FileSystem
 {
@@ -22,4 +22,4 @@ public:
 
     static std::string GetRelativeEditorDataPath(const std::string& filename);
 };
-} // namespace spy
+} // namespace snack

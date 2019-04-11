@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 enum class Button : int32
 {
@@ -12,4 +12,4 @@ enum class Button : int32
     MIDDLE,
     RIGHT
 };
-} // namespace spy
+} // namespace snack

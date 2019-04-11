@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class RENDER_CORE_API ObjParser final
 {
@@ -26,4 +26,4 @@ private:
 
     std::string m_error;
 };
-} // namespace spy
+} // namespace snack

@@ -6,7 +6,7 @@
 #include <SDL/SDL.h>
 #include <string>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A window used for rendering.
@@ -133,10 +133,10 @@ private:
     int32 m_windowWidth;
     int32 m_windowHeight;
 };
-} // namespace spy
+} // namespace snack
 
 /**
- * @class spy::RenderWindow
+ * @class snack::RenderWindow
  * @ingroup RenderCore
  *
  * @code

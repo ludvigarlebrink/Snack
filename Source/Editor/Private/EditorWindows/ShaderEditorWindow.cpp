@@ -1,7 +1,7 @@
 #include "EditorWindows\ShaderEditorWindow.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 ShaderEditorWindow::ShaderEditorWindow()
 {
@@ -20,4 +20,4 @@ void ShaderEditorWindow::OnDraw(f32 deltaTime)
 {
     SketchNode::Begin(1353);
 }
-} // namespace spy
+} // namespace snack

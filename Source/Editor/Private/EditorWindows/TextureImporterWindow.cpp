@@ -1,7 +1,7 @@
 #include "EditorWindows\TextureImporterWIndow.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 TextureImporterWindow::TextureImporterWindow()
 {
@@ -29,4 +29,4 @@ void TextureImporterWindow::OnDraw(f32 deltaTime)
 
     }
 }
-} // namespace spy
+} // namespace snack

@@ -1,18 +1,33 @@
 #include "AssetManager.hpp"
 #include "Components/Rendering/MeshComponent.hpp"
 #include "FileSystem.hpp"
+#include "Rendering/Terrain.hpp"
 #include "Texture.hpp"
 
-namespace spy
+namespace snack
 {
 AssetManager::AssetManager()
 {
     m_defaultMaterial = new Material();
-    m_defaultMaterial->SetColor("Base", { 1.0, 1.0, 1.0, 1.0 });
+    m_defaultMaterial->SetColor("Albedo", { 1.0, 1.0, 1.0, 1.0 });
 }
 
 AssetManager::~AssetManager()
 {
+}
+
+void AssetManager::DestroyTerrain(const std::string& filename)
+{
+    auto itr = m_terrains.find(filename);
+    if (itr != m_terrains.end())
+    {
+        itr->second.first--;
+        if (itr->second.first <= 0)
+        {
+            delete itr->second.second;
+            m_terrains.erase(filename);
+        }
+    }
 }
 
 void AssetManager::DestroyTexture(const std::string& filename)
@@ -45,8 +60,23 @@ Material * AssetManager::LoadMaterial(const std::string & filename)
 
     Material* material = new Material();
     material->Load(FileSystem::GetRelativeDataPath(filename));
-    m_materials.insert({ filename, std::pair<int32, Material*>(1, material) });
+    m_materials.insert({ filename, { 1, material } });
     return material;
+}
+
+Terrain* AssetManager::LoadTerrain(const std::string& filename)
+{
+    auto itr = m_terrains.find(filename);
+    if (itr != m_terrains.end())
+    {
+        itr->second.first++;
+        return itr->second.second;
+    }
+
+    Terrain* terrain = new Terrain();
+    terrain->Load(filename);
+    m_terrains.insert({ filename, { 1, terrain } });
+    return terrain;
 }
 
 Texture* AssetManager::LoadTexture(const std::string& filename)
@@ -63,4 +93,4 @@ Texture* AssetManager::LoadTexture(const std::string& filename)
     m_textures.insert({ filename, std::pair<int32, Texture*>(1, pTexture) });
     return pTexture;
 }
-} // namespace spy
+} // namespace snack

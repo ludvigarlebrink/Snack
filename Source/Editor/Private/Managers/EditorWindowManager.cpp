@@ -2,7 +2,7 @@
 #include "EditorWindows/EditorWindow.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 EditorWindowManager::EditorWindowManager()
 {
@@ -47,4 +47,4 @@ void EditorWindowManager::OpenWindow(const std::string& id, EditorWindow* editor
 {
     m_openWindows.insert({ id, editorWindow });
 }
-} // namespace spy
+} // namespace snack

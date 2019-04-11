@@ -1,7 +1,7 @@
 #include "SketchGizmo.hpp"
 #include "SketchInternal.hpp"
 
-namespace spy
+namespace snack
 {
 void SketchGizmo::Cone(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& rightAxis, f32 baseScaling, f32 topScaling)
 {
@@ -279,7 +279,7 @@ void SketchGizmo::CubeOverdrawn(const glm::mat4& model)
 
 void SketchGizmo::CubeOverdrawn(const glm::mat4& model, const glm::vec4& color)
 {
-    SketchInternal::Vertex vertices[8];
+    SketchInternal::Vertex vertices[24];
 
     // Plane 1.
     vertices[0].position = model * glm::vec4(0.5f, -0.5f, 0.5f, 1.0f);
@@ -293,6 +293,30 @@ void SketchGizmo::CubeOverdrawn(const glm::mat4& model, const glm::vec4& color)
     vertices[6].position = model * glm::vec4(-0.5f, 0.5f, -0.5f, 1.0f);
     vertices[7].position = model * glm::vec4(-0.5f, -0.5f, -0.5f, 1.0f);
 
+    // Plane 3.
+    vertices[8].position = model * glm::vec4(0.5f, -0.5f, 0.5f, 1.0f);
+    vertices[9].position = model * glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+    vertices[10].position = model * glm::vec4(0.5f, 0.5f, -0.5f, 1.0f);
+    vertices[11].position = model * glm::vec4(0.5f, -0.5f, -0.5f, 1.0f);
+
+    // Plane 4.
+    vertices[12].position = model * glm::vec4(-0.5f, -0.5f, 0.5f, 1.0f);
+    vertices[13].position = model * glm::vec4(-0.5f, 0.5f, 0.5f, 1.0f);
+    vertices[14].position = model * glm::vec4(-0.5f, 0.5f, -0.5f, 1.0f);
+    vertices[15].position = model * glm::vec4(-0.5f, -0.5f, -0.5f, 1.0f);
+
+    // Plane 5.
+    vertices[16].position = model * glm::vec4(0.5f, 0.5f, -0.5f, 1.0f);
+    vertices[17].position = model * glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+    vertices[18].position = model * glm::vec4(-0.5f, 0.5f, 0.5f, 1.0f);
+    vertices[19].position = model * glm::vec4(-0.5f, 0.5f, -0.5f, 1.0f);
+
+    // Plane 6.
+    vertices[20].position = model * glm::vec4(0.5f, -0.5f, -0.5f, 1.0f);
+    vertices[21].position = model * glm::vec4(0.5f, -0.5f, 0.5f, 1.0f);
+    vertices[22].position = model * glm::vec4(-0.5f, -0.5f, 0.5f, 1.0f);
+    vertices[23].position = model * glm::vec4(-0.5f, -0.5f, -0.5f, 1.0f);
+
     vertices[0].color = color;
     vertices[1].color = color;
     vertices[2].color = color;
@@ -301,6 +325,22 @@ void SketchGizmo::CubeOverdrawn(const glm::mat4& model, const glm::vec4& color)
     vertices[5].color = color;
     vertices[6].color = color;
     vertices[7].color = color;
+    vertices[8].color = color;
+    vertices[9].color = color;
+    vertices[10].color = color;
+    vertices[11].color = color;
+    vertices[12].color = color;
+    vertices[13].color = color;
+    vertices[14].color = color;
+    vertices[15].color = color;
+    vertices[16].color = color;
+    vertices[17].color = color;
+    vertices[18].color = color;
+    vertices[19].color = color;
+    vertices[20].color = color;
+    vertices[21].color = color;
+    vertices[22].color = color;
+    vertices[23].color = color;
 
     uint32 element = SketchInternal::m_gizmoDrawData.verticesOverdrawn.size();
 
@@ -320,6 +360,38 @@ void SketchGizmo::CubeOverdrawn(const glm::mat4& model, const glm::vec4& color)
     SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 7u);
     SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 4u);
 
+    // Plane 3.
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 8u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 9u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 10u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 10u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 11u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 8u);
+
+    // Plane 4.
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 12u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 13u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 14u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 14u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 15u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 12u);
+
+    // Plane 5.
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 16u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 17u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 18u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 18u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 19u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 16u);
+
+    // Plane 6.
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 20u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 21u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 22u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 22u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 23u);
+    SketchInternal::m_gizmoDrawData.elementsOverdrawn.push_back(element + 20u);
+
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[0]);
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[1]);
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[2]);
@@ -328,6 +400,22 @@ void SketchGizmo::CubeOverdrawn(const glm::mat4& model, const glm::vec4& color)
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[5]);
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[6]);
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[7]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[8]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[9]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[10]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[11]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[12]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[13]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[14]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[15]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[16]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[17]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[18]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[19]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[20]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[21]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[22]);
+    SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[23]);
 }
 
 void SketchGizmo::Line(const glm::vec3& p0, glm::vec3& p1)
@@ -441,4 +529,4 @@ void SketchGizmo::QuadOverdrawn(const glm::vec3& p0, const glm::vec3& p1, const 
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[2]);
     SketchInternal::m_gizmoDrawData.verticesOverdrawn.push_back(vertices[3]);
 }
-} // namespace spy
+} // namespace snack

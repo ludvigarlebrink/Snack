@@ -8,7 +8,7 @@
 #include "RenderCoreForward.hpp"
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class EDITOR_API MaterialEditorWindow final : public EditorWindow
 {
@@ -42,4 +42,4 @@ private:
 
     bool m_IsMaterial;
 };
-}// namespace spy
+}// namespace snack

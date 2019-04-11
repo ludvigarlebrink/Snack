@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class SpotlightComponent final : public BaseComponent
 {
@@ -27,4 +27,4 @@ private:
     f32 m_intensity;
     glm::vec4 m_color;
 };
-} // namespace spy
+} // namespace snack

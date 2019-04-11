@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 using InstanceID = uint64;
-} // namespace spy
+} // namespace snack

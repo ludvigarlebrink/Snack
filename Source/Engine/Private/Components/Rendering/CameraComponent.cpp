@@ -3,11 +3,12 @@
 #include "SketchInclude.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 CameraComponent::CameraComponent(Transform* transform)
     : BaseComponent(transform)
     , m_projection(Projection::PERSPECTIVE)
+    , m_renderMode(RenderMode::FORWARD)
     , m_fieldOfView(45.0f)
     , m_farPlane(1000.0f)
     , m_nearPlane(0.1f)
@@ -66,18 +67,56 @@ glm::mat4 CameraComponent::GetProjectionMatrix(f32 width, f32 height) const
     return glm::mat4(1.0);
 }
 
+CameraComponent::RenderMode CameraComponent::GetRenderMode() const
+{
+    return m_renderMode;
+}
+
 glm::mat4 CameraComponent::GetViewMatrix() const
 {
-    return glm::inverse(GetTransform()->GetWorldMatrix());
+    glm::mat4 model = GetTransform()->GetWorldMatrix();
+    return glm::lookAt(glm::vec3(model[3]), glm::vec3(model[0]) + glm::vec3(model[3]), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+#ifdef SPY_EDITOR
+void CameraComponent::OnEditorGizmo()
+{
+    glm::mat4 model = GetTransform()->GetWorldMatrix();
+    // @todo
 }
 
 void CameraComponent::OnEditorInspector()
 {
-#ifdef SPY_EDITOR
     BaseComponent::OnEditorInspector();
 
     Sketch::FloatField("Near Plane", m_nearPlane);
     Sketch::FloatField("Far Plane", m_farPlane);
+
+    std::string selectedRenderMode;
+    if (m_renderMode == RenderMode::FORWARD)
+    {
+        selectedRenderMode = "Forward";
+    }
+    else
+    {
+        selectedRenderMode = "Deferred";
+    }
+
+    if (SketchCombo::Begin("Render Mode", selectedRenderMode))
+    {
+        if (SketchCombo::Selectable("Forward"))
+        {
+            m_renderMode = RenderMode::FORWARD;
+        }
+
+        if (SketchCombo::Selectable("Deferred"))
+        {
+            m_renderMode = RenderMode::DEFERRED;
+        }
+
+        SketchCombo::End();
+    }
+
     
     std::string selectedProjection;
     if (m_projection == Projection::ORTHOGRAPHIC)
@@ -89,7 +128,7 @@ void CameraComponent::OnEditorInspector()
         selectedProjection = "Perspective";
     }
 
-    if (SketchCombo::Begin("Projection Combo", selectedProjection))
+    if (SketchCombo::Begin("Projection", selectedProjection))
     {
         if (SketchCombo::Selectable("Orthographic"))
         {
@@ -112,8 +151,8 @@ void CameraComponent::OnEditorInspector()
     {
         Sketch::FloatField("Field of View", m_size);
     }
-#endif
 }
+#endif
 
 void CameraComponent::SetFarPlane(f32 farPlane)
 {
@@ -135,8 +174,13 @@ void CameraComponent::SetProjection(Projection projection)
     m_projection = projection;
 }
 
+void CameraComponent::SetRenderMode(RenderMode renderMode)
+{
+    m_renderMode = renderMode;
+}
+
 void CameraComponent::SetSize(f32 size)
 {
     m_size = size;
 }
-} // namespace spy
+} // namespace snack

@@ -3,7 +3,7 @@
 #include "Transform.hpp"
 #include "Manager.hpp"
 
-namespace spy
+namespace snack
 {
 BehaviorSystem* BehaviorComponent::m_behaviorSystem = nullptr;
 
@@ -72,4 +72,4 @@ void BehaviorComponent::OnTick(f32 deltaTime)
 {
     // Do nothing...
 }
-} // namespace spy
+} // namespace snack

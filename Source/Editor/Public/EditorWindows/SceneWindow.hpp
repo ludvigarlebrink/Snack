@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace spy
+namespace snack
 {
 class ISceneTool;
 class SceneMoveTool;
@@ -65,5 +65,10 @@ private:
     Texture* m_texture;
     Renderbuffer* m_depthStencil;
     Framebuffer* m_framebuffer;
+
+    Texture* m_selectToolIcon;
+    Texture* m_moveToolIcon;
+    Texture* m_rotateToolIcon;
+    Texture* m_scaleToolIcon;
 };
-} // namespace spy
+} // namespace snack

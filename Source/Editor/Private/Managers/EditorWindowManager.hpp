@@ -5,7 +5,7 @@
 
 #include <unordered_map>
 
-namespace spy
+namespace snack
 {
 class EditorWindowManager final : public IEditorWindowManager
 {
@@ -29,4 +29,4 @@ private:
 
     std::unordered_map<std::string, EditorWindow*> m_openWindows;
 };
-} // namespace spy
+} // namespace snack

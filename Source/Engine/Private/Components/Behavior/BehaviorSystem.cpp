@@ -2,7 +2,7 @@
 #include "Components/Behavior/BehaviorComponent.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 BehaviorSystem::BehaviorSystem()
 {
@@ -72,4 +72,4 @@ void BehaviorSystem::TearDown()
 {
     BehaviorComponent::m_behaviorSystem = nullptr;
 }
-} // namespace spy
+} // namespace snack

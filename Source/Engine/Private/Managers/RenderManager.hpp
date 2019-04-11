@@ -4,7 +4,7 @@
 
 #include <set>
 
-namespace spy
+namespace snack
 {
 class RenderManager final : public IRenderManager
 {
@@ -18,7 +18,9 @@ public:
 
     Transform* PickMesh(const glm::vec3& origin, const glm::vec3& direction) override;
 
-    void RenderSceneToTexture(const glm::mat4& viewProjection) override;
+    void RenderSceneToTexture(Framebuffer* framebuffer, int32 width, int32 height) override;
+
+    void RenderSceneCustomCamera(const glm::mat4& viewProjection) override;
 
 protected:
 
@@ -36,6 +38,8 @@ protected:
 
     void DeregisterSpotlightComponent(SpotlightComponent* spotlightComponent) override;
 
+    void DeregisterTerrainComponent(TerrainComponent* terrainComponent) override;
+
     void RegisterCameraComponent(CameraComponent* cameraComponent) override;
 
     void RegisterDirectionalLightComponent(DirectionalLightComponent* directionalLightComponent) override;
@@ -50,7 +54,13 @@ protected:
 
     void RegisterSpotlightComponent(SpotlightComponent* spotlightComponent) override;
 
+    void RegisterTerrainComponent(TerrainComponent* terrainComponent) override;
+
 private:
+
+    void DeferredGeometryPass(CameraComponent* camera);
+
+    void DeferredLightingPass();
 
     void SetUp();
 
@@ -61,6 +71,16 @@ private:
     RenderWindow* m_renderWindow;
     Shader* m_meshShader;
     Shader* m_skinnedMeshShader;
+    Shader* m_terrainShader;
+
+    Framebuffer* m_deferredFrameBuffer;
+    Renderbuffer* m_depthStencil;
+    Texture* m_gAlbedo;
+    Texture* m_gNormal;
+    Texture* m_gPosition;
+    Shader* m_geometryPassShader;
+    Shader* m_lightingPassShader;
+    FullScreenQuad* m_fullScreenQuad;
 
     std::set<CameraComponent*> m_cameraComponents;
     std::set<DirectionalLightComponent*> m_directionalLightComponents;
@@ -69,5 +89,6 @@ private:
     std::set<PointLightComponent*> m_pointLightComponents;
     std::set<SkinnedMeshComponent*> m_skinnedMeshComponents;
     std::set<SpotlightComponent*> m_spotlightComponents;
+    std::set<TerrainComponent*> m_terrainComponents;
 };
-} // namespace spy
+} // namespace snack

@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class Texture;
 
@@ -49,4 +49,4 @@ private:
     Character m_characters[128];
     Texture* m_texture;
 };
-} // namespace spy
+} // namespace snack

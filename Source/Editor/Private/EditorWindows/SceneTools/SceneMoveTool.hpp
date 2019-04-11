@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class SceneMoveTool final : public ISceneTool
 {
@@ -56,4 +56,4 @@ private:
     glm::vec4 m_yPanColorQuad;
     glm::vec4 m_zPanColorQuad;
 };
-} // namespace spy
+} // namespace snack

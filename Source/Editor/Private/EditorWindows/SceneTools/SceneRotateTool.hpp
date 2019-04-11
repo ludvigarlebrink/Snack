@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class SceneRotateTool final : public ISceneTool
 {
@@ -34,4 +34,4 @@ private:
 
     Mode m_mode;
 };
-} // namespace spy
+} // namespace snack

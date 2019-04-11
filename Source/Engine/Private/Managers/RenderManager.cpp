@@ -6,15 +6,24 @@
 #include "Components/Rendering/PointLightComponent.hpp"
 #include "Components/Rendering/SkinnedMeshComponent.hpp"
 #include "Components/Rendering/SpotlightComponent.hpp"
+#include "Components/Rendering/TerrainComponent.hpp"
 #include "FileSystem.hpp"
+#include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 #include "RenderCoreInclude.hpp"
+#include "Rendering/Terrain.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 RenderManager::RenderManager()
     : m_renderWindow(nullptr)
+    , m_meshShader(nullptr)
+    , m_skinnedMeshShader(nullptr)
+    , m_deferredFrameBuffer(nullptr)
+    , m_gAlbedo(nullptr)
+    , m_gNormal(nullptr)
+    , m_depthStencil(nullptr)
 {
     SetUp();
 }
@@ -44,7 +53,44 @@ Transform* RenderManager::PickMesh(const glm::vec3& origin, const glm::vec3& dir
     return nullptr;
 }
 
-void RenderManager::RenderSceneToTexture(const glm::mat4& viewProjection)
+void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, int32 height)
+{
+    if (width != m_gPosition->GetWidth() || height != m_gPosition->GetHeight())
+    {
+        m_gPosition->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+        m_gNormal->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+        m_gAlbedo->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
+        m_depthStencil->SetData(width, height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
+    }
+
+    for (auto c : m_cameraComponents)
+    {
+        if (c->GetRenderMode() == CameraComponent::RenderMode::DEFERRED)
+        {
+            m_renderWindow->SetViewport(0, 0, m_gAlbedo->GetWidth(), m_gAlbedo->GetHeight());
+            m_renderWindow->EnableCullFace(true);
+            m_renderWindow->EnableDepthTest(true);
+            DeferredGeometryPass(c);
+            framebuffer->Bind();
+            {
+                DeferredLightingPass();
+            }
+            framebuffer->Unbind();
+        }
+        else 
+        {
+            // @todo Render forward.
+            framebuffer->Bind();
+            {
+                m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+                m_renderWindow->Clear();
+            }
+            framebuffer->Unbind();
+        }
+    }
+}
+
+void RenderManager::RenderSceneCustomCamera(const glm::mat4& viewProjection)
 {
     m_renderWindow->EnableBlend(false);
     m_renderWindow->EnableCullFace(true);
@@ -60,14 +106,26 @@ void RenderManager::RenderSceneToTexture(const glm::mat4& viewProjection)
         m_meshShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
         ++lightCount;
     }
+    
     m_meshShader->SetIntSlow("DirectionalLightCount", lightCount);
-
+    m_meshShader->SetMat4Slow("ViewProjection", viewProjection);
     for (auto meshComponent : m_meshComponents)
     {
         Mesh* mesh = meshComponent->GetMesh();
         m_meshShader->SetMat4Slow("Model", meshComponent->GetTransform()->GetWorldMatrix());
-        m_meshShader->SetMat4Slow("ViewProjection", viewProjection);
         mesh->Render(Mesh::Mode::TRIANGLES);
+    }
+
+    m_terrainShader->Use();
+    m_terrainShader->SetMat4Slow("ViewProjection", viewProjection);
+    for (auto terrainComponent : m_terrainComponents)
+    {
+        Terrain* terrain = terrainComponent->GetTerrain();
+        if (terrain)
+        {
+            m_terrainShader->SetMat4Slow("Model", terrainComponent->GetTransform()->GetWorldMatrix());
+            terrain->Render();
+        }
     }
 }
 
@@ -106,6 +164,11 @@ void RenderManager::DeregisterSpotlightComponent(SpotlightComponent* spotlightCo
     m_spotlightComponents.erase(spotlightComponent);
 }
 
+void RenderManager::DeregisterTerrainComponent(TerrainComponent* terrainComponent)
+{
+    m_terrainComponents.erase(terrainComponent);
+}
+
 void RenderManager::RegisterCameraComponent(CameraComponent* cameraComponent)
 {
     m_cameraComponents.insert(cameraComponent);
@@ -141,6 +204,56 @@ void RenderManager::RegisterSpotlightComponent(SpotlightComponent* spotlightComp
     m_spotlightComponents.insert(spotlightComponent);
 }
 
+void RenderManager::RegisterTerrainComponent(TerrainComponent* terrainComponent)
+{
+    m_terrainComponents.insert(terrainComponent);
+}
+
+void RenderManager::DeferredGeometryPass(CameraComponent* camera)
+{
+    m_deferredFrameBuffer->Bind();
+    {
+        m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+        m_renderWindow->Clear();
+        m_geometryPassShader->Use();
+        m_geometryPassShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(m_gPosition->GetWidth(), m_gPosition->GetHeight()) * camera->GetViewMatrix());
+        for (auto m : m_meshComponents)
+        {
+            Mesh* mesh = m->GetMesh();
+            m_geometryPassShader->SetMat4Slow("Model", m->GetTransform()->GetWorldMatrix());
+            mesh->Render(Mesh::Mode::TRIANGLES);
+        }
+    }
+    m_deferredFrameBuffer->Unbind();
+}
+
+void RenderManager::DeferredLightingPass()
+{
+    m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    m_renderWindow->Clear();
+
+    m_lightingPassShader->Use();
+    int32 lightCount = 0;
+    for (auto directionalLight : m_directionalLightComponents)
+    {
+        glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
+        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
+        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_lightingPassShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        ++lightCount;
+    }
+    m_lightingPassShader->SetIntSlow("lightCount", lightCount);
+    // @todo maybe rename these to GPosition? CaptialCase for uniforms?
+    m_lightingPassShader->SetIntSlow("gPosition", 0);
+    m_lightingPassShader->SetIntSlow("gNormal", 1);
+    m_lightingPassShader->SetIntSlow("gAlbedo", 2);
+    m_gPosition->Bind(0);
+    m_gNormal->Bind(1);
+    m_gAlbedo->Bind(2);
+    m_fullScreenQuad->Render();
+}
+
 void RenderManager::SetUp()
 {
     m_renderWindow = new RenderWindow("Snack Editor", 1280, 720);
@@ -149,10 +262,58 @@ void RenderManager::SetUp()
     m_meshShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/DefaultMesh.vs.glsl"), Shader::Type::VERTEX_SHADER);
     m_meshShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/DefaultMesh.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
     m_meshShader->LinkProgram();
+
+    m_terrainShader = new Shader();
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.gs.glsl"), Shader::Type::GEOMETRY_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_terrainShader->LinkProgram();
+
+    // Deferred rendering.
+    m_deferredFrameBuffer = new Framebuffer();
+
+    m_gPosition = new Texture();
+    m_gPosition->SetData(512, 512, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_gPosition->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_gPosition->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_deferredFrameBuffer->AttachTexture(0, m_gPosition);
+
+    m_gNormal = new Texture();
+    m_gNormal->SetData(512, 512, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_gNormal->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_gNormal->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_deferredFrameBuffer->AttachTexture(1, m_gNormal);
+
+    m_gAlbedo = new Texture();
+    m_gAlbedo->SetData(512, 512, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
+    m_gAlbedo->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_gAlbedo->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_deferredFrameBuffer->AttachTexture(2, m_gAlbedo);
+
+    // Set draw buffers.
+    uint32 attachments[3] = { 0, 1, 2 };
+    m_deferredFrameBuffer->SetDrawBuffers(attachments, 3);
+
+    // Depth and stencil.
+    m_depthStencil = new Renderbuffer();
+    m_depthStencil->SetData(512, 512, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
+    m_deferredFrameBuffer->AttachDepthStencil(m_depthStencil);
+
+    m_geometryPassShader = new Shader();
+    m_geometryPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/GeometryPass.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_geometryPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/GeometryPass.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_geometryPassShader->LinkProgram();
+
+    m_lightingPassShader = new Shader();
+    m_lightingPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/LightingPass.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_lightingPassShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/LightingPass.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_lightingPassShader->LinkProgram();
+
+    m_fullScreenQuad = new FullScreenQuad();
 }
 
 void RenderManager::TearDown()
 {
     delete m_renderWindow;
 }
-} // namespace spy
+} // namespace snack

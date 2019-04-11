@@ -5,7 +5,7 @@
 #include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 
-namespace spy
+namespace snack
 {
 SceneRotateTool::SceneRotateTool()
     : m_mode(Mode::NONE)
@@ -103,4 +103,4 @@ void SceneRotateTool::OnTick(const SceneToolData& data)
         }
     }
 }
-} // namespace spy
+} // namespace snack

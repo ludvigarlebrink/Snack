@@ -8,7 +8,7 @@
 #include <string>
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 namespace priv
 {
@@ -43,9 +43,9 @@ static void CheckRenderError(const char* file, int32 line)
     }
 }
 } // namespace priv
-} // namespace spy
+} // namespace snack
 
-#define SPY_CHECK_RENDER_ERROR() spy::priv::CheckRenderError(__FILE__, __LINE__)
+#define SPY_CHECK_RENDER_ERROR() snack::priv::CheckRenderError(__FILE__, __LINE__)
 
 #else
 

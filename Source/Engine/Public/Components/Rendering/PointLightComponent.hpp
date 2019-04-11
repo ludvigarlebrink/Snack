@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class PointLightComponent final : public BaseComponent
 {
@@ -28,4 +28,4 @@ private:
     f32 m_range;
     glm::vec4 m_color;
 };
-} // namespace spy
+} // namespace snack

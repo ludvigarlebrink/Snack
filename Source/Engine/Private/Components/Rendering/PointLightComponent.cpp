@@ -1,9 +1,11 @@
 #include "Components/Rendering/PointLightComponent.hpp"
 #include"SketchInclude.hpp"
 #include "Manager.hpp"
+#ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
+#endif
 
-namespace spy
+namespace snack
 {
 PointLightComponent::PointLightComponent(Transform* transform)
     : BaseComponent(transform)
@@ -41,4 +43,4 @@ void PointLightComponent::SetIntensity(f32 intensity)
 {
     m_intensity = intensity;
 }
-} // namespace spy
+} // namespace snack

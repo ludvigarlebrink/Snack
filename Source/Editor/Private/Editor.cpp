@@ -7,6 +7,7 @@
 #include "EditorWindows/SceneWindow.hpp"
 #include "EditorWindows/ScriptEditorWindow.hpp"
 #include "EditorWindows/ShaderEditorWindow.hpp"
+#include "EditorWindows/TerrainEditorWindow.hpp"
 #include "EngineInclude.hpp"
 #include "Managers/EditorSceneManager.hpp"
 #include "Managers/EditorWindowManager.hpp"
@@ -15,7 +16,7 @@
 #include "SketchInternal.hpp"
 #include "Timer.hpp"
 
-namespace spy
+namespace snack
 {
 Editor::Editor()
 {
@@ -159,27 +160,27 @@ void Editor::DrawMainMenu()
 
         if (SketchMenu::Begin("Window"))
         {
-            if (SketchMenu::Item("Scene", "Ctrl+1"))
+            if (SketchMenu::Item("Scene"))
             {
                 m_editorWindowManager->OpenWindow<SceneWindow>();
             }
 
-            if (SketchMenu::Item("Game", "Ctrl+2"))
+            if (SketchMenu::Item("Game"))
             {
                 m_editorWindowManager->OpenWindow<GameWindow>();
             }
 
-            if (SketchMenu::Item("Scene Graph", "Ctrl+3"))
+            if (SketchMenu::Item("Scene Graph"))
             {
                 m_editorWindowManager->OpenWindow<SceneGraphWindow>();
             }
 
-            if (SketchMenu::Item("Inspector", "Ctrl+4"))
+            if (SketchMenu::Item("Inspector"))
             {
                 m_editorWindowManager->OpenWindow<InspectorWindow>();
             }
 
-            if (SketchMenu::Item("Asset Browser", "Ctrl+5"))
+            if (SketchMenu::Item("Asset Browser"))
             {
                 m_editorWindowManager->OpenWindow<AssetBrowserWindow>();
             }
@@ -187,6 +188,11 @@ void Editor::DrawMainMenu()
             if (SketchMenu::Item("Script Editor"))
             {
                 m_editorWindowManager->OpenWindow<ScriptEditorWindow>();
+            }
+
+            if (SketchMenu::Item("Terrain Editor"))
+            {
+                m_editorWindowManager->OpenWindow<TerrainEditorWindow>();
             }
 
             if (SketchMenu::Item("Particle Editor"))
@@ -220,4 +226,4 @@ void Editor::DrawMainMenu()
         SketchMenu::EndMain();
     }
 }
-} // namespace spy
+} // namespace snack

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 class Font;
 class Framebuffer;
@@ -10,4 +10,4 @@ class RenderWindow;
 class Shader;
 class Texture;
 class Mesh;
-} // namespace spy
+} // namespace snack

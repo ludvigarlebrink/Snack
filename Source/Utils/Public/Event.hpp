@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 class IEvent
 {

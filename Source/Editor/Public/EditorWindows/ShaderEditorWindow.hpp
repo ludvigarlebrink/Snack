@@ -2,7 +2,7 @@
 
 #include "EditorWindow.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API ShaderEditorWindow final : public EditorWindow
 {
@@ -20,4 +20,4 @@ private:
 
 
 };
-} // namespace spy
+} // namespace snack

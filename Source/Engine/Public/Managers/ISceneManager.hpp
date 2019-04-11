@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 class Transform;
 class Engine;
@@ -27,4 +27,4 @@ public:
 
     virtual Transform* Instantiate(Transform* parent) = 0;
 };
-} // namespace spy
+} // namespace snack

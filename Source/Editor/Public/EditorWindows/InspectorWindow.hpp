@@ -4,7 +4,7 @@
 #include "EngineForward.hpp"
 #include "Managers/IClassManager.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API InspectorWindow final : public EditorWindow
 {
@@ -25,4 +25,4 @@ private:
     std::string m_search;
     std::vector<IClassManager::ComponentInfo> m_componentInfos;
 };
-} // namespace spy
+} // namespace snack

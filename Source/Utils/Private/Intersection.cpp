@@ -2,7 +2,7 @@
 
 #include <numeric>
 
-namespace spy
+namespace snack
 {
 bool Intersection::RayVsOBB(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& aabbMin, const glm::vec3& aabbMax, const glm::mat4& modelMatrix, RayHitData& hit)
 {
@@ -195,4 +195,4 @@ bool Intersection::RayVsSphere(const glm::vec3& origin, const glm::vec3& directi
     hit.normal = glm::normalize(hit.point - center);
     return true;
 }
-} // namespace spy
+} // namespace snack

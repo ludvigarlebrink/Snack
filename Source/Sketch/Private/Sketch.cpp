@@ -3,7 +3,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_stdlib.h"
 
-namespace spy
+namespace snack
 {
 bool Sketch::Button(const std::string& label)
 {
@@ -33,9 +33,35 @@ bool Sketch::FloatField(const std::string& label, f32& value, f32 width)
     return returnVal;
 }
 
-void Sketch::Text(const std::string& text)
+void Sketch::Image(Texture* texture, const glm::vec2& size)
 {
-    ImGui::Text(text.c_str());
+    ImGui::Image(static_cast<ImTextureID>(texture), ImVec2(size.x, size.y), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+}
+
+bool Sketch::ImageButton(Texture* texture, bool flip)
+{
+    if (flip)
+    {
+        return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 0);
+    }
+
+    return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 0);
+}
+
+bool Sketch::ImageButton(Texture* texture, bool flip, const glm::vec4& color)
+{
+    if (flip)
+    {
+        return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
+    }
+
+    return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
+}
+
+
+bool Sketch::IntField(const std::string& label, int32& value)
+{
+    return ImGui::DragInt(label.c_str(), &value);
 }
 
 bool Sketch::Selectable(const std::string& label)
@@ -58,14 +84,14 @@ void Sketch::Seperator()
     ImGui::Separator();
 }
 
+void Sketch::Text(const std::string& text)
+{
+    ImGui::Text(text.c_str());
+}
+
 bool Sketch::TextField(const std::string& label, std::string& text)
 {
     return ImGui::InputText(label.c_str(), &text);
-}
-
-void Sketch::Image(Texture* texture, const glm::vec2& size)
-{
-    ImGui::Image(static_cast<ImTextureID>(texture), ImVec2(size.x, size.y), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 }
 
 bool Sketch::Vec2Field(const std::string& label, glm::vec2& value)
@@ -106,4 +132,4 @@ bool Sketch::Vec4Field(const std::string& label, glm::vec4& value)
     }
     return false;
 }
-} // namespace spy
+} // namespace snack

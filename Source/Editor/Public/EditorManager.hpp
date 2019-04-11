@@ -3,7 +3,7 @@
 #include "Managers/IEditorSceneManager.hpp"
 #include "Managers/IEditorWindowManager.hpp"
 
-namespace spy
+namespace snack
 {
 class Editor;
 
@@ -22,4 +22,4 @@ private:
     static IEditorSceneManager* m_editorSceneManager;
     static IEditorWindowManager* m_editorWindowManager;
 };
-} // namespace spy
+} // namespace snack

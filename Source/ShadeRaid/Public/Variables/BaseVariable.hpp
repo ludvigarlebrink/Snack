@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class BaseVariable
 {
@@ -20,4 +20,4 @@ private:
 
     std::string m_key;
 };
-} // namespace spy
+} // namespace snack

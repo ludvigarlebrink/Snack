@@ -7,7 +7,7 @@
 #include <sstream>
 #include <cstring>
 
-namespace spy
+namespace snack
 {
 Material::Material()
 {
@@ -66,7 +66,7 @@ bool Material::Load(const std::string& filename)
     {
         cereal::JSONInputArchive ar(ss);
 
-        int size = 0;
+        int32 size = 0;
         while (const char* name = ar.getNodeName()) {
             ar.startNode();
             if (std::strcmp(name, "textures_size") == 0) {
@@ -180,7 +180,7 @@ void Material::SetColor(const std::string& id, const glm::vec4& color)
     m_textures.insert({ id, { "", nullptr, color } });
 }
 
-void Material::SetShader(Shader * shader)
+void Material::SetShader(Shader* shader)
 {
     m_shader = shader;
 }
@@ -202,9 +202,4 @@ void Material::SetTexture(const std::string& id, Texture* texture, const glm::ve
 
     m_textures.insert({ id, { "", texture, color } });
 }
-
-void Material::SetMaterial()
-{
-
-}
-} // namespace spy
+} // namespace snack

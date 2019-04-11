@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class SceneManager final : public ISceneManager
 {
@@ -40,4 +40,4 @@ private:
 
     std::vector<Transform*> m_toBeDestroyed;
 };
-} // namespace spy
+} // namespace snack

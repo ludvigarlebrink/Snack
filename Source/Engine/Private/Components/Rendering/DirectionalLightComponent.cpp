@@ -5,7 +5,7 @@
 #include "SketchInclude.hpp"
 #endif
 
-namespace spy
+namespace snack
 {
 DirectionalLightComponent::DirectionalLightComponent(Transform* transform)
     : BaseComponent(transform)
@@ -64,4 +64,4 @@ void DirectionalLightComponent::SetIntensity(f32 intensity)
 {
     m_intensity = intensity;
 }
-} // namespace spy
+} // namespace snack

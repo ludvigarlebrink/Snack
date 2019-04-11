@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace spy
+namespace snack
 {
 struct SceneToolData
 {
@@ -16,4 +16,4 @@ struct SceneToolData
     glm::mat4 projection;
     glm::mat4 viewInverse;
 };
-} // namespace spy
+} // namespace snack

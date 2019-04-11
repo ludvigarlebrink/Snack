@@ -7,7 +7,7 @@
 #include <SDL/SDL.h>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class SketchGizmo;
 
@@ -65,4 +65,4 @@ private:
     static Shader* m_gizmoShader;
     static GizmoDrawData m_gizmoDrawData;
 };
-} // namespace spy
+} // namespace snack

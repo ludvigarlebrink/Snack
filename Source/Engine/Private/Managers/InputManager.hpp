@@ -2,7 +2,7 @@
 
 #include "Managers/IInputManager.hpp"
 
-namespace spy
+namespace snack
 {
 class InputManager final : public IInputManager
 {
@@ -55,4 +55,4 @@ private:
     int32 m_keysDownCount;
     int32 m_keysUpCount;
 };
-} // namespace spy
+} // namespace snack

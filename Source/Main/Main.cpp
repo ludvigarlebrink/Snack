@@ -4,7 +4,7 @@
 #include "Engine.hpp"
 #endif
 
-using namespace spy;
+using namespace snack;
 
 #ifdef SPY_EDITOR
 

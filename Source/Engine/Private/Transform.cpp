@@ -6,7 +6,7 @@
 #include "Sketch.hpp"
 #endif
 
-namespace spy
+namespace snack
 {
 Transform::Transform(Transform* parent, InstanceID instanceID)
     : m_name("Transform")
@@ -315,4 +315,4 @@ void Transform::SetScale(f32 uniform)
 {
     m_scale = glm::vec3(uniform, uniform, uniform);
 }
-} // namespace spy
+} // namespace snack

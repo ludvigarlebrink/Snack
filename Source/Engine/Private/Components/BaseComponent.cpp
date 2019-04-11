@@ -2,7 +2,7 @@
 #include "SketchInclude.hpp"
 #include "Transform.hpp"
 
-namespace spy
+namespace snack
 {
 BaseComponent::BaseComponent(Transform* pEntity)
     : m_isEnabled(true)
@@ -38,4 +38,4 @@ void BaseComponent::SetEnabled(bool enabled)
 {
     m_isEnabled = enabled;
 }
-} // namespace spy
+} // namespace snack

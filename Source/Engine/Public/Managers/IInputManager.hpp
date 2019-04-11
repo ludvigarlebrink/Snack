@@ -4,7 +4,7 @@
 #include "Input/Button.hpp"
 #include "Input/Key.hpp"
 
-namespace spy
+namespace snack
 {
 class ENGINE_API IInputManager
 {
@@ -26,4 +26,4 @@ public:
 
     virtual void ProcessEvents() = 0;
 };
-} // namespace spy
+} // namespace snack

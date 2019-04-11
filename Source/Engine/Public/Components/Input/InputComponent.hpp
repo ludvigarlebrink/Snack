@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace spy
+namespace snack
 {
 class InputSystem;
 

@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 struct SceneToolData;
 
@@ -18,4 +18,4 @@ public:
 
     virtual void OnTick(const SceneToolData& data) = 0;
 };
-} // namespace spy
+} // namespace snack

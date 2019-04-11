@@ -2,7 +2,7 @@
 
 #include "EditorWindow.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API TextureImporterWindow final : public EditorWindow
 {
@@ -23,4 +23,4 @@ protected:
 private:
 
 };
-} // namespace spy
+} // namespace snack

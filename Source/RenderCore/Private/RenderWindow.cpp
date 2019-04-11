@@ -2,7 +2,7 @@
 #include "RenderError.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 RenderWindow::RenderWindow()
     : m_window(nullptr)
@@ -219,4 +219,4 @@ uint32 RenderWindow::ToGLBlendFactor(BlendFactor blendFactor)
 
     return GL_ONE;
 }
-} // namespace spy
+} // namespace snack

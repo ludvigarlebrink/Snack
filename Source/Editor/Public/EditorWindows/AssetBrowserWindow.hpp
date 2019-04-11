@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class EDITOR_API AssetBrowserWindow final : public EditorWindow
 {
@@ -45,4 +45,4 @@ private:
 
     std::vector<int32> m_selectedFiles;
 };
-} // namespace spy
+} // namespace snack

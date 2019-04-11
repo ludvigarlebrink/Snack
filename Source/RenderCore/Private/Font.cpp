@@ -6,7 +6,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-namespace spy
+namespace snack
 {
 Font::Font()
     : m_fontSize(12)
@@ -111,4 +111,4 @@ void Font::LoadTTF(const std::string& filename, int32 fontSize)
 void Font::TearDown()
 {
 }
-} // namespace spy
+} // namespace snack

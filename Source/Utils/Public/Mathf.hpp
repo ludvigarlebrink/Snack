@@ -2,7 +2,7 @@
 
 #include "BaseTypes.hpp"
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A collection of mathematical functions.
@@ -72,9 +72,9 @@ public:
      */
     static const f32 PI;
 };
-} // namespace spy
+} // namespace snack
 
 /**
- * @class spy::Mathf
+ * @class snack::Mathf
  * @ingroup Math
  */

@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class EditorSceneManager final : public IEditorSceneManager
 {
@@ -34,4 +34,4 @@ private:
 
     std::vector<Transform*> m_selectedTransforms;
 };
-} // namespace spy
+} // namespace snack

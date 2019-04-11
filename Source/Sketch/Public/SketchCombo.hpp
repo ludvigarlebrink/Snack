@@ -4,15 +4,15 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 class SKETCH_API SketchCombo
 {
 public:
 
-    static bool Begin(const std::string& id, const std::string& previewLabel);
+    static bool Begin(const std::string& label, const std::string& previewLabel);
     
-    static bool Begin(const std::string& id, const std::string& previewLabel, f32 width);
+    static bool Begin(const std::string& label, const std::string& previewLabel, f32 width);
 
     static void End();
 
@@ -20,4 +20,4 @@ public:
 
     static bool Selectable(const std::string& label, bool isSelected);
 };
-} // namespace spy
+} // namespace snack

@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class Renderbuffer;
 
@@ -26,6 +26,8 @@ public:
 
     void Bind();
 
+    void SetDrawBuffers(uint32* attachments, int32 attchmentCount);
+
     void Unbind();
 
 private:
@@ -38,4 +40,4 @@ private:
 
     uint32 m_fbo;
 };
-} // namespace spy
+} // namespace snack

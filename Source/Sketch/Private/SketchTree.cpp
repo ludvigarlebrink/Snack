@@ -1,7 +1,7 @@
 #include "SketchTree.hpp"
 #include "imgui/imgui.h"
 
-namespace spy
+namespace snack
 {
 bool SketchTree::BeginNode(const std::string& label, bool isSelected, bool& isClicked)
 {
@@ -55,4 +55,4 @@ bool SketchTree::LeafNode(const std::string& label, uint64 id, bool isSelected, 
     isClicked = ImGui::IsItemClicked(0);
     return isOpen;
 }
-} // namespace spy
+} // namespace snack

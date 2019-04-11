@@ -4,7 +4,7 @@
 #include "EngineInclude.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 InspectorWindow::InspectorWindow()
 {
@@ -90,4 +90,4 @@ void InspectorWindow::OnDraw(f32 deltaTime)
         }
     }
 }
-} // namespace spy
+} // namespace snack

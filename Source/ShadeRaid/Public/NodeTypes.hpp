@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 enum class NodeTypes
 {
@@ -9,4 +9,4 @@ enum class NodeTypes
     TEXTURE_ENTRY,
     VERTEX_ENTRY
 };
-} // namespace spy
+} // namespace snack

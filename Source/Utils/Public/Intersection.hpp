@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class UTILS_API Intersection
 {
@@ -26,4 +26,4 @@ public:
 
     static bool RayVsSphere(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& center, f32 radius, RayHitData& hit);
 };
-} // namespace spy
+} // namespace snack

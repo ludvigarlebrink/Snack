@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 FolderNode::FolderNode(const std::string& folderpath)
 {
@@ -99,4 +99,4 @@ void FolderNode::SetUp(const std::string& folderpath, FolderNode* parent)
         }
     }
 }
-} // namespace spy
+} // namespace snack

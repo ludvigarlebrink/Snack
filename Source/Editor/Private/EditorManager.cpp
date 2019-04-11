@@ -1,6 +1,6 @@
 #include "EditorManager.hpp"
 
-namespace spy
+namespace snack
 {
 IEditorSceneManager* EditorManager::m_editorSceneManager = nullptr;
 IEditorWindowManager* EditorManager::m_editorWindowManager = nullptr;

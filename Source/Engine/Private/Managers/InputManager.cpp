@@ -5,7 +5,7 @@
 
 #include <SDL/SDL.h>
 
-namespace spy
+namespace snack
 {
 InputManager::InputManager()
     : m_keysDownCount(0)
@@ -241,4 +241,4 @@ void InputManager::SetUp()
 void InputManager::TearDown()
 {
 }
-} // namespace spy
+} // namespace snack

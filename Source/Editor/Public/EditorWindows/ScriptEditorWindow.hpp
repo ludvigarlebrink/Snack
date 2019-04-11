@@ -2,7 +2,7 @@
 
 #include "EditorWindow.hpp"
 
-namespace spy
+namespace snack
 {
 class EDITOR_API ScriptEditorWindow final : public EditorWindow
 {
@@ -18,4 +18,4 @@ protected:
 
     void OnDraw(f32 deltaTime) override;
 };
-} // namespace spy
+} // namespace snack

@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief Drag and drop.
@@ -37,9 +37,9 @@ public:
 
     static void SetPayload(const std::string& type, void* data, uint64 size);
 };
-} // namespace spy
+} // namespace snack
 
 /**
- * @class spy::SketchDragDrop
+ * @class snack::SketchDragDrop
  * @ingroup Sketch
  */

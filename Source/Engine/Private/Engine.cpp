@@ -20,11 +20,12 @@
 #include "Components/Rendering/PointLightComponent.hpp"
 #include "Components/Rendering/SkinnedMeshComponent.hpp"
 #include "Components/Rendering/SpotlightComponent.hpp"
+#include "Components/Rendering/TerrainComponent.hpp"
 
 
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 Engine::Engine()
 {
@@ -75,10 +76,11 @@ void Engine::SetUp()
     m_classManager->RegisterComponent<PointLightComponent>("Point Light");
     m_classManager->RegisterComponent<SkinnedMeshComponent>("Skinned Mesh");
     m_classManager->RegisterComponent<SpotlightComponent>("Spotlight");
+    m_classManager->RegisterComponent<TerrainComponent>("Terrain");
 }
 
 void Engine::TearDown()
 {
     // @todo
 }
-} // namespace spy
+} // namespace snack

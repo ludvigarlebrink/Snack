@@ -4,7 +4,7 @@
 #include "Texture.hpp"
 #include "glad/glad.h"
 
-namespace spy
+namespace snack
 {
 Framebuffer::Framebuffer()
     : m_fbo(0u)
@@ -37,6 +37,19 @@ void Framebuffer::Bind()
     SPY_CHECK_RENDER_ERROR();
 }
 
+void Framebuffer::SetDrawBuffers(uint32* attachments, int32 attachmentCount)
+{
+    Bind();
+    uint32* a = new uint32[attachmentCount];
+    for (int32 i = 0; i < attachmentCount; ++i)
+    {
+        a[i] = GL_COLOR_ATTACHMENT0 + attachments[i];
+    }
+    glDrawBuffers(attachmentCount, a);
+    SPY_CHECK_RENDER_ERROR();
+    delete[] a;
+}
+
 void Framebuffer::Unbind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0u);
@@ -56,4 +69,4 @@ void Framebuffer::TearDown()
     SPY_CHECK_RENDER_ERROR();
     m_fbo = 0u;
 }
-} // namespace spy
+} // namespace snack

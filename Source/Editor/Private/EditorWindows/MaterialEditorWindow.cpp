@@ -4,7 +4,7 @@
 #include "RenderCoreInclude.hpp"
 #include "SketchInclude.hpp"
 
-namespace spy
+namespace snack
 {
 MaterialEditorWindow::MaterialEditorWindow()
     : m_material(nullptr)
@@ -28,23 +28,14 @@ void MaterialEditorWindow::OnDraw(f32 deltaTime)
     {
         bool isMaterial = false;
 
-        std::vector<std::string> TextureList;
-        TextureList = m_material->GetIds();
-        /*TextureList.push_back("Poop");
-        TextureList.push_back("Fabric");
-        TextureList.push_back("Death");
+        std::vector<std::string> textureList;
+        textureList = m_material->GetIds();
 
-        glm::vec4 Initcolor(0.0, 0.0, 0.0, 0.0);
-        for (int x = 0; x < TextureList.size(); ++x)
-        {
-            m_colors.push_back(Initcolor);
-        }*/
-        //Sketch::Vec4Field("Color", m_color);
         Sketch::Text("Textures:");
-        int y = 0;
-        for (std::vector<std::string>::iterator it = TextureList.begin(); it != TextureList.end(); ++it)
+        int32 y = 0;
+        for (auto& it : textureList)
         {
-            Sketch::Text(*it);
+            Sketch::Text(it);
             Sketch::SameLine();
             m_color = m_material->GetColor(*it);
             Sketch::Vec4Field("Color", m_color);
@@ -73,5 +64,4 @@ void MaterialEditorWindow::SetUp()
 void MaterialEditorWindow::TearDown()
 {
 }
-
-} // namespace spy
+} // namespace snack

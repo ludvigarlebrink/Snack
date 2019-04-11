@@ -1,12 +1,12 @@
 #include "Variables\BaseVariable.hpp"
 
-namespace spy
+namespace snack
 {
 BaseVariable::~BaseVariable()
 {
 }
 
-std::string spy::BaseVariable::GetKey() const
+std::string snack::BaseVariable::GetKey() const
 {
     return m_key;
 }
@@ -15,4 +15,4 @@ void BaseVariable::SetKey(const std::string& key)
 {
     m_key = key;
 }
-} // namespace spy
+} // namespace snack

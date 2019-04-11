@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief A normal static vertex.
@@ -29,4 +29,4 @@ struct StaticVertex
      */
     glm::vec2 textureCoordinate;
 };
-} // namespace spy
+} // namespace snack

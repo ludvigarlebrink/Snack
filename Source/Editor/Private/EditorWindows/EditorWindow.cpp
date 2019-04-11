@@ -1,6 +1,6 @@
 #include "EditorWindows/EditorWindow.hpp"
 
-namespace spy
+namespace snack
 {
 EditorWindow::EditorWindow()
 {
@@ -14,4 +14,4 @@ void EditorWindow::OnDraw(f32 deltaTime)
 {
     // Do nothing...
 }
-} // namespace spy
+} // namespace snack

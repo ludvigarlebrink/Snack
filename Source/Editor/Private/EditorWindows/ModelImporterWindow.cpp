@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-namespace spy
+namespace snack
 {
 ModelImporterWindow::ModelImporterWindow()
     : m_flipTextureCoordiantes(false)
@@ -89,4 +89,4 @@ void ModelImporterWindow::ImportObj()
         std::cout << "Model: " << m_source << " imported.\n";
     }
 }
-} // namespace spy
+} // namespace snack

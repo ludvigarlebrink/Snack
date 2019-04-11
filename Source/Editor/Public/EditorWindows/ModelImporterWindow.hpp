@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 class EDITOR_API ModelImporterWindow final : public EditorWindow
 {
@@ -35,4 +35,4 @@ private:
 
     std::string m_source;
 };
-} // namespace spy
+} // namespace snack

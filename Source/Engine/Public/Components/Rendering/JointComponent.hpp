@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-namespace spy
+namespace snack
 {
 class JointComponent final : public BaseComponent
 {
@@ -19,4 +19,4 @@ public:
 
     void OnEditorInspector() override;
 };
-} // namespace spy
+} // namespace snack

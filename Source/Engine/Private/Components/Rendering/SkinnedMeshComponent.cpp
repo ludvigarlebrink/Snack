@@ -1,7 +1,7 @@
 #include "Components\Rendering\SkinnedMeshComponent.hpp"
 #include "Manager.hpp"
 
-namespace spy
+namespace snack
 {
 SkinnedMeshComponent::SkinnedMeshComponent(Transform* transform)
     : BaseComponent(transform)
@@ -39,4 +39,4 @@ void SkinnedMeshComponent::OnEditorInspector()
 {
 }
 #endif
-} // namespace spy
+} // namespace snack

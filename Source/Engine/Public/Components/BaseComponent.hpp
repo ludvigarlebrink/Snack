@@ -5,7 +5,7 @@
 #include <typeinfo>
 #include <string>
 
-namespace spy
+namespace snack
 {
 class Engine;
 class IAssetManager;
@@ -43,4 +43,4 @@ private:
     bool m_isEnabled;
     Transform* m_pTransform;
 };
-} // namespace spy
+} // namespace snack

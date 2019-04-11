@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 
-namespace spy
+namespace snack
 {
 /**
  * @brief Graphic output stream.
@@ -20,7 +20,7 @@ public:
 
     void Close() override;
 
-    bool GetStaticMesh(const std::string& name, std::vector<StaticVertex>& vertices, std::vector<uint32>& elements);
+    bool LoadStaticMesh(const std::string& name, std::vector<StaticVertex>& vertices, std::vector<uint32>& elements);
 
     bool Open(const std::string& filename) override;
 
@@ -35,4 +35,4 @@ private:
     std::ifstream m_file;
     std::vector<Header> m_headers;
 };
-} // namespace spy
+} // namespace snack

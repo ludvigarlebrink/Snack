@@ -1,6 +1,6 @@
 #pragma once
 
-namespace spy
+namespace snack
 {
 enum class Axis
 {
@@ -8,4 +8,4 @@ enum class Axis
     Y_AXIS,
     Z_AXIS
 };
-} // namespace spy
+} // namespace snack

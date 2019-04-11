@@ -5,11 +5,24 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace spy
+namespace snack
 {
 class ENGINE_API CameraComponent final : public BaseComponent
 {
 public:
+
+    enum class RenderMode
+    {
+        /**
+         * @brief Render in deferred mode.
+         */
+        DEFERRED,
+
+        /**
+         * @brief Render in forward mode.
+         */
+        FORWARD,
+    };
 
     enum class Projection
     {
@@ -26,7 +39,7 @@ public:
 
 public:
 
-    CameraComponent(Transform* pTransform);
+    CameraComponent(Transform* transform);
 
     ~CameraComponent();
 
@@ -42,9 +55,15 @@ public:
 
     glm::mat4 GetProjectionMatrix(f32 width, f32 height) const;
 
+    RenderMode GetRenderMode() const;
+
     glm::mat4 GetViewMatrix() const;
 
+#ifdef SPY_EDITOR
+    void OnEditorGizmo() override;
+
     void OnEditorInspector() override;
+#endif
 
     void SetFarPlane(f32 farPlane);
 
@@ -54,11 +73,14 @@ public:
 
     void SetProjection(Projection projection);
 
+    void SetRenderMode(RenderMode renderMode);
+
     void SetSize(f32 size);
 
 private:
 
     Projection m_projection;
+    RenderMode m_renderMode;
 
     glm::mat4 m_projectionMatrix;
 
@@ -67,4 +89,4 @@ private:
     f32 m_farPlane;
     f32 m_size;
 };
-} // namespace spy
+} // namespace snack
