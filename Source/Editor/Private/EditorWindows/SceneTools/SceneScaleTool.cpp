@@ -65,7 +65,6 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
         SketchGizmo::LineOverdrawn(widgetPosition, xAxis + widgetPosition, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
         SketchGizmo::LineOverdrawn(widgetPosition, yAxis + widgetPosition, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
         SketchGizmo::LineOverdrawn(widgetPosition, zAxis + widgetPosition, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-
     }
 }
 } // namespace snack
