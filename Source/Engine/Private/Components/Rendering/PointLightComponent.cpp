@@ -1,7 +1,9 @@
 #include "Components/Rendering/PointLightComponent.hpp"
 #include"SketchInclude.hpp"
 #include "Manager.hpp"
+#ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
+#endif
 
 namespace snack
 {

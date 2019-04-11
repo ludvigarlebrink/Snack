@@ -38,6 +38,8 @@ protected:
 
     void DeregisterSpotlightComponent(SpotlightComponent* spotlightComponent) override;
 
+    void DeregisterTerrainComponent(TerrainComponent* terrainComponent) override;
+
     void RegisterCameraComponent(CameraComponent* cameraComponent) override;
 
     void RegisterDirectionalLightComponent(DirectionalLightComponent* directionalLightComponent) override;
@@ -51,6 +53,8 @@ protected:
     void RegisterSkinnedMeshComponent(SkinnedMeshComponent* skinnedMeshComponent) override;
 
     void RegisterSpotlightComponent(SpotlightComponent* spotlightComponent) override;
+
+    void RegisterTerrainComponent(TerrainComponent* terrainComponent) override;
 
 private:
 
@@ -67,6 +71,7 @@ private:
     RenderWindow* m_renderWindow;
     Shader* m_meshShader;
     Shader* m_skinnedMeshShader;
+    Shader* m_terrainShader;
 
     Framebuffer* m_deferredFrameBuffer;
     Renderbuffer* m_depthStencil;
@@ -84,5 +89,6 @@ private:
     std::set<PointLightComponent*> m_pointLightComponents;
     std::set<SkinnedMeshComponent*> m_skinnedMeshComponents;
     std::set<SpotlightComponent*> m_spotlightComponents;
+    std::set<TerrainComponent*> m_terrainComponents;
 };
 } // namespace snack

@@ -2,6 +2,8 @@
 #include "EditorManager.hpp"
 #include "EditorWindows/ModelImporterWindow.hpp"
 #include "EditorWindows/TextureImporterWindow.hpp"
+#include "EditorWindows/TerrainEditorWindow.hpp"
+#include "EngineInclude.hpp"
 #include "PlatformInclude.hpp"
 #include "SketchInclude.hpp"
 
@@ -130,6 +132,16 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                     }
                 }
 
+                if (SketchDragDrop::BeginSource(fileInfo.name))
+                {
+                    // @todo This is a bit clunky, maybe make this better?
+                    char filename[512];
+                    memset(filename, '\0', 512);
+                    memcpy(filename, fileInfo.relativePath.c_str(), fileInfo.relativePath.size());
+                    SketchDragDrop::SetPayload("Filename", filename, 512);
+                    SketchDragDrop::EndSource();
+                }
+
                 if (SketchPopup::BeginContext(fileInfo.name + fileInfo.extension))
                 {
                     if (fileInfo.extension == ".scene")
@@ -145,6 +157,15 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                     else if (fileInfo.extension == ".shader")
                     {
                         SketchMenu::Item("Open");
+                        Sketch::Seperator();
+                    }
+                    else if (fileInfo.extension == ".terrain")
+                    {
+                        if (SketchMenu::Item("Open"))
+                        {
+                            TerrainEditorWindow* terrainWindow = EditorManager::Window()->OpenWindow<TerrainEditorWindow>();
+                            terrainWindow->SetTerrain(fileInfo.relativePath);
+                        }
                         Sketch::Seperator();
                     }
 
@@ -197,6 +218,7 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             SketchPopup::MenuItemOpenPopup("Lua Script", "Create Lua Script");
             SketchPopup::MenuItemOpenPopup("Material", "Create Material");
             SketchPopup::MenuItemOpenPopup("Shader", "Create Shader");
+            SketchPopup::MenuItemOpenPopup("Terrain", "Create Terrain");
             SketchPopup::MenuItemOpenPopup("Text File", "Create Text File");
 
 
@@ -234,6 +256,14 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
                 std::string filepath = folderNode->GetRelativePath() + inputText + ".shader";
                 FileSystem::CreateFile(filepath);
                 inputText.clear();
+                m_refresh = true;
+            }
+            else if (SketchPopup::Dialog("Create Terrain", "Terrain Name:", "Create", "Cancel", inputText))
+            {
+                std::string filepath = folderNode->GetRelativePath() + inputText + ".terrain";
+                Terrain* terrain = new Terrain();
+                terrain->Save(filepath);
+                delete terrain;
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Text File", "File Name:", "Create", "Cancel", inputText))

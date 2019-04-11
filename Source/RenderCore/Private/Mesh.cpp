@@ -139,7 +139,7 @@ void Mesh::SetAttribPtr(int32 index, Type type, int32 offset)
 
 void Mesh::SetData(void* vertexData, int32 vertexCount, int32 vertexSize, uint32* elementData, int32 elementCount)
 {
-    SetData(vertexData, vertexSize, vertexCount, elementData, elementCount, Optimization::STATIC_DRAW);
+    SetData(vertexData, vertexCount, vertexSize, elementData, elementCount, Optimization::STATIC_DRAW);
 }
 
 void Mesh::SetData(void* vertexData, int32 vertexCount, int32 vertexSize, uint32* elementData, int32 elementCount, Optimization optimization)

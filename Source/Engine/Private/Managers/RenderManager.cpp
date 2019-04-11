@@ -6,10 +6,12 @@
 #include "Components/Rendering/PointLightComponent.hpp"
 #include "Components/Rendering/SkinnedMeshComponent.hpp"
 #include "Components/Rendering/SpotlightComponent.hpp"
+#include "Components/Rendering/TerrainComponent.hpp"
 #include "FileSystem.hpp"
 #include "SketchInclude.hpp"
 #include "UtilsInclude.hpp"
 #include "RenderCoreInclude.hpp"
+#include "Rendering/Terrain.hpp"
 #include "Transform.hpp"
 
 namespace snack
@@ -104,14 +106,26 @@ void RenderManager::RenderSceneCustomCamera(const glm::mat4& viewProjection)
         m_meshShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
         ++lightCount;
     }
+    
     m_meshShader->SetIntSlow("DirectionalLightCount", lightCount);
-
+    m_meshShader->SetMat4Slow("ViewProjection", viewProjection);
     for (auto meshComponent : m_meshComponents)
     {
         Mesh* mesh = meshComponent->GetMesh();
         m_meshShader->SetMat4Slow("Model", meshComponent->GetTransform()->GetWorldMatrix());
-        m_meshShader->SetMat4Slow("ViewProjection", viewProjection);
         mesh->Render(Mesh::Mode::TRIANGLES);
+    }
+
+    m_terrainShader->Use();
+    m_terrainShader->SetMat4Slow("ViewProjection", viewProjection);
+    for (auto terrainComponent : m_terrainComponents)
+    {
+        Terrain* terrain = terrainComponent->GetTerrain();
+        if (terrain)
+        {
+            m_terrainShader->SetMat4Slow("Model", terrainComponent->GetTransform()->GetWorldMatrix());
+            terrain->Render();
+        }
     }
 }
 
@@ -150,6 +164,11 @@ void RenderManager::DeregisterSpotlightComponent(SpotlightComponent* spotlightCo
     m_spotlightComponents.erase(spotlightComponent);
 }
 
+void RenderManager::DeregisterTerrainComponent(TerrainComponent* terrainComponent)
+{
+    m_terrainComponents.erase(terrainComponent);
+}
+
 void RenderManager::RegisterCameraComponent(CameraComponent* cameraComponent)
 {
     m_cameraComponents.insert(cameraComponent);
@@ -183,6 +202,11 @@ void RenderManager::RegisterSkinnedMeshComponent(SkinnedMeshComponent* skinnedMe
 void RenderManager::RegisterSpotlightComponent(SpotlightComponent* spotlightComponent)
 {
     m_spotlightComponents.insert(spotlightComponent);
+}
+
+void RenderManager::RegisterTerrainComponent(TerrainComponent* terrainComponent)
+{
+    m_terrainComponents.insert(terrainComponent);
 }
 
 void RenderManager::DeferredGeometryPass(CameraComponent* camera)
@@ -243,6 +267,12 @@ void RenderManager::SetUp()
     m_meshShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/DefaultMesh.vs.glsl"), Shader::Type::VERTEX_SHADER);
     m_meshShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/DefaultMesh.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
     m_meshShader->LinkProgram();
+
+    m_terrainShader = new Shader();
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.gs.glsl"), Shader::Type::GEOMETRY_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_terrainShader->LinkProgram();
 
     // Deferred rendering.
     m_deferredFrameBuffer = new Framebuffer();

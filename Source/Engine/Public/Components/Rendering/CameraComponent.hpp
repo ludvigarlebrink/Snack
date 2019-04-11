@@ -39,7 +39,7 @@ public:
 
 public:
 
-    CameraComponent(Transform* pTransform);
+    CameraComponent(Transform* transform);
 
     ~CameraComponent();
 
@@ -83,7 +83,6 @@ private:
     RenderMode m_renderMode;
 
     glm::mat4 m_projectionMatrix;
-
 
     f32 m_fieldOfView;
     f32 m_nearPlane;

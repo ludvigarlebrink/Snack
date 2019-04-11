@@ -58,6 +58,12 @@ bool Sketch::ImageButton(Texture* texture, bool flip, const glm::vec4& color)
     return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
 }
 
+
+bool Sketch::IntField(const std::string& label, int32& value)
+{
+    return ImGui::DragInt(label.c_str(), &value);
+}
+
 bool Sketch::Selectable(const std::string& label)
 {
     return ImGui::Selectable(label.c_str());
