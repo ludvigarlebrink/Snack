@@ -3,13 +3,20 @@
         "type": "material"
     },
     "textures_size": {
-        "size": 1
+        "size": 2
     },
     "textures": [
         {
             "id": "Base",
-            "rColor": 1.0,
+            "rColor": 2.0,
             "gColor": 1.0,
+            "bColor": 1.0,
+            "aColor": 1.0
+        },
+		{
+            "id": "Poop",
+            "rColor": 2.0,
+            "gColor": 0.5,
             "bColor": 1.0,
             "aColor": 1.0
         }
