@@ -4,6 +4,8 @@
 #include "SketchInclude.hpp"
 #endif
 
+#include <algorithm>
+
 namespace snack
 {
 SpotlightComponent::SpotlightComponent(Transform* transform)
@@ -37,6 +39,6 @@ void SpotlightComponent::OnEditorInspector()
 
 void SpotlightComponent::SetIntensity(f32 intensity)
 {
-    m_intensity = intensity;
+    m_intensity = std::clamp(intensity, 0.0f, 100.0f);
 }
 } // namespace snack

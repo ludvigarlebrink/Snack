@@ -93,7 +93,7 @@ void main()
 		vec3 H = normalize(viewDir + L);  
 		float distance    = length(PointLights[i].position - WorldPosition.xyz);
 		float attenuation = 1.0 / (distance * distance);
-		vec3 radiance     = PointLights[i].color * attenuation;
+		vec3 radiance     = PointLights[i].intensity * PointLights[i].color * attenuation;
 
 		// BRDF
 		float NDF = DistributionGGX(Normal.xyz, H, roughness);       

@@ -239,7 +239,7 @@ void RenderManager::DeferredLightingPass(CameraComponent* camera)
         glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
         m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
         m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
-        m_lightingPassShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        m_lightingPassShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", directionalLight->GetIntensity());
         ++lightCount;
     }
     m_lightingPassShader->SetIntSlow("DirectionalLightCount", lightCount);
@@ -249,7 +249,7 @@ void RenderManager::DeferredLightingPass(CameraComponent* camera)
         glm::mat4 model = pointLight->GetTransform()->GetWorldMatrix();
         m_lightingPassShader->SetVec3Slow("PointLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
         m_lightingPassShader->SetVec3Slow("PointLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
-        m_lightingPassShader->SetFloatSlow("PointLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        m_lightingPassShader->SetFloatSlow("PointLights[" + std::to_string(lightCount) + "].intensity", pointLight->GetIntensity());
         ++lightCount;
     }
     m_lightingPassShader->SetIntSlow("PointLightCount", lightCount);

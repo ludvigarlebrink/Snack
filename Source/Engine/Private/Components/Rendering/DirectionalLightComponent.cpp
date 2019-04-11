@@ -5,6 +5,8 @@
 #include "SketchInclude.hpp"
 #endif
 
+#include <algorithm>
+
 namespace snack
 {
 DirectionalLightComponent::DirectionalLightComponent(Transform* transform)
@@ -62,6 +64,6 @@ void DirectionalLightComponent::OnEditorInspector()
 
 void DirectionalLightComponent::SetIntensity(f32 intensity)
 {
-    m_intensity = intensity;
+    m_intensity = std::clamp(intensity, 0.0f, 100.0f);
 }
 } // namespace snack
