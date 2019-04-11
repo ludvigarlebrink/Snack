@@ -213,17 +213,22 @@ void RenderManager::DeferredLightingPass()
     for (auto directionalLight : m_directionalLightComponents)
     {
         glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
-        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
-        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
-        m_lightingPassShader->SetVec3Slow("directionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
-        m_lightingPassShader->SetFloatSlow("directionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
+        m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+        m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_lightingPassShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
         ++lightCount;
     }
-    m_lightingPassShader->SetIntSlow("lightCount", lightCount);
+    m_lightingPassShader->SetIntSlow("LightCount", lightCount);
+    if (m_cameraComponents.size() > 0)
+    {
+        CameraComponent camera = **m_cameraComponents.begin();
+        m_lightingPassShader->SetVec3Slow("ViewPosition", camera.GetTransform()->GetWorldPosition());
+    }
     // @todo maybe rename these to GPosition? CaptialCase for uniforms?
-    m_lightingPassShader->SetIntSlow("gPosition", 0);
-    m_lightingPassShader->SetIntSlow("gNormal", 1);
-    m_lightingPassShader->SetIntSlow("gAlbedo", 2);
+    m_lightingPassShader->SetIntSlow("GPosition", 0);
+    m_lightingPassShader->SetIntSlow("GNormal", 1);
+    m_lightingPassShader->SetIntSlow("GAlbedo", 2);
     m_gPosition->Bind(0);
     m_gNormal->Bind(1);
     m_gAlbedo->Bind(2);
