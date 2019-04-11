@@ -27,37 +27,22 @@ void main()
 	vec3 diffuse = vec3(0.0, 0.0, 0.0);
 	float specularStrength = 0.9;
 	vec3 specular = vec3(0.0, 0.0, 0.0);
-	int shininess = 256;
+	float shininess = 5000;
 	// retrieve data from G-buffer
 	vec4 WorldPosition = texture(GPosition, TexCoords_FS_in);
 	vec4 Normal = texture(GNormal, TexCoords_FS_in);
 	vec4 Albedo = texture(GAlbedo, TexCoords_FS_in);
 	vec3 viewDir = normalize(ViewPosition - WorldPosition.xyz);
-	int specCount = 0;
 	for (int i = 0; i < LightCount; ++i) 
 	{
 		ambient += DirectionalLights[i].color * ambientStrength;		
 		float diff = max(dot(Normal.xyz, DirectionalLights[i].direction), 0.0);
 		diffuse += diff * DirectionalLights[i].color;
-
 		
 		vec3 reflectDir = reflect(-DirectionalLights[i].direction, Normal.xyz); 
 		float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
-		if (spec > 0) {
-			++specCount;
-		}
-		specular += specularStrength * spec * DirectionalLights[i].color;
-		
+		specular += specularStrength * spec * DirectionalLights[i].color;		
 	}
-	if (LightCount > 0) 
-	{
-		ambient /= LightCount;
-		diffuse /= LightCount;
-	}
-	if (specCount > 0) 
-	{
-		specular /= specCount;
-	}
-	vec3 result = (ambient + diffuse + specular) * Albedo.xyz;
+	vec3 result = clamp((ambient + diffuse + specular) * Albedo.xyz, vec3(0), vec3(1));
 	FragColor = vec4(result, 1.0);
 }  

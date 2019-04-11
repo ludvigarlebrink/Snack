@@ -60,7 +60,7 @@ private:
 
     void DeferredGeometryPass(CameraComponent* camera);
 
-    void DeferredLightingPass();
+    void DeferredLightingPass(CameraComponent* camera);
 
     void SetUp();
 

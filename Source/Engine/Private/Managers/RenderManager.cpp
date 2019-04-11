@@ -73,7 +73,7 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
             DeferredGeometryPass(c);
             framebuffer->Bind();
             {
-                DeferredLightingPass();
+                DeferredLightingPass(c);
             }
             framebuffer->Unbind();
         }
@@ -227,7 +227,7 @@ void RenderManager::DeferredGeometryPass(CameraComponent* camera)
     m_deferredFrameBuffer->Unbind();
 }
 
-void RenderManager::DeferredLightingPass()
+void RenderManager::DeferredLightingPass(CameraComponent* camera)
 {
     m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     m_renderWindow->Clear();
@@ -244,11 +244,7 @@ void RenderManager::DeferredLightingPass()
         ++lightCount;
     }
     m_lightingPassShader->SetIntSlow("LightCount", lightCount);
-    if (m_cameraComponents.size() > 0)
-    {
-        CameraComponent camera = **m_cameraComponents.begin();
-        m_lightingPassShader->SetVec3Slow("ViewPosition", camera.GetTransform()->GetWorldPosition());
-    }
+    m_lightingPassShader->SetVec3Slow("ViewPosition", camera->GetTransform()->GetWorldPosition());
     // @todo maybe rename these to GPosition? CaptialCase for uniforms?
     m_lightingPassShader->SetIntSlow("GPosition", 0);
     m_lightingPassShader->SetIntSlow("GNormal", 1);
