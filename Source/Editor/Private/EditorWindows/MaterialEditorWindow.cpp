@@ -37,7 +37,7 @@ void MaterialEditorWindow::OnDraw(f32 deltaTime)
         {
             Sketch::Text(it);
             Sketch::SameLine();
-            m_color = m_material->GetColor(*it);
+            //m_color = m_material->GetColor(*it);
             Sketch::Vec4Field("Color", m_color);
             y++;
         }
