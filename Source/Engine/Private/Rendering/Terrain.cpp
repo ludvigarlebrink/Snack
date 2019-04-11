@@ -93,7 +93,7 @@ void Terrain::Refresh()
 
 void Terrain::Render()
 {
-    m_mesh->Render(Mesh::Mode::TRIANGLES);
+    m_mesh->Render(Mesh::Mode::PATCHES);
 }
 
 bool Terrain::Save(const std::string& filename)

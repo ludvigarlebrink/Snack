@@ -274,6 +274,8 @@ void RenderManager::SetUp()
 
     m_terrainShader = new Shader();
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.tcs.glsl"), Shader::Type::TESSELATION_CONTROL_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.tes.glsl"), Shader::Type::TESSELATION_EVALUATION_SHADER);
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.gs.glsl"), Shader::Type::GEOMETRY_SHADER);
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
     m_terrainShader->LinkProgram();
