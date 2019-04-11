@@ -74,23 +74,26 @@ bool Material::Load(const std::string& filename)
             }
             else if (std::strcmp(name, "textures") == 0)
             {
-                ar.startNode();
-                std::string id;
-                ar(cereal::make_nvp("id", id));
+                for (int i = 0; i < size; ++i) 
+                {
+                    ar.startNode();
+                    std::string id;
+                    ar(cereal::make_nvp("id", id));
 
-                std::string texturename;
-                name = ar.getNodeName();
-                if (std::strcmp(name, "texture") == 0) {
-                    ar(cereal::make_nvp("texture", texturename));
+                    std::string texturename;
+                    name = ar.getNodeName();
+                    if (std::strcmp(name, "texture") == 0) {
+                        ar(cereal::make_nvp("texture", texturename));
+                    }
+
+                    glm::vec4 color;
+                    ar(cereal::make_nvp("rColor", color.r));
+                    ar(cereal::make_nvp("gColor", color.g));
+                    ar(cereal::make_nvp("bColor", color.b));
+                    ar(cereal::make_nvp("aColor", color.a));
+                    LoadTexture(texturename, id, color);
+                    ar.finishNode();
                 }
-
-                glm::vec4 color;
-                ar(cereal::make_nvp("rColor", color.r));
-                ar(cereal::make_nvp("gColor", color.g));
-                ar(cereal::make_nvp("bColor", color.b));
-                ar(cereal::make_nvp("aColor", color.a));
-                LoadTexture(texturename, id, color);
-                ar.finishNode();
             }
             ar.finishNode();
         }

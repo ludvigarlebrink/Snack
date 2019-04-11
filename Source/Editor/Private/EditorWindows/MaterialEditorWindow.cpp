@@ -37,8 +37,8 @@ void MaterialEditorWindow::OnDraw(f32 deltaTime)
         {
             Sketch::Text(it);
             Sketch::SameLine();
-            Sketch::Vec4Field("Color", m_colors[y]);
-            ++y;
+            Sketch::Vec4Field("Color", m_color);
+            y++;
         }
         Sketch::Text("Is this working?!");
     }
@@ -47,17 +47,13 @@ void MaterialEditorWindow::OnDraw(f32 deltaTime)
 void MaterialEditorWindow::SetColor(const std::vector<glm::vec4>& colors, const glm::vec4 color)
 {
     m_color = color;
-    m_colors = colors;
-    for (std::vector<glm::vec4>::iterator it = m_colors.begin(); it != m_colors.end(); ++it)
-    {
-        m_colors.push_back(m_color);
-    }  
+     
 }
 
 void MaterialEditorWindow::SetUp()
 {
     m_material = new Material();
-    m_material = Manager::Asset()->LoadMaterial(FileSystem::GetRelativeDataPath("Material/Default.mat"));
+    m_material = Manager::Asset()->LoadMaterial("Materials/Default.mat");
 }
 
 void MaterialEditorWindow::TearDown()
