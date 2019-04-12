@@ -26,5 +26,7 @@ public:
     virtual Transform* Instantiate() = 0;
 
     virtual Transform* Instantiate(Transform* parent) = 0;
+
+    virtual Transform* InstantiateFromPrototype(Transform* prototype) = 0;
 };
 } // namespace snack

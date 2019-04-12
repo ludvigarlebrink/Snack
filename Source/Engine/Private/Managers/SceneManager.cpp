@@ -69,6 +69,29 @@ Transform* SceneManager::Instantiate(Transform* parent)
     return transform;
 }
 
+Transform* SceneManager::InstantiateFromPrototype(Transform* prototype)
+{
+    Transform* transform = new Transform(prototype->GetParent(), m_nextInstanceID);
+    ++m_nextInstanceID;
+    for (auto p : prototype->m_children)
+    {
+        Transform* child = new Transform(transform, m_nextInstanceID);
+        ++m_nextInstanceID;
+        InstantiateFromPrototypeChildren(child, p);
+    }
+    return transform;
+}
+
+void SceneManager::InstantiateFromPrototypeChildren(Transform* parent, Transform* prototype)
+{
+    for (auto p : prototype->m_children)
+    {
+        Transform* child = new Transform(parent, m_nextInstanceID);
+        ++m_nextInstanceID;
+        InstantiateFromPrototypeChildren(child, p);
+    }
+}
+
 void SceneManager::SetUp()
 {
     m_scene = new Transform(nullptr, m_nextInstanceID);

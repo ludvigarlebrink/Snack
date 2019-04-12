@@ -99,9 +99,28 @@ void SceneWindow::OnDraw(f32 deltaTime)
 
     if (SketchWindow::IsFocused())
     {
+        // Delete
         if (SketchEvent::KeyDown(Key::DELETE))
         {
             EditorManager::Scene()->DeleteSelectedTransforms();
+        }
+        
+        // Copy.
+        if (SketchEvent::KeyDown(Key::C, Mod::CTRL))
+        {
+            EditorManager::Scene()->CopySelectedTransforms();
+        }
+
+        // Paste.
+        if (SketchEvent::KeyDown(Key::V, Mod::CTRL))
+        {
+            EditorManager::Scene()->PasteTransforms();
+        }
+
+        // Duplicate.
+        if (SketchEvent::KeyDown(Key::D, Mod::CTRL))
+        {
+            EditorManager::Scene()->DuplicateSelectedTransforms();
         }
 
         if (!m_cameraMode)

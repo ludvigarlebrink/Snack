@@ -27,7 +27,11 @@ public:
 
     Transform* Instantiate(Transform* parent) override;
 
+    Transform* InstantiateFromPrototype(Transform* prototype) override;
+
 private:
+
+    void InstantiateFromPrototypeChildren(Transform* parent, Transform* prototype);
 
     void SetUp();
 

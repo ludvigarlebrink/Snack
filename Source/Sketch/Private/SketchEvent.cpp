@@ -90,29 +90,34 @@ bool SketchEvent::IsPointerOverWindow()
 
 bool SketchEvent::KeyDown(Key key)
 {
-    if (m_keys[static_cast<int32>(key)] == State::DOWN)
+    return m_keys[static_cast<int32>(key)] == State::DOWN;
+}
+
+bool SketchEvent::KeyDown(Key key, Mod mod)
+{
+    switch (mod)
     {
-        return true;
+    case Mod::ALT:
+        return m_keys[static_cast<int32>(key)] == State::DOWN && ImGui::GetIO().KeyAlt;
+    case Mod::CTRL:
+        return m_keys[static_cast<int32>(key)] == State::DOWN && ImGui::GetIO().KeyCtrl;
+    case Mod::SHIFT:
+        return m_keys[static_cast<int32>(key)] == State::DOWN && ImGui::GetIO().KeyShift;
+    default:
+        break;
     }
+
     return false;
 }
 
 bool SketchEvent::KeyRepeat(Key key)
 {
-    if (m_keys[static_cast<int32>(key)] == State::DOWN || m_keys[static_cast<int32>(key)] == State::REPEAT)
-    {
-        return true;
-    }
-    return false;
+    return m_keys[static_cast<int32>(key)] == State::DOWN || m_keys[static_cast<int32>(key)] == State::REPEAT;
 }
 
 bool SketchEvent::KeyUp(Key key)
 {
-    if (m_keys[static_cast<int32>(key)] == State::UP)
-    {
-        return true;
-    }
-    return false;
+    return m_keys[static_cast<int32>(key)] == State::UP;
 }
 
 bool SketchEvent::ModRepeat(Mod mod)
