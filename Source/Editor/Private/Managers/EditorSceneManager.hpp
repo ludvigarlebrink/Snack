@@ -16,6 +16,8 @@ public:
 
     void ClearSelectedTransforms() override;
 
+    void DeleteSelectedTransforms() override;
+
     Transform* GetSelectedTransform(int32 index) override;
 
     virtual int32 GetSelectedTransformCount() override;

@@ -30,5 +30,7 @@ public:
     static glm::vec2 GetPosition();
 
     static glm::vec2 GetSize();
+
+    static bool IsFocused();
 };
 } // namespace snack

@@ -26,6 +26,14 @@ std::string SceneGraphWindow::GetTitle()
 
 void SceneGraphWindow::OnDraw(f32 deltaTime)
 {
+    if (SketchWindow::IsFocused())
+    {
+        if (SketchEvent::KeyDown(Key::DELETE))
+        {
+            EditorManager::Scene()->DeleteSelectedTransforms();
+        }
+    }
+
     if (m_dragDropReparented)
     {
         bool sourceIsParentOfTarget = false;
@@ -147,27 +155,11 @@ bool SceneGraphWindow::DrawTransform(Transform* transform)
                 {
                     EditorManager::Scene()->ClearSelectedTransforms();
                 }
+                Manager::Scene()->DestroyImmediate(transform);
             }
             else if (EditorManager::Scene()->GetSelectedTransformCount() > 1)
             {
-                std::vector<Transform*> toBeDestroyed;
-                for (int32 i = 0; i < EditorManager::Scene()->GetSelectedTransformCount(); ++i)
-                {
-                    toBeDestroyed.push_back(EditorManager::Scene()->GetSelectedTransform(i));
-                }
-                EditorManager::Scene()->ClearSelectedTransforms();
-
-                // Destroy objects with higher depths first.
-                auto sortFunc = [](Transform* lhs, Transform* rhs)->bool
-                {
-                    return lhs->GetDepth() > rhs->GetDepth();
-                };
-
-                std::sort(toBeDestroyed.begin(), toBeDestroyed.end(), sortFunc);
-                for (auto t : toBeDestroyed)
-                {
-                    Manager::Scene()->DestroyImmediate(t);
-                }
+                EditorManager::Scene()->DeleteSelectedTransforms();
             }
             else
             {

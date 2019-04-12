@@ -13,6 +13,8 @@ public:
 
     virtual void ClearSelectedTransforms() = 0;
 
+    virtual void DeleteSelectedTransforms() = 0;
+
     virtual Transform* GetSelectedTransform(int32 index) = 0;
 
     virtual int32 GetSelectedTransformCount() = 0;

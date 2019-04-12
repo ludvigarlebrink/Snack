@@ -97,33 +97,42 @@ void SceneWindow::OnDraw(f32 deltaTime)
     Sketch::SameLine();
     Sketch::FloatField("Speed", m_moveSpeed, 80.0f);
 
-    if (!m_cameraMode)
+    if (SketchWindow::IsFocused())
     {
-        if (SketchEvent::KeyDown(Key::Q))
+        if (SketchEvent::KeyDown(Key::DELETE))
         {
-            m_activeSceneTool->OnEnd();
-            m_activeSceneTool = m_selectTool;
-            m_activeSceneTool->OnBegin();
+            EditorManager::Scene()->DeleteSelectedTransforms();
         }
-        else if (SketchEvent::KeyDown(Key::W))
+
+        if (!m_cameraMode)
         {
-            m_activeSceneTool->OnEnd();
-            m_activeSceneTool = m_moveTool;
-            m_activeSceneTool->OnBegin();
-        }
-        else if (SketchEvent::KeyDown(Key::E))
-        {
-            m_activeSceneTool->OnEnd();
-            m_activeSceneTool = m_rotateTool;
-            m_activeSceneTool->OnBegin();
-        }
-        else if (SketchEvent::KeyDown(Key::R))
-        {
-            m_activeSceneTool->OnEnd();
-            m_activeSceneTool = m_scaleTool;
-            m_activeSceneTool->OnBegin();
+            if (SketchEvent::KeyDown(Key::Q))
+            {
+                m_activeSceneTool->OnEnd();
+                m_activeSceneTool = m_selectTool;
+                m_activeSceneTool->OnBegin();
+            }
+            else if (SketchEvent::KeyDown(Key::W))
+            {
+                m_activeSceneTool->OnEnd();
+                m_activeSceneTool = m_moveTool;
+                m_activeSceneTool->OnBegin();
+            }
+            else if (SketchEvent::KeyDown(Key::E))
+            {
+                m_activeSceneTool->OnEnd();
+                m_activeSceneTool = m_rotateTool;
+                m_activeSceneTool->OnBegin();
+            }
+            else if (SketchEvent::KeyDown(Key::R))
+            {
+                m_activeSceneTool->OnEnd();
+                m_activeSceneTool = m_scaleTool;
+                m_activeSceneTool->OnBegin();
+            }
         }
     }
+
 
     SketchWindow::BeginChild("Scene Render Child");
     {
