@@ -27,6 +27,12 @@ void SceneGraphWindow::OnDraw(f32 deltaTime)
 {
     if (SketchWindow::IsFocused())
     {
+        // Save.
+        if (SketchEvent::KeyDown(Key::S, Mod::CTRL))
+        {
+
+        }
+
         // Delete.
         if (SketchEvent::KeyDown(Key::DELETE))
         {
