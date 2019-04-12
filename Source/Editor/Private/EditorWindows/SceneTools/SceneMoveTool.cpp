@@ -75,29 +75,30 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
         {
             static const glm::vec3 xAabbMin = glm::vec3(0.0f, -0.025f, -0.025f);
             static const glm::vec3 xAabbMax = glm::vec3(1.0f, 0.025f, 0.025f);
-            static const glm::vec3 xAabbMinHandle = glm::vec3(1.0f, -0.06f, -0.06f);
-            static const glm::vec3 xAabbMaxHandle = glm::vec3(1.3f, 0.06f, 0.06f);
+            static const glm::vec3 xAabbMinHandle = glm::vec3(1.0f, -0.0625f, -0.0625f);
+            static const glm::vec3 xAabbMaxHandle = glm::vec3(1.25f, 0.0625f, 0.0625f);
             static const glm::vec3 xAabbMinPan = glm::vec3(-0.025f, 0.0f, 0.0f);
             static const glm::vec3 xAabbMaxPan = glm::vec3(0.025f, 0.25f, 0.25f);
 
             static const glm::vec3 yAabbMin = glm::vec3(-0.025f, 0.0f, -0.025f);
             static const glm::vec3 yAabbMax = glm::vec3(0.025f, 1.0f, 0.025f);
-            static const glm::vec3 yAabbMinHandle = glm::vec3(-0.06f, 1.0f, -0.06f);
-            static const glm::vec3 yAabbMaxHandle = glm::vec3(0.06f, 1.3f, 0.06f);
-            static const glm::vec3 yAabbMinPan = glm::vec3(0.0f, -0.025f, 0.0f);
+            static const glm::vec3 yAabbMinHandle = glm::vec3(-0.0625f, 1.0f, -0.0625f);
+            static const glm::vec3 yAabbMaxHandle = glm::vec3(0.0625f, 1.25f, 0.0625f);
+            static const glm::vec3 yAabbMinPan = glm::vec3(0.0f, -0.025f, 0.0625f);
             static const glm::vec3 yAabbMaxPan = glm::vec3(0.25f, 0.025f, 0.25f);
 
             static const glm::vec3 zAabbMin = glm::vec3(-0.025f, -0.025f, 0.0f);
             static const glm::vec3 zAabbMax = glm::vec3(0.025f, 0.025f, 1.0f);
-            static const glm::vec3 zAabbMinHandle = glm::vec3(-0.06f, -0.06f, 1.0f);
-            static const glm::vec3 zAabbMaxHandle = glm::vec3(0.06f, 0.06f, 1.3f);
+            static const glm::vec3 zAabbMinHandle = glm::vec3(-0.0625f, -0.0625f, 1.0f);
+            static const glm::vec3 zAabbMaxHandle = glm::vec3(0.0625f, 0.0625f, 1.25f);
             static const glm::vec3 zAabbMinPan = glm::vec3(0.0f, 0.0f, -0.025f);
             static const glm::vec3 zAabbMaxPan = glm::vec3(0.25f, 0.25f, 0.025f);
 
             glm::mat4 rayModel = model;
-            rayModel[3].x = widgetPosition.x;
-            rayModel[3].y = widgetPosition.y;
-            rayModel[3].z = widgetPosition.z;
+            rayModel[0] = glm::vec4(xAxis, rayModel[3].x);
+            rayModel[1] = glm::vec4(yAxis, rayModel[3].y);
+            rayModel[2] = glm::vec4(zAxis, rayModel[3].z);
+            rayModel[3] = glm::vec4(widgetPosition, 1.0f);
 
             f32 t = std::numeric_limits<f32>::max();
             bool hitPan = false;
@@ -364,8 +365,8 @@ void SceneMoveTool::Draw(const glm::vec3& xAxis, const glm::vec3& yAxis, const g
     SketchGizmo::LineOverdrawn(position, yAxis + position, m_yColor);
     SketchGizmo::LineOverdrawn(position, zAxis + position, m_zColor);
 
-    SketchGizmo::ConeOverdrawn(xAxis + position, xAxis, yAxis, 0.12f, 0.25f, m_xColor);
-    SketchGizmo::ConeOverdrawn(yAxis + position, yAxis, zAxis, 0.12f, 0.25f, m_yColor);
-    SketchGizmo::ConeOverdrawn(zAxis + position, zAxis, xAxis, 0.12f, 0.25f, m_zColor);
+    SketchGizmo::ConeOverdrawn(xAxis + position, xAxis, yAxis, 0.125f, 0.25f, m_xColor);
+    SketchGizmo::ConeOverdrawn(yAxis + position, yAxis, zAxis, 0.125f, 0.25f, m_yColor);
+    SketchGizmo::ConeOverdrawn(zAxis + position, zAxis, xAxis, 0.125f, 0.25f, m_zColor);
 }
 } // namespace snack

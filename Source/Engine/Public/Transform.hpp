@@ -88,6 +88,10 @@ public:
 
     bool RemoveComponent(const std::string& id);
 
+    void Scale(const glm::vec3& scale);
+
+    void Scale(f32 x, f32 y, f32 z);
+
     void SetEnabled(bool enabled);
 
     void SetName(const std::string& name);

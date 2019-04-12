@@ -18,3 +18,4 @@
 
 #### Done
 * Gizmo rendering
+* Widgets (move, rotate, scale), local/world, and editor mouse picking.

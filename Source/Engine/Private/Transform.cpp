@@ -238,6 +238,16 @@ bool Transform::RemoveComponent(const std::string& id)
     return false;
 }
 
+void Transform::Scale(const glm::vec3& scale)
+{
+    m_scale += scale;
+}
+
+void Transform::Scale(f32 x, f32 y, f32 z)
+{
+    m_scale += glm::vec3(x, y, z);
+}
+
 void Transform::SetEnabled(bool enabled)
 {
     m_isEnabled = enabled;
