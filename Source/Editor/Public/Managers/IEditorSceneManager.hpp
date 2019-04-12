@@ -32,5 +32,6 @@ public:
     virtual void PushSelectedTransfrom(Transform* transform) = 0;
 
     virtual void RemoveSelectedTransfrom(int32 index) = 0;
+
 };
 } // namespace snack
