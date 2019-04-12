@@ -30,7 +30,7 @@ void SceneGraphWindow::OnDraw(f32 deltaTime)
         // Save.
         if (SketchEvent::KeyDown(Key::S, Mod::CTRL))
         {
-
+            // @todo Save
         }
 
         // Delete.
