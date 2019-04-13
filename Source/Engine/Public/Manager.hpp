@@ -5,6 +5,7 @@
 #include "Managers/IInputManager.hpp"
 #include "Managers/IRenderManager.hpp"
 #include "Managers/ISceneManager.hpp"
+#include "Managers/IScriptManager.hpp"
 
 namespace snack
 {
@@ -26,6 +27,8 @@ public:
 
     static ISceneManager* Scene();
 
+    static IScriptManager* Script();
+
 private:
 
     static IAssetManager* m_assetManager;
@@ -33,5 +36,6 @@ private:
     static IInputManager* m_inputManager;
     static IRenderManager* m_renderManager;
     static ISceneManager* m_sceneManager;
+    static IScriptManager* m_scriptManager;
 };
 } // namespace snack

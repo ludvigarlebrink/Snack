@@ -2,6 +2,12 @@
 
 #include "Managers/IScriptManager.hpp"
 
+#include <glm/glm.hpp>
+
+#define SOL_CHECK_ARGUMENTS 1
+#include <iostream>
+#include <sol/sol.hpp>
+
 namespace snack
 {
 class ScriptManager final : public IScriptManager
@@ -22,10 +28,12 @@ private:
 
     void SetUp();
 
+    void SetUpMath();
+
     void TearDown();
 
 private:
 
-
+    sol::state lua;
 };
 } // namespace snack

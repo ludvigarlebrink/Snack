@@ -5,6 +5,7 @@
 #include "Managers/InputManager.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SceneManager.hpp"
+#include "Managers/ScriptManager.hpp"
 #include "RenderCoreInclude.hpp"
 #include "UtilsInclude.hpp"
 
@@ -58,12 +59,14 @@ void Engine::SetUp()
     m_inputManager = new InputManager();
     m_renderManager = new RenderManager();
     m_sceneManager = new SceneManager();
+    m_scriptManager = new ScriptManager;
 
     Manager::m_assetManager = m_assetManager;
     Manager::m_classManager = m_classManager;
     Manager::m_inputManager = m_inputManager;
     Manager::m_renderManager = m_renderManager;
     Manager::m_sceneManager = m_sceneManager;
+    Manager::m_scriptManager = m_scriptManager;
 
     m_classManager->RegisterComponentUnconstructable<BehaviorComponent>("Behavior");
     m_classManager->RegisterComponent<InputComponent>("Input");

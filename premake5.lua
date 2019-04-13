@@ -139,7 +139,7 @@ function UseEditor()
     filter {}
 end
 
-workspace "SpyHunterEngine"
+workspace "SnackEngine"
     location "Solution"
     language "C++"
     cppdialect "C++17"
