@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "Managers/IScriptManager.hpp"
 
 #include <glm/glm.hpp>
@@ -27,6 +28,8 @@ protected:
 private:
 
     void SetUp();
+
+    void SetUpEngine();
 
     void SetUpMath();
 

@@ -1,4 +1,6 @@
 #include "ScriptManager.hpp"
+#include "Manager.hpp"
+#include "Transform.hpp"
 
 namespace snack
 {
@@ -14,10 +16,23 @@ ScriptManager::~ScriptManager()
 
 void ScriptManager::Tick(f32 deltaTime)
 {
+    lua.script_file("Data/Player.lua");
+
+    auto func = lua["Player"]["New"];
+    if (func.valid())
+    {
+        sol::table returnVal = func();
+        auto func2 = lua["Player"]["OnTick"];
+        if (func2.valid())
+        {
+            func2(returnVal, 0.1);
+        }
+    }
 }
 
 void ScriptManager::PostTick(f32 deltaTime)
 {
+
 }
 
 void ScriptManager::SetUp()
@@ -26,24 +41,84 @@ void ScriptManager::SetUp()
     lua.open_libraries(sol::lib::base);
 
     SetUpMath();
+    SetUpEngine();
+}
 
-    lua.script("v = vec2.new()\n"
-        "v = vec2.new(12)\n"
-        "v = vec2.new(10, 10)\n"
-        "print(vec2.x)\n");
+void ScriptManager::SetUpEngine()
+{
+    lua.new_usertype<Transform>("Transform",
+        "new", sol::no_constructor,
+
+        "GetLocalPosition", &Transform::GetLocalPosition,
+        "GetWorldPosition", &Transform::GetWorldPosition,
+
+        "SetLocalPosition", sol::resolve<const glm::vec3&>(&Transform::SetLocalPosition),
+        "SetLocalPosition", sol::resolve<f32, f32, f32>(&Transform::SetLocalPosition),
+        "SetWorldPosition", sol::resolve<const glm::vec3&>(&Transform::SetWorldPosition),
+        "SetWorldPosition", sol::resolve<f32, f32, f32>(&Transform::SetWorldPosition)
+    );
+
+    lua.set_function("Instantiate", sol::overload(
+        []()->Transform* { return Manager::Scene()->Instantiate(); },
+        [](Transform* parent)->Transform* { return Manager::Scene()->Instantiate(parent); }
+    ));
 }
 
 void ScriptManager::SetUpMath()
 {
     // Vec2.
-    {
-        sol::constructors<glm::vec2(), glm::vec2(f32), glm::vec2(f32, f32)> ctor;
-        sol::usertype<glm::vec2> utype = lua.new_usertype<glm::vec2>("vec2", ctor);
-    //    utype["x"] = &glm::vec2::x;
-    //    utype["y"] = &glm::vec2::y;
-    //    utype["r"] = &glm::vec2::r;
-    //    utype["g"] = &glm::vec2::g;
-    }
+    lua.new_usertype<glm::vec2>("Vec2",
+        sol::constructors<
+            glm::vec2(),
+            glm::vec2(const glm::vec2&),
+            glm::vec2(f32),
+            glm::vec2(f32, f32)
+        >(),
+
+        // Properties.
+        "x", &glm::vec2::x,
+        "y", &glm::vec2::y,
+        "r", &glm::vec2::r,
+        "g", &glm::vec2::g
+    );
+
+    // Vec3.
+    lua.new_usertype<glm::vec3>("Vec3",
+        sol::constructors<
+            glm::vec3(),
+            glm::vec3(const glm::vec3&),
+            glm::vec3(f32),
+            glm::vec3(f32, f32, f32)
+        >(),
+
+        // Properties.
+        "x", &glm::vec3::x,
+        "y", &glm::vec3::y,
+        "z", &glm::vec3::z,
+        "r", &glm::vec3::r,
+        "g", &glm::vec3::g,
+        "b", &glm::vec3::b
+    );
+
+    // Vec3.
+    lua.new_usertype<glm::vec4>("Vec4",
+        sol::constructors<
+        glm::vec4(),
+        glm::vec4(const glm::vec4&),
+        glm::vec4(f32),
+        glm::vec4(f32, f32, f32, f32)
+        >(),
+
+        // Properties.
+        "x", &glm::vec4::x,
+        "y", &glm::vec4::y,
+        "z", &glm::vec4::z,
+        "w", &glm::vec4::w,
+        "r", &glm::vec4::r,
+        "g", &glm::vec4::g,
+        "b", &glm::vec4::b,
+        "a", &glm::vec4::a
+    );
 }
 
 void ScriptManager::TearDown()

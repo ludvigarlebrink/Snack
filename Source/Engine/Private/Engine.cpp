@@ -80,6 +80,8 @@ void Engine::SetUp()
     m_classManager->RegisterComponent<SkinnedMeshComponent>("Skinned Mesh");
     m_classManager->RegisterComponent<SpotlightComponent>("Spotlight");
     m_classManager->RegisterComponent<TerrainComponent>("Terrain");
+
+    m_scriptManager->Tick(0.1f);
 }
 
 void Engine::TearDown()

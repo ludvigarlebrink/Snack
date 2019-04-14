@@ -212,9 +212,9 @@ void Transform::Move(f32 x, f32 y, f32 z)
     m_position += glm::vec3(x, y, z);
 }
 
+#ifdef SPY_EDITOR
 void Transform::OnEditorInspector()
 {
-#ifdef SPY_EDITOR
     Sketch::Checkbox("Enabled", m_isEnabled);
     Sketch::SameLine();
     Sketch::Checkbox("Static", m_isStaic);
@@ -222,8 +222,8 @@ void Transform::OnEditorInspector()
     Sketch::Vec3Field("Position", m_position);
     Sketch::Vec3Field("Rotation", m_rotation);
     Sketch::Vec3Field("Scale", m_scale);
-#endif
 }
+#endif
 
 bool Transform::RemoveComponent(const std::string& id)
 {
@@ -324,5 +324,15 @@ void Transform::SetScale(f32 x, f32 y, f32 z)
 void Transform::SetScale(f32 uniform)
 {
     m_scale = glm::vec3(uniform, uniform, uniform);
+}
+
+void Transform::SetWorldPosition(const glm::vec3& position)
+{
+    m_position = position;
+}
+
+void Transform::SetWorldPosition(f32 x, f32 y, f32 z)
+{
+    m_position = glm::vec3(x, y, z);
 }
 } // namespace snack

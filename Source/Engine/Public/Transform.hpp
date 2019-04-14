@@ -113,6 +113,10 @@ public:
 
     void SetScale(f32 uniform);
 
+    void SetWorldPosition(const glm::vec3& position);
+
+    void SetWorldPosition(f32 x, f32 y, f32 z);
+
 private:
 
     InstanceID m_instanceID;
