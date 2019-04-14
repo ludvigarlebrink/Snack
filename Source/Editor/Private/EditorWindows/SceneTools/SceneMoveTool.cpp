@@ -224,7 +224,7 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
             if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, yAxis, glm::vec3(model[3]), rayHitData))
             {
                 f32 dist = glm::distance(glm::vec3(model[3]) * xAxis, rayHitData.point * xAxis);
-                if (dist > 0.0000001f)
+                if (dist > F32_EPSILON)
                 {
                     f32 dotProduct = glm::dot(xAxis, glm::normalize(rayHitData.point - glm::vec3(model[3])));
                     if (dotProduct > 0.0f)
@@ -245,7 +245,7 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
             if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, xAxis, glm::vec3(model[3]), rayHitData))
             {
                 f32 dist = glm::distance(glm::vec3(model[3]) * yAxis, rayHitData.point * yAxis);
-                if (dist > 0.0000001f)
+                if (dist > F32_EPSILON)
                 {
                     f32 dotProduct = glm::dot(yAxis, glm::normalize(rayHitData.point - glm::vec3(model[3])));
                     if (dotProduct > 0.0f)
@@ -266,7 +266,7 @@ void SceneMoveTool::OnTick(const SceneToolData& data)
             if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, yAxis, glm::vec3(model[3]), rayHitData))
             {
                 f32 dist = glm::distance(glm::vec3(model[3]) * zAxis, rayHitData.point * zAxis);
-                if (dist > 0.0000001f)
+                if (dist > F32_EPSILON)
                 {
                     f32 dotProduct = glm::dot(zAxis, glm::normalize(rayHitData.point - glm::vec3(model[3])));
                     if (dotProduct > 0.0f)

@@ -313,17 +313,17 @@ void Transform::SetRotation(f32 x, f32 y, f32 z)
 
 void Transform::SetScale(const glm::vec3& scale)
 {
-    m_scale = scale;
+    m_scale = glm::max(scale, glm::vec3(F32_EPSILON));
 }
 
 void Transform::SetScale(f32 x, f32 y, f32 z)
 {
-    m_scale = glm::vec3(x, y, z);
+    m_scale = glm::max(glm::vec3(x, y, z), glm::vec3(F32_EPSILON));
 }
 
 void Transform::SetScale(f32 uniform)
 {
-    m_scale = glm::vec3(uniform, uniform, uniform);
+    m_scale = glm::max(glm::vec3(uniform), glm::vec3(F32_EPSILON));
 }
 
 void Transform::SetWorldPosition(const glm::vec3& position)

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <limits>
+
 typedef unsigned char uchar;
 typedef signed char schar;
 
@@ -33,3 +35,7 @@ typedef ulonglong uint64;
 
 typedef float  f32;
 typedef double f64;
+
+#define F32_MAX std::numeric_limits<f32>::max()
+#define F32_MIN -std::numeric_limits<f32>::max()
+#define F32_EPSILON std::numeric_limits<f32>::epsilon()
