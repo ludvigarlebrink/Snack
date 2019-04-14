@@ -102,6 +102,11 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
                 if (SketchEvent::ButtonDown(Button::LEFT))
                 {
                     m_mode = Mode::SCALE_UNIFORM;
+                    if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, -data.viewInverse[2], glm::vec3(model[3]), rayHitData))
+                    {
+                        m_offset = glm::distance(glm::vec3(model[3]), rayHitData.point);
+                        m_offsetScale = transform->GetScale();
+                    }
                 }
             }
             else if (Intersection::RayVsOBB(data.cameraPosition, rayWorld, xAabbMin, xAabbMax, rayModel, rayHitData) ||
@@ -150,6 +155,16 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
         else if (m_mode == Mode::SCALE_UNIFORM)
         {
             m_uniformColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+            Intersection::RayHitData rayHitData;
+            if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, -data.viewInverse[2], glm::vec3(model[3]), rayHitData))
+            {
+                f32 dist = glm::distance(glm::vec3(model[3]), rayHitData.point);
+                if (dist > 0.0000001f)
+                {
+                    transform->SetScale(m_offsetScale + glm::vec3(dist) - glm::vec3(m_offset));
+
+                }
+            }
         }
         else if (m_mode == Mode::SCALE_X_AXIS)
         {
@@ -158,7 +173,7 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
             if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, yAxis, glm::vec3(model[3]), rayHitData))
             {
                 f32 dist = glm::distance(glm::vec3(model[3]) * xAxis, rayHitData.point * xAxis);
-                if (dist > 0.0001f)
+                if (dist > 0.0000001f)
                 {
                     f32 dotProduct = glm::dot(xAxis, glm::normalize(rayHitData.point - glm::vec3(model[3])));
                     if (dotProduct > 0.0f)
@@ -179,7 +194,7 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
             if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, xAxis, glm::vec3(model[3]), rayHitData))
             {
                 f32 dist = glm::distance(glm::vec3(model[3]) * yAxis, rayHitData.point * yAxis);
-                if (dist > 0.0001f)
+                if (dist > 0.0000001f)
                 {
                     f32 dotProduct = glm::dot(yAxis, glm::normalize(rayHitData.point - glm::vec3(model[3])));
                     if (dotProduct > 0.0f)
@@ -200,7 +215,7 @@ void SceneScaleTool::OnTick(const SceneToolData& data)
             if (Intersection::RayVsPlane(data.cameraPosition, rayWorld, yAxis, glm::vec3(model[3]), rayHitData))
             {
                 f32 dist = glm::distance(glm::vec3(model[3]) * zAxis, rayHitData.point * zAxis);
-                if (dist > 0.0001f)
+                if (dist > 0.0000001f)
                 {
                     f32 dotProduct = glm::dot(zAxis, glm::normalize(rayHitData.point - glm::vec3(model[3])));
                     if (dotProduct > 0.0f)
