@@ -16,17 +16,13 @@ ScriptManager::~ScriptManager()
 
 void ScriptManager::Tick(f32 deltaTime)
 {
-    lua.script_file("Data/Player.lua");
+    lua.do_file("Data/Player.lua");
+    lua["Lemon"]["new"]();
 
-    auto func = lua["Player"]["New"];
-    if (func.valid())
+    auto f = lua["Lemon"]["new"];
+    if (f.valid())
     {
-        sol::table returnVal = func();
-        auto func2 = lua["Player"]["OnTick"];
-        if (func2.valid())
-        {
-            func2(returnVal, 0.1);
-        }
+        f();
     }
 }
 
@@ -38,7 +34,7 @@ void ScriptManager::PostTick(f32 deltaTime)
 void ScriptManager::SetUp()
 {
     // Open libraries.
-    lua.open_libraries(sol::lib::base);
+    lua.open_libraries(sol::lib::base, sol::lib::package);
 
     SetUpMath();
     SetUpEngine();

@@ -15,7 +15,7 @@ namespace snack
 {
 class BaseComponent;
 class SceneManager;
-class Script;
+class ScriptObject;
 class Engine;
 
 class ENGINE_API Transform final
@@ -129,7 +129,7 @@ private:
     int32 m_depth;
 
     std::unordered_map<std::string, BaseComponent*> m_components;
-    std::unordered_map<std::string, Script*> m_scripts;
+    std::unordered_map<std::string, ScriptObject*> m_scripts;
 
     std::vector<Transform*> m_children;
     Transform* m_parent;

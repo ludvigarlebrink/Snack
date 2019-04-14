@@ -1,29 +1,23 @@
-Player = {}
+class = require 'Data/middleclass'
 
-Player.prototype = {
-    x = 0,
-    y = 0
-}
+Fruit = class('Fruit')
 
-Player.mt = {}
-
-function Player:OnAwake(self)
-
+function Fruit:initialize(sweetness)
+    self.sweetness = sweetness
 end
 
-function Player:OnTick(self, deltaTime)
-    t = Instantiate()
-    t2 = Instantiate(t)
-    t2:SetLocalPosition(23, 12, 2)
+Fruit.static.sweetness_threshold = 5
+
+function Fruit:isSweet()
+    print(self.sweetness > Fruit.sweetness_threshold)
 end
 
-function Player.New()
-    local t = {}
-    setmetatable(t, Player.mt)
-    return t;
+Lemon = class('Lemon', Fruit)
+
+function Lemon:initialize()
+    Fruit.initialize(self, 4)
+    print(true)
 end
 
-Player.mt.__index = Player.prototype
-
-p2 = Player.New()
-Player:OnTick(p2, 0.1)
+some = Lemon:new(32)
+some:isSweet()
