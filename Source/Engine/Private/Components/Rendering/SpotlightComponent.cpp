@@ -3,6 +3,7 @@
 #ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
 #endif
+#include "UtilsInclude.hpp"
 
 #include <algorithm>
 
@@ -22,7 +23,7 @@ SpotlightComponent::~SpotlightComponent()
 
 std::string SpotlightComponent::GetComponentID()
 {
-    return typeid(SpotlightComponent).name();
+    return CLASS_NAME(SpotlightComponent);
 }
 
 f32 SpotlightComponent::GetIntensity() const

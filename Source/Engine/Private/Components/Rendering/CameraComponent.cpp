@@ -2,6 +2,7 @@
 #include "Manager.hpp"
 #include "SketchInclude.hpp"
 #include "Transform.hpp"
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -24,7 +25,7 @@ CameraComponent::~CameraComponent()
 
 std::string CameraComponent::GetComponentID()
 {
-    return typeid(CameraComponent).name();
+    return CLASS_NAME(CameraComponent);
 }
 
 f32 CameraComponent::GetFarPlane() const
@@ -95,7 +96,7 @@ void CameraComponent::Load(cereal::JSONInputArchive& archive)
     );
 
     m_projection = static_cast<Projection>(projection);
-    m_renderMode = static_cast<RenderMode>(m_renderMode);
+    m_renderMode = static_cast<RenderMode>(renderMode);
 }
 
 #ifdef SPY_EDITOR

@@ -1,5 +1,6 @@
 #include "Components/Rendering/JointComponent.hpp"
 #include "Manager.hpp"
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -16,7 +17,7 @@ JointComponent::~JointComponent()
 
 std::string JointComponent::GetComponentID()
 {
-    return typeid(JointComponent).name();
+    return CLASS_NAME(JointComponent);
 }
 
 void JointComponent::Load(cereal::JSONInputArchive& archive)

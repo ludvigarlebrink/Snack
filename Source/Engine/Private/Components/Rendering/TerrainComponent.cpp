@@ -3,6 +3,7 @@
 #ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
 #endif
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -25,7 +26,7 @@ TerrainComponent::~TerrainComponent()
 
 std::string TerrainComponent::GetComponentID()
 {
-    return typeid(TerrainComponent).name();
+    return CLASS_NAME(TerrainComponent);
 }
 
 Terrain* TerrainComponent::GetTerrain()

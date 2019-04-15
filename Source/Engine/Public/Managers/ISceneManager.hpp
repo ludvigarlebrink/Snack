@@ -23,6 +23,8 @@ public:
 
     virtual void DestroyImmediate(Transform* transform) = 0;
 
+    virtual std::string GetFilename() const = 0;
+
     virtual Transform* GetSceneRoot() = 0;
 
     virtual Transform* Instantiate() = 0;

@@ -1,4 +1,5 @@
 #include "Components/Rendering/SkyComponent.hpp"
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -9,6 +10,11 @@ SkyComponent::SkyComponent(Transform* transform)
 
 SkyComponent::~SkyComponent()
 {
+}
+
+std::string SkyComponent::GetComponentID()
+{
+    return CLASS_NAME(PointLightComponent);
 }
 
 void SkyComponent::Load(cereal::JSONInputArchive& archive)

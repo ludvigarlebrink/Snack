@@ -4,6 +4,7 @@
 #ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
 #endif
+#include "UtilsInclude.hpp"
 
 #include <algorithm>
 
@@ -23,7 +24,7 @@ DirectionalLightComponent::~DirectionalLightComponent()
 
 std::string DirectionalLightComponent::GetComponentID()
 {
-    return typeid(DirectionalLightComponent).name();
+    return CLASS_NAME(DirectionalLightComponent);
 }
 
 f32 DirectionalLightComponent::GetIntensity() const

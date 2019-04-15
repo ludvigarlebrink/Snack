@@ -271,7 +271,7 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
                 delete terrain;
                 m_refresh = true;
             }
-            else if (SketchPopup::Dialog("Create Text File", "File Name:", "Create", "Cancel", inputText))
+            else if (SketchPopup::Dialog("Create Text File", "Filename:", "Create", "Cancel", inputText))
             {
                 std::string filepath = folderNode->GetRelativePath() + inputText + ".txt";
                 FileSystem::CreateFile(filepath);

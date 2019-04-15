@@ -1,5 +1,6 @@
 #include "Components\Rendering\SkinnedMeshComponent.hpp"
 #include "Manager.hpp"
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -16,7 +17,7 @@ SkinnedMeshComponent::~SkinnedMeshComponent()
 
 std::string SkinnedMeshComponent::GetComponentID()
 {
-    return typeid(SkinnedMeshComponent).name();
+    return CLASS_NAME(PointLightComponent);
 }
 
 Material* SkinnedMeshComponent::GetMaterial() const

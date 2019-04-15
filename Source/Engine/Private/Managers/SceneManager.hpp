@@ -21,6 +21,8 @@ public:
 
     void DestroyImmediate(Transform* transform) override;
 
+    std::string GetFilename() const override;
+
     Transform* GetSceneRoot() override;
 
     Transform* Instantiate() override;
@@ -47,5 +49,6 @@ private:
     Transform* m_scene;
 
     std::vector<Transform*> m_toBeDestroyed;
+    std::string m_filename;
 };
 } // namespace snack

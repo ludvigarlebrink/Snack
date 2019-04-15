@@ -1,5 +1,6 @@
 #include "Components/Input/InputComponent.hpp"
 #include "SketchInclude.hpp"
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -51,7 +52,7 @@ void InputComponent::DeregisterAction(const std::string& id)
 
 std::string InputComponent::GetComponentID()
 {
-    return typeid(InputComponent).name();
+    return CLASS_NAME(InputComponent);
 }
 
 void InputComponent::OnEditorInspector()

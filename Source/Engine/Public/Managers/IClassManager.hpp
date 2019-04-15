@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace snack
 {
@@ -52,7 +53,19 @@ void IClassManager::RegisterComponent(const std::string& name)
     {
         return new T(transform);
     };
-    RegisterComponent(typeid(T).name(), name, cb);
+
+    std::string className = typeid(T).name();
+    // Check if namespace.
+    if (className.find(':') != std::string::npos)
+    {
+        className = className.substr(className.find_last_of(':') + 1);
+    }
+    else
+    {
+        className = className.substr(className.find_last_of(' ') + 1);
+    }
+    std::cout << className << "\n";
+    RegisterComponent(className, name, cb);
 }
 
 template<typename T>

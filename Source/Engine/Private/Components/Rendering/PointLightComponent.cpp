@@ -4,6 +4,7 @@
 #ifdef SPY_EDITOR
 #include "SketchInclude.hpp"
 #endif
+#include "UtilsInclude.hpp"
 
 #include <algorithm>
 
@@ -25,7 +26,7 @@ PointLightComponent::~PointLightComponent()
 
 std::string PointLightComponent::GetComponentID()
 {
-    return typeid(PointLightComponent).name();
+    return CLASS_NAME(PointLightComponent);
 }
 
 f32 PointLightComponent::GetIntensity() const

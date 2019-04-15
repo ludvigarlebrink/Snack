@@ -6,6 +6,7 @@
 #include "SketchInclude.hpp"
 #endif
 #include "Transform.hpp"
+#include "UtilsInclude.hpp"
 
 namespace snack
 {
@@ -223,7 +224,7 @@ MeshComponent::~MeshComponent()
 
 std::string MeshComponent::GetComponentID()
 {
-    return typeid(MeshComponent).name();
+    return CLASS_NAME(MeshComponent);
 }
 
 Material* MeshComponent::GetMaterial() const

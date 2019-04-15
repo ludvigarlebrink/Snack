@@ -1,5 +1,6 @@
 #include "SceneManager.hpp"
 #include "Transform.hpp"
+#include "PlatformInclude.hpp"
 
 #include <cereal/cereal.hpp>
 #include <cereal/archives/json.hpp>
@@ -48,6 +49,11 @@ void SceneManager::DestroyImmediate(Transform* transform)
     delete transform;
 }
 
+std::string SceneManager::GetFilename() const
+{
+    return m_filename;
+}
+
 Transform* SceneManager::GetSceneRoot()
 {
     return m_scene;
@@ -89,7 +95,7 @@ Transform* SceneManager::InstantiateFromPrototype(Transform* prototype)
 
 bool SceneManager::Load(const std::string& filename)
 {
-    std::ifstream f(filename);
+    std::ifstream f(FileSystem::GetRelativeDataPath(filename));
     if (!f.is_open())
     {
         return false;
@@ -111,6 +117,8 @@ bool SceneManager::Load(const std::string& filename)
     cereal::JSONInputArchive archive(ss);
     m_scene->Load(archive);
 
+    m_filename = filename;
+
     return true;
 }
 
@@ -124,7 +132,7 @@ bool SceneManager::Save(const std::string& filename)
         m_scene->Save(archive);
     }
 
-    std::ofstream f(filename);
+    std::ofstream f(FileSystem::GetRelativeDataPath(filename));
     if (!f.is_open())
     {
         return false;
@@ -133,6 +141,8 @@ bool SceneManager::Save(const std::string& filename)
     f << ss.str();
 
     f.close();
+
+    m_filename = filename;
 
     return true;
 }

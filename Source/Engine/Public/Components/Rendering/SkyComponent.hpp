@@ -12,6 +12,8 @@ public:
 
     ~SkyComponent();
 
+    std::string GetComponentID() override;
+
     void Load(cereal::JSONInputArchive& archive) override;
 
     void Save(cereal::JSONOutputArchive& archive) override;

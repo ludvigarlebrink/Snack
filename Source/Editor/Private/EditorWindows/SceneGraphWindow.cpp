@@ -1,7 +1,9 @@
 #include "EditorWindows/SceneGraphWindow.hpp"
 #include "EditorManager.hpp"
 #include "EngineInclude.hpp"
+#include "PlatformInclude.hpp"
 #include "SketchInclude.hpp"
+#include "UtilsInclude.hpp"
 
 #include <iostream>
 
@@ -30,7 +32,16 @@ void SceneGraphWindow::OnDraw(f32 deltaTime)
         // Save.
         if (SketchEvent::KeyDown(Key::S, Mod::CTRL))
         {
-            Manager::Scene()->Save("Data/Test.scn");
+            EditorManager::Scene()->ClearSelectedTransforms();
+            std::string filename = Manager::Scene()->GetFilename();
+            if (filename.empty())
+            {
+                SketchPopup::OpenPopup("Save Scene As");
+            }
+            else
+            {
+                Manager::Scene()->Save(filename);
+            }
         }
 
         // Delete.
@@ -56,6 +67,12 @@ void SceneGraphWindow::OnDraw(f32 deltaTime)
         {
             EditorManager::Scene()->DuplicateSelectedTransforms();
         }
+    }
+
+    static std::string inputText = "";
+    if (SketchPopup::Dialog("Save Scene As", "Scene Name:", "Save", "Cancel", inputText))
+    {
+        Manager::Scene()->Save(inputText + ".scn");
     }
 
     if (m_dragDropReparented)
