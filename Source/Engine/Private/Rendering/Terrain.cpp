@@ -1,4 +1,5 @@
 #include "Rendering/Terrain.hpp"
+#include "PlatformInclude.hpp"
 #include "RenderCoreInclude.hpp"
 
 #include <fstream>
@@ -98,7 +99,7 @@ void Terrain::Render()
 
 bool Terrain::Save(const std::string& filename)
 {
-    std::ofstream f(filename, std::ios::out | std::ios::binary);
+    std::ofstream f(FileSystem::GetRelativeDataPath(filename), std::ios::out | std::ios::binary);
     if (!f.is_open())
     {
         return false;

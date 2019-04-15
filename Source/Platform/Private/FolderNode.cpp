@@ -8,12 +8,12 @@ namespace snack
 {
 FolderNode::FolderNode(const std::string& folderpath)
 {
-    SetUp(folderpath, nullptr);
+    SetUp(folderpath, folderpath.size(), nullptr);
 }
 
-FolderNode::FolderNode(const std::string& folderpath, FolderNode* parent)
+FolderNode::FolderNode(const std::string& folderpath, int32 offset, FolderNode* parent)
 {
-    SetUp(folderpath, parent);
+    SetUp(folderpath, offset, parent);
 }
 
 FolderNode::~FolderNode()
@@ -43,6 +43,11 @@ int32 FolderNode::GetFileInfoCount() const
     return m_fileInfos.size();
 }
 
+std::string FolderNode::GetFullRelativePath() const
+{
+    return m_fullRelativePath;
+}
+
 std::string FolderNode::GetName() const
 {
     return m_name;
@@ -58,29 +63,31 @@ bool FolderNode::IsLeaf() const
     return m_children.empty();
 }
 
-void FolderNode::SetUp(const std::string& folderpath, FolderNode* parent)
+void FolderNode::SetUp(const std::string& folderpath, int32 offset, FolderNode* parent)
 {
     int32 count = std::count(folderpath.begin(), folderpath.end(), '/');
 
     if (count == 0)
     {
         m_name = folderpath;
-        m_relativePath = folderpath;
-        m_relativePath.append("/");
+        m_fullRelativePath = folderpath;
+        m_fullRelativePath.append("/");
     }
     else if (count == 1)
     {
         m_name = folderpath.substr(0, folderpath.find_last_of('/'));
-        m_relativePath = folderpath;
+        m_fullRelativePath = folderpath;
     }
     else
     {
         m_name = folderpath.substr(0, folderpath.find_last_of('/'));
         m_name = m_name.substr(m_name.find_last_of('/') + 1);
-        m_relativePath = folderpath;
+        m_fullRelativePath = folderpath;
     }
 
-    for (const auto& entry : std::filesystem::directory_iterator(m_relativePath))
+    m_relativePath = m_fullRelativePath.substr(offset);
+
+    for (const auto& entry : std::filesystem::directory_iterator(m_fullRelativePath))
     {
         if (entry.is_regular_file())
         {
@@ -89,12 +96,13 @@ void FolderNode::SetUp(const std::string& folderpath, FolderNode* parent)
             std::string name = relativePath.substr(relativePath.find_last_of("/") + 1);
             fileInfo.name = name.substr(0, name.find_first_of('.'));
             fileInfo.extension = name.substr(name.find_first_of('.'));
-            fileInfo.relativePath = relativePath;
+            fileInfo.fullRelativePath = relativePath;
+            fileInfo.relativePath = relativePath.substr(offset);
             m_fileInfos.push_back(fileInfo);
         }
         else if (entry.is_directory())
         {
-            FolderNode* child = new FolderNode(entry.path().generic_string() + "/", this);
+            FolderNode* child = new FolderNode(entry.path().generic_u8string() + "/", offset, this);
             m_children.push_back(child);
         }
     }

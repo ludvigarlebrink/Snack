@@ -50,7 +50,7 @@ void TerrainComponent::OnEditorInspector()
         {
             std::string filename = static_cast<char*>(payload.data);
 
-            if (filename.substr(filename.find_last_of('.')) == ".terrain")
+            if (filename.substr(filename.find_last_of('.')) == ".trn")
             {
                 if (m_terrain)
                 {

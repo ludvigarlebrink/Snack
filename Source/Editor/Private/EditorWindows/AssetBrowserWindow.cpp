@@ -150,11 +150,11 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                         {
                             // @todo Check if the current scene is saved?
                             // Load the scene.
-                            Manager::Scene()->Load(fileInfo.relativePath);
+                            Manager::Scene()->Load(fileInfo.fullRelativePath);
                         }
                         Sketch::Seperator();
                     }
-                    else if (fileInfo.extension == ".mat")
+                    else if (fileInfo.extension == ".mt")
                     {
                         SketchMenu::Item("Open");
                         Sketch::Seperator();
@@ -164,12 +164,12 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                         SketchMenu::Item("Open");
                         Sketch::Seperator();
                     }
-                    else if (fileInfo.extension == ".terrain")
+                    else if (fileInfo.extension == ".trn")
                     {
                         if (SketchMenu::Item("Open"))
                         {
                             TerrainEditorWindow* terrainWindow = EditorManager::Window()->OpenWindow<TerrainEditorWindow>();
-                            terrainWindow->SetTerrain(fileInfo.relativePath);
+                            terrainWindow->SetTerrain(fileInfo.fullRelativePath);
                         }
                         Sketch::Seperator();
                     }
@@ -230,42 +230,42 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             static std::string inputText = "";
             if (SketchPopup::Dialog("Create Folder", "Folder Name:", "Create", "Cancel", inputText))
             {
-                std::string folderpath = folderNode->GetRelativePath() + inputText;
+                std::string folderpath = folderNode->GetFullRelativePath() + inputText;
                 FileSystem::CreateFolder(folderpath);
                 inputText.clear();
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Scene", "Scene Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".scn";
+                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".scn";
                 FileSystem::CreateFile(filepath, "[]");
                 inputText.clear();
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Lua Script", "Lua Script Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".lua";
+                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".lua";
                 FileSystem::CreateFile(filepath);
                 inputText.clear();
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Material", "Material Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".mat";
+                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".mt";
                 FileSystem::CreateFile(filepath);
                 inputText.clear();
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Shader", "Shader Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".shader";
+                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".shader";
                 FileSystem::CreateFile(filepath);
                 inputText.clear();
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Terrain", "Terrain Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".terrain";
+                std::string filepath = folderNode->GetRelativePath() + inputText + ".trn";
                 Terrain* terrain = new Terrain();
                 terrain->Save(filepath);
                 delete terrain;
@@ -273,7 +273,7 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             }
             else if (SketchPopup::Dialog("Create Text File", "Filename:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".txt";
+                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".txt";
                 FileSystem::CreateFile(filepath);
                 inputText.clear();
                 m_refresh = true;
@@ -282,15 +282,15 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             SketchMenu::End();
         }
 
-        if (folderNode->GetRelativePath() != FileSystem::GetRelativeDataPath() &&
-            folderNode->GetRelativePath() != FileSystem::GetRelativeEditorDataPath())
+        if (folderNode->GetFullRelativePath() != FileSystem::GetRelativeDataPath() &&
+            folderNode->GetFullRelativePath() != FileSystem::GetRelativeEditorDataPath())
         {
             SketchPopup::MenuItemOpenPopup("Rename", "Rename Folder");
 
             SketchPopup::MenuItemOpenPopup("Delete", "Delete Folder");
             if (SketchPopup::DialogYesNo("Delete Folder", "Are you sure?\nThis will delete this folder all\nof its subfolders permanently."))
             {
-                FileSystem::DeleteFolder(folderNode->GetRelativePath().substr(0, folderNode->GetRelativePath().find_last_of('/')));
+                FileSystem::DeleteFolder(folderNode->GetFullRelativePath().substr(0, folderNode->GetFullRelativePath().find_last_of('/')));
                 m_refresh = true;
             }
         }
@@ -316,7 +316,7 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
 
 bool AssetBrowserWindow::FindSelectedFolderByName(FolderNode* folderNode, const std::string& folderpath)
 {
-    if (folderNode->GetRelativePath() == folderpath)
+    if (folderNode->GetFullRelativePath() == folderpath)
     {
         m_selectedFolder = folderNode;
         return true;
@@ -338,7 +338,7 @@ void AssetBrowserWindow::Refresh()
     std::string currentFolder;
     if (m_selectedFolder)
     {
-        currentFolder = m_selectedFolder->GetRelativePath();
+        currentFolder = m_selectedFolder->GetFullRelativePath();
         m_selectedFolder = nullptr;
     }
 
