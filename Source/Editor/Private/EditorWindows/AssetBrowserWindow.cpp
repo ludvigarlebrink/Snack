@@ -73,7 +73,7 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
 
         Sketch::SameLine();
 
-        if (Sketch::Button("Refersh"))
+        if (Sketch::Button("Refresh"))
         {
             m_refresh = true;
         }
