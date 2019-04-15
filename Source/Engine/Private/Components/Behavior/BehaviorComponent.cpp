@@ -1,5 +1,4 @@
 #include "Components/Behavior/BehaviorComponent.hpp"
-#include "BehaviorSystem.hpp"
 #include "Transform.hpp"
 #include "Manager.hpp"
 
@@ -10,12 +9,10 @@ BehaviorSystem* BehaviorComponent::m_behaviorSystem = nullptr;
 BehaviorComponent::BehaviorComponent(Transform* transform)
     : BaseComponent(transform)
 {
-    m_behaviorSystem->RegisterBehavior(this);
 }
 
 BehaviorComponent::~BehaviorComponent()
 {
-    m_behaviorSystem->DeregisterBehavior(this);
 }
 
 void BehaviorComponent::OnEditorInspector()

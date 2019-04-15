@@ -50,6 +50,8 @@ public:
 
     static bool KeyDown(Key key);
 
+    static bool KeyDown(Key key, Mod mod);
+
     static bool KeyRepeat(Key key);
 
     static bool KeyUp(Key key);

@@ -7,6 +7,7 @@ IClassManager* Manager::m_classManager = nullptr;
 IInputManager* Manager::m_inputManager = nullptr;
 IRenderManager* Manager::m_renderManager = nullptr;
 ISceneManager* Manager::m_sceneManager = nullptr;
+IScriptManager* Manager::m_scriptManager = nullptr;
 
 IAssetManager* Manager::Asset()
 {
@@ -31,5 +32,10 @@ IRenderManager* Manager::Render()
 ISceneManager* Manager::Scene()
 {
     return m_sceneManager;
+}
+
+IScriptManager* Manager::Script()
+{
+    return m_scriptManager;
 }
 } // namespace snack

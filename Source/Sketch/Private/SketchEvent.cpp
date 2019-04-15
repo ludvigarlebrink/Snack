@@ -90,29 +90,34 @@ bool SketchEvent::IsPointerOverWindow()
 
 bool SketchEvent::KeyDown(Key key)
 {
-    if (m_keys[static_cast<int32>(key)] == State::DOWN)
+    return m_keys[static_cast<int32>(key)] == State::DOWN;
+}
+
+bool SketchEvent::KeyDown(Key key, Mod mod)
+{
+    switch (mod)
     {
-        return true;
+    case Mod::ALT:
+        return m_keys[static_cast<int32>(key)] == State::DOWN && ImGui::GetIO().KeyAlt;
+    case Mod::CTRL:
+        return m_keys[static_cast<int32>(key)] == State::DOWN && ImGui::GetIO().KeyCtrl;
+    case Mod::SHIFT:
+        return m_keys[static_cast<int32>(key)] == State::DOWN && ImGui::GetIO().KeyShift;
+    default:
+        break;
     }
+
     return false;
 }
 
 bool SketchEvent::KeyRepeat(Key key)
 {
-    if (m_keys[static_cast<int32>(key)] == State::DOWN || m_keys[static_cast<int32>(key)] == State::REPEAT)
-    {
-        return true;
-    }
-    return false;
+    return m_keys[static_cast<int32>(key)] == State::DOWN || m_keys[static_cast<int32>(key)] == State::REPEAT;
 }
 
 bool SketchEvent::KeyUp(Key key)
 {
-    if (m_keys[static_cast<int32>(key)] == State::UP)
-    {
-        return true;
-    }
-    return false;
+    return m_keys[static_cast<int32>(key)] == State::UP;
 }
 
 bool SketchEvent::ModRepeat(Mod mod)
@@ -164,113 +169,89 @@ Key SketchEvent::GetKey(int32 key)
     switch (key)
     {
     case SDLK_SPACE:
-    {
         return Key::SPACE;
-    }
+
+    case SDLK_DELETE:
+        return Key::DELETE;
+
     case SDLK_a:
-    {
         return Key::A;
-    }
+
     case SDLK_b:
-    {
         return Key::B;
-    }
+
     case SDLK_c:
-    {
         return Key::C;
-    }
+
     case SDLK_d:
-    {
         return Key::D;
-    }
+
     case SDLK_e:
-    {
         return Key::E;
-    }
+
     case SDLK_f:
-    {
         return Key::F;
-    }
+
     case SDLK_g:
-    {
         return Key::G;
-    }
+
     case SDLK_h:
-    {
         return Key::H;
-    }
+
     case SDLK_i:
-    {
         return Key::I;
-    }
+
     case SDLK_j:
-    {
         return Key::J;
-    }
+
     case SDLK_k:
-    {
         return Key::K;
-    }
+
     case SDLK_l:
-    {
         return Key::L;
-    }
+
     case SDLK_m:
-    {
         return Key::M;
-    }
+
     case SDLK_n:
-    {
         return Key::N;
-    }
+
     case SDLK_o:
-    {
         return Key::O;
-    }
+
     case SDLK_p:
-    {
         return Key::R;
-    }
+
     case SDLK_q:
-    {
         return Key::Q;
-    }
+
     case SDLK_r:
-    {
         return Key::R;
-    }
+
     case SDLK_s:
-    {
         return Key::S;
-    }
+
     case SDLK_t:
-    {
         return Key::T;
-    }
+
     case SDLK_u:
-    {
         return Key::U;
-    }
+
     case SDLK_v:
-    {
         return Key::V;
-    }
+
     case SDLK_w:
-    {
         return Key::W;
-    }
+
     case SDLK_x:
-    {
         return Key::X;
-    }
+
     case SDLK_y:
-    {
         return Key::Y;
-    }
+
     case SDLK_z:
-    {
         return Key::Z;
-    }
+
     default:
         break;
     }

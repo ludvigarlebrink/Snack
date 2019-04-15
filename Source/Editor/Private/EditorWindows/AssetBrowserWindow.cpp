@@ -144,9 +144,14 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
 
                 if (SketchPopup::BeginContext(fileInfo.name + fileInfo.extension))
                 {
-                    if (fileInfo.extension == ".scene")
+                    if (fileInfo.extension == ".scn")
                     {
-                        SketchMenu::Item("Open");
+                        if (SketchMenu::Item("Open"))
+                        {
+                            // @todo Check if the current scene is saved?
+                            // Load the scene.
+                            Manager::Scene()->Load(fileInfo.relativePath);
+                        }
                         Sketch::Seperator();
                     }
                     else if (fileInfo.extension == ".mat")

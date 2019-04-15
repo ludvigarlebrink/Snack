@@ -15,6 +15,8 @@ enum class Key : int32
     ENTER,
     SPACE,
 
+    DELETE,
+
     UP,
     DOWN,
     LEFT,

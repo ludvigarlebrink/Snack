@@ -6,6 +6,7 @@
 #include "Managers/IInputManager.hpp"
 #include "Managers/IRenderManager.hpp"
 #include "Managers/ISceneManager.hpp"
+#include "Managers/IScriptManager.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -42,5 +43,6 @@ private:
     IInputManager* m_inputManager;
     IRenderManager* m_renderManager;
     ISceneManager* m_sceneManager;
+    IScriptManager* m_scriptManager;
 };
 } // namespace snack

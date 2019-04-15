@@ -3,7 +3,6 @@
 #include "EngineInclude.hpp"
 #include "SketchInclude.hpp"
 
-#include <algorithm>
 #include <iostream>
 
 namespace snack
@@ -26,6 +25,39 @@ std::string SceneGraphWindow::GetTitle()
 
 void SceneGraphWindow::OnDraw(f32 deltaTime)
 {
+    if (SketchWindow::IsFocused())
+    {
+        // Save.
+        if (SketchEvent::KeyDown(Key::S, Mod::CTRL))
+        {
+            Manager::Scene()->Save("Data/Test.scn");
+        }
+
+        // Delete.
+        if (SketchEvent::KeyDown(Key::DELETE))
+        {
+            EditorManager::Scene()->DeleteSelectedTransforms();
+        }
+
+        // Copy.
+        if (SketchEvent::KeyDown(Key::C, Mod::CTRL))
+        {
+            EditorManager::Scene()->CopySelectedTransforms();
+        }
+
+        // Paste.
+        if (SketchEvent::KeyDown(Key::V, Mod::CTRL))
+        {
+            EditorManager::Scene()->PasteTransforms();
+        }
+
+        // Duplicate.
+        if (SketchEvent::KeyDown(Key::D, Mod::CTRL))
+        {
+            EditorManager::Scene()->DuplicateSelectedTransforms();
+        }
+    }
+
     if (m_dragDropReparented)
     {
         bool sourceIsParentOfTarget = false;
@@ -147,27 +179,11 @@ bool SceneGraphWindow::DrawTransform(Transform* transform)
                 {
                     EditorManager::Scene()->ClearSelectedTransforms();
                 }
+                Manager::Scene()->DestroyImmediate(transform);
             }
             else if (EditorManager::Scene()->GetSelectedTransformCount() > 1)
             {
-                std::vector<Transform*> toBeDestroyed;
-                for (int32 i = 0; i < EditorManager::Scene()->GetSelectedTransformCount(); ++i)
-                {
-                    toBeDestroyed.push_back(EditorManager::Scene()->GetSelectedTransform(i));
-                }
-                EditorManager::Scene()->ClearSelectedTransforms();
-
-                // Destroy objects with higher depths first.
-                auto sortFunc = [](Transform* lhs, Transform* rhs)->bool
-                {
-                    return lhs->GetDepth() > rhs->GetDepth();
-                };
-
-                std::sort(toBeDestroyed.begin(), toBeDestroyed.end(), sortFunc);
-                for (auto t : toBeDestroyed)
-                {
-                    Manager::Scene()->DestroyImmediate(t);
-                }
+                EditorManager::Scene()->DeleteSelectedTransforms();
             }
             else
             {

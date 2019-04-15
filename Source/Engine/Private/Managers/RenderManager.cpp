@@ -73,7 +73,7 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
             DeferredGeometryPass(c);
             framebuffer->Bind();
             {
-                DeferredLightingPass();
+                DeferredLightingPass(c);
             }
             framebuffer->Unbind();
         }
@@ -227,7 +227,7 @@ void RenderManager::DeferredGeometryPass(CameraComponent* camera)
     m_deferredFrameBuffer->Unbind();
 }
 
-void RenderManager::DeferredLightingPass()
+void RenderManager::DeferredLightingPass(CameraComponent* camera)
 {
     m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     m_renderWindow->Clear();
@@ -237,19 +237,23 @@ void RenderManager::DeferredLightingPass()
     for (auto directionalLight : m_directionalLightComponents)
     {
         glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
-        m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
         m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
         m_lightingPassShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
-        m_lightingPassShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", 1.0f);
+        m_lightingPassShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", directionalLight->GetIntensity());
         ++lightCount;
     }
-    m_lightingPassShader->SetIntSlow("LightCount", lightCount);
-    if (m_cameraComponents.size() > 0)
+    m_lightingPassShader->SetIntSlow("DirectionalLightCount", lightCount);
+    lightCount = 0;
+    for (auto pointLight : m_pointLightComponents)
     {
-        CameraComponent camera = **m_cameraComponents.begin();
-        m_lightingPassShader->SetVec3Slow("ViewPosition", camera.GetTransform()->GetWorldPosition());
+        glm::mat4 model = pointLight->GetTransform()->GetWorldMatrix();
+        m_lightingPassShader->SetVec3Slow("PointLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
+        m_lightingPassShader->SetVec3Slow("PointLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_lightingPassShader->SetFloatSlow("PointLights[" + std::to_string(lightCount) + "].intensity", pointLight->GetIntensity());
+        ++lightCount;
     }
-    // @todo maybe rename these to GPosition? CaptialCase for uniforms?
+    m_lightingPassShader->SetIntSlow("PointLightCount", lightCount);
+    m_lightingPassShader->SetVec3Slow("ViewPosition", camera->GetTransform()->GetWorldPosition());
     m_lightingPassShader->SetIntSlow("GPosition", 0);
     m_lightingPassShader->SetIntSlow("GNormal", 1);
     m_lightingPassShader->SetIntSlow("GAlbedo", 2);
@@ -270,6 +274,8 @@ void RenderManager::SetUp()
 
     m_terrainShader = new Shader();
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.tcs.glsl"), Shader::Type::TESSELATION_CONTROL_SHADER);
+    m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.tes.glsl"), Shader::Type::TESSELATION_EVALUATION_SHADER);
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.gs.glsl"), Shader::Type::GEOMETRY_SHADER);
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
     m_terrainShader->LinkProgram();

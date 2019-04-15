@@ -1,11 +1,11 @@
 #include "Shader.hpp"
-#include "RenderError.hpp"
 #include "Log.hpp"
+#include "RenderError.hpp"
+#include "RenderSM.hpp"
 #include "glad/glad.h"
 
 #include <fstream>
 #include <streambuf>
-#include <iostream>
 
 namespace snack
 {
@@ -110,6 +110,10 @@ bool Shader::LoadShaderFromString(const std::string& shaderSource, Type type)
     SPY_CHECK_RENDER_ERROR();
     if (!CheckShaderCompileErrors(shader, "Shader"))
     {
+        for (auto s : m_shaders)
+        {
+            glDeleteShader(s);
+        }
         glDeleteShader(shader);
         SPY_CHECK_RENDER_ERROR();
         glDeleteProgram(m_shaderProgram);
@@ -127,187 +131,217 @@ bool Shader::LoadShaderFromString(const std::string& shaderSource, Type type)
 
 void Shader::SetFloat(uint32 location, f32 value)
 {
+    Use();
     glUniform1f(location, value);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetFloatSlow(const std::string& name, f32 value)
 {
+    Use();
     glUniform1f(glGetUniformLocation(m_shaderProgram, name.c_str()), value);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetFloatSlow(const std::string& name, const std::vector<f32>& values)
 {
+    Use();
     glUniform1fv(glGetUniformLocation(m_shaderProgram, name.c_str()), values.size(), values.data());
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetInt(uint32 location, int32 value)
 {
+    Use();
     glUniform1i(location, value);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIntSlow(const std::string& name, int32 value)
 {
+    Use();
     glUniform1i(glGetUniformLocation(m_shaderProgram, name.c_str()), value);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetMat2(uint32 location, const glm::mat2& mat)
 {
+    Use();
     glUniformMatrix2fv(location, 1, GL_FALSE, &mat[0][0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetMat2Slow(const std::string& name, const glm::mat2& mat)
 {
+    Use();
     glUniformMatrix2fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetMat3(uint32 location, const glm::mat3& mat)
 {
+    Use();
     glUniformMatrix3fv(location, 1, GL_FALSE, &mat[0][0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetMat3Slow(const std::string& name, const glm::mat3& mat)
 {
+    Use();
     glUniformMatrix3fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetMat4(uint32 location, const glm::mat4& mat)
 {
+    Use();
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetMat4Slow(const std::string& name, const glm::mat4& mat)
 {
-    glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+    Use();
+    glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
-void Shader::SetVec2(uint32 location, const glm::vec2 & vec)
+void Shader::SetVec2(uint32 location, const glm::vec2& vec)
 {
-    glUniform2fv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform2fv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetVec2Slow(const std::string& name, const glm::vec2& vec)
 {
-    glUniform2fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform2fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIVec2(uint32 location, const glm::ivec2& vec)
 {
+    Use();
     glUniform2iv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIVec2Slow(const std::string& name, const glm::ivec2& vec)
 {
-    glUniform2iv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform2iv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetUVec2(uint32 location, const glm::uvec2& vec)
 {
+    Use();
     glUniform2uiv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetUVec2Slow(const std::string& name, const glm::uvec2& vec)
 {
-    glUniform2uiv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform2uiv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetVec3(uint32 location, const glm::vec3& vec)
 {
-    glUniform3fv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform3fv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetVec3Slow(const std::string& name, const glm::vec3& vec)
 {
-    glUniform3fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform3fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetVec3Slow(const std::string& name, const std::vector<glm::vec3>& vec)
 {
+    Use();
     glUniform3fv(glGetUniformLocation(m_shaderProgram, name.c_str()), vec.size(), &vec[0][0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIVec3(uint32 location, const glm::ivec3& vec)
 {
-    glUniform3iv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform3iv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIVec3Slow(const std::string& name, const glm::ivec3& vec)
 {
-    glUniform3iv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform3iv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetUVec3(uint32 location, const glm::uvec3& vec)
 {
-    glUniform3uiv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform3uiv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetUVec3Slow(const std::string& name, const glm::uvec3& vec)
 {
-    glUniform3uiv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform3uiv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetVec4(uint32 location, const glm::vec4& vec)
 {
-    glUniform4fv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform4fv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetVec4Slow(const std::string& name, const glm::vec4& vec)
 {
-    glUniform4fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform4fv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIVec4(uint32 location, const glm::ivec4& vec)
 {
-    glUniform4iv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform4iv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetIVec4Slow(const std::string& name, const glm::ivec4& vec)
 {
-    glUniform4iv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform4iv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetUVec4(uint32 location, const glm::uvec4& vec)
 {
-    glUniform4uiv(location, 1, glm::value_ptr(vec));
+    Use();
+    glUniform4uiv(location, 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::SetUVec4Slow(const std::string& name, const glm::uvec4& vec)
 {
-    glUniform4uiv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, glm::value_ptr(vec));
+    Use();
+    glUniform4uiv(glGetUniformLocation(m_shaderProgram, name.c_str()), 1, &vec[0]);
     SPY_CHECK_RENDER_ERROR();
 }
 
 void Shader::Use()
 {
-    glUseProgram(m_shaderProgram);
+    RenderSM::UseShaderProgram(m_shaderProgram);
     SPY_CHECK_RENDER_ERROR();
 }
 

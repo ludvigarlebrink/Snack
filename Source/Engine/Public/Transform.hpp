@@ -4,6 +4,8 @@
 #include "InstanceID.hpp"
 #include "Log.hpp"
 
+#include <cereal/cereal.hpp>
+#include <cereal/archives/json.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
@@ -15,6 +17,7 @@ namespace snack
 {
 class BaseComponent;
 class SceneManager;
+class ScriptObject;
 class Engine;
 
 class ENGINE_API Transform final
@@ -88,6 +91,10 @@ public:
 
     bool RemoveComponent(const std::string& id);
 
+    void Scale(const glm::vec3& scale);
+
+    void Scale(f32 x, f32 y, f32 z);
+
     void SetEnabled(bool enabled);
 
     void SetName(const std::string& name);
@@ -108,6 +115,16 @@ public:
 
     void SetScale(f32 uniform);
 
+    void SetWorldPosition(const glm::vec3& position);
+
+    void SetWorldPosition(f32 x, f32 y, f32 z);
+
+private:
+
+    void Load(cereal::JSONInputArchive& archive);
+
+    void Save(cereal::JSONOutputArchive& archive);
+
 private:
 
     InstanceID m_instanceID;
@@ -120,6 +137,8 @@ private:
     int32 m_depth;
 
     std::unordered_map<std::string, BaseComponent*> m_components;
+    std::unordered_map<std::string, ScriptObject*> m_scripts;
+
     std::vector<Transform*> m_children;
     Transform* m_parent;
 

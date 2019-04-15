@@ -78,4 +78,9 @@ glm::vec2 SketchWindow::GetSize()
 {
     return glm::vec2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 }
+
+bool SketchWindow::IsFocused()
+{
+    return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
+}
 } // namespace snack

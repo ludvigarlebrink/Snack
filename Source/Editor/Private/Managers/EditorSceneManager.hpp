@@ -16,9 +16,21 @@ public:
 
     void ClearSelectedTransforms() override;
 
+    void CopySelectedTransforms() override;
+
+    void CopyTransform(Transform* transform) override;
+
+    void DeleteSelectedTransforms() override;
+
+    void DuplicateSelectedTransforms() override;
+
     Transform* GetSelectedTransform(int32 index) override;
 
-    virtual int32 GetSelectedTransformCount() override;
+    int32 GetSelectedTransformCount() override;
+
+    void PasteTransforms() override;
+
+    void PasteTransforms(Transform* parent) override;
 
     void PushSelectedTransfrom(Transform* transform) override;
 
@@ -33,5 +45,6 @@ private:
 private:
 
     std::vector<Transform*> m_selectedTransforms;
+    std::vector<Transform*> m_toBePasted;
 };
 } // namespace snack

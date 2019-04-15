@@ -1,6 +1,11 @@
 #include "SceneManager.hpp"
 #include "Transform.hpp"
 
+#include <cereal/cereal.hpp>
+#include <cereal/archives/json.hpp>
+#include <fstream>
+#include <sstream>
+
 namespace snack
 {
 SceneManager::SceneManager()
@@ -67,6 +72,79 @@ Transform* SceneManager::Instantiate(Transform* parent)
     Transform* transform = new Transform(parent, m_nextInstanceID);
     ++m_nextInstanceID;
     return transform;
+}
+
+Transform* SceneManager::InstantiateFromPrototype(Transform* prototype)
+{
+    Transform* transform = new Transform(prototype->GetParent(), m_nextInstanceID);
+    ++m_nextInstanceID;
+    for (auto p : prototype->m_children)
+    {
+        Transform* child = new Transform(transform, m_nextInstanceID);
+        ++m_nextInstanceID;
+        InstantiateFromPrototypeChildren(child, p);
+    }
+    return transform;
+}
+
+bool SceneManager::Load(const std::string& filename)
+{
+    std::ifstream f(filename);
+    if (!f.is_open())
+    {
+        return false;
+    }
+
+    delete m_scene;
+
+    m_scene = new Transform(nullptr, m_nextInstanceID);
+    m_scene->m_isScene = true;
+    m_scene->m_name = "Scene";
+    ++m_nextInstanceID;
+
+    std::stringstream ss;
+    {
+        std::string source((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+        ss << source;
+    }
+
+    cereal::JSONInputArchive archive(ss);
+    m_scene->Load(archive);
+
+    return true;
+}
+
+bool SceneManager::Save(const std::string& filename)
+{
+    std::stringstream ss;
+
+    {
+        cereal::JSONOutputArchive archive(ss);
+        archive.makeArray();
+        m_scene->Save(archive);
+    }
+
+    std::ofstream f(filename);
+    if (!f.is_open())
+    {
+        return false;
+    }
+
+    f << ss.str();
+
+    f.close();
+
+    return true;
+}
+
+void SceneManager::InstantiateFromPrototypeChildren(Transform* parent, Transform* prototype)
+{
+    for (auto p : prototype->m_children)
+    {
+        Transform* child = new Transform(parent, m_nextInstanceID);
+        ++m_nextInstanceID;
+        InstantiateFromPrototypeChildren(child, p);
+    }
 }
 
 void SceneManager::SetUp()

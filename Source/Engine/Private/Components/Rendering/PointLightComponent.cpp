@@ -5,6 +5,8 @@
 #include "SketchInclude.hpp"
 #endif
 
+#include <algorithm>
+
 namespace snack
 {
 PointLightComponent::PointLightComponent(Transform* transform)
@@ -41,6 +43,6 @@ void PointLightComponent::OnEditorInspector()
 
 void PointLightComponent::SetIntensity(f32 intensity)
 {
-    m_intensity = intensity;
+    m_intensity = std::clamp(intensity, 0.0f, 100.0f);
 }
 } // namespace snack

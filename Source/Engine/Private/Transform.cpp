@@ -212,9 +212,9 @@ void Transform::Move(f32 x, f32 y, f32 z)
     m_position += glm::vec3(x, y, z);
 }
 
+#ifdef SPY_EDITOR
 void Transform::OnEditorInspector()
 {
-#ifdef SPY_EDITOR
     Sketch::Checkbox("Enabled", m_isEnabled);
     Sketch::SameLine();
     Sketch::Checkbox("Static", m_isStaic);
@@ -222,8 +222,8 @@ void Transform::OnEditorInspector()
     Sketch::Vec3Field("Position", m_position);
     Sketch::Vec3Field("Rotation", m_rotation);
     Sketch::Vec3Field("Scale", m_scale);
-#endif
 }
+#endif
 
 bool Transform::RemoveComponent(const std::string& id)
 {
@@ -236,6 +236,16 @@ bool Transform::RemoveComponent(const std::string& id)
     }
 
     return false;
+}
+
+void Transform::Scale(const glm::vec3& scale)
+{
+    m_scale += scale;
+}
+
+void Transform::Scale(f32 x, f32 y, f32 z)
+{
+    m_scale += glm::vec3(x, y, z);
 }
 
 void Transform::SetEnabled(bool enabled)
@@ -303,16 +313,127 @@ void Transform::SetRotation(f32 x, f32 y, f32 z)
 
 void Transform::SetScale(const glm::vec3& scale)
 {
-    m_scale = scale;
+    m_scale = glm::max(scale, glm::vec3(F32_EPSILON));
 }
 
 void Transform::SetScale(f32 x, f32 y, f32 z)
 {
-    m_scale = glm::vec3(x, y, z);
+    m_scale = glm::max(glm::vec3(x, y, z), glm::vec3(F32_EPSILON));
 }
 
 void Transform::SetScale(f32 uniform)
 {
-    m_scale = glm::vec3(uniform, uniform, uniform);
+    m_scale = glm::max(glm::vec3(uniform), glm::vec3(F32_EPSILON));
+}
+
+void Transform::SetWorldPosition(const glm::vec3& position)
+{
+    m_position = position;
+}
+
+void Transform::SetWorldPosition(f32 x, f32 y, f32 z)
+{
+    m_position = glm::vec3(x, y, z);
+}
+
+void Transform::Load(cereal::JSONInputArchive& archive)
+{
+    if (m_isScene)
+    {
+        int32 count = 0;
+        archive(count);
+        for (int32 i = 0; i < count; ++i)
+        {
+            Transform* child = Manager::Scene()->Instantiate(this);
+            child->Load(archive);
+        }
+    }
+    else
+    {
+        archive.startNode();
+        {
+            archive(
+                cereal::make_nvp("name", m_name),
+
+                cereal::make_nvp("isEnabled", m_isEnabled),
+                cereal::make_nvp("isStatic", m_isStaic),
+
+                cereal::make_nvp("positionX", m_position.x),
+                cereal::make_nvp("positionY", m_position.y),
+                cereal::make_nvp("positionZ", m_position.z),
+
+                cereal::make_nvp("rotationX", m_rotation.x),
+                cereal::make_nvp("rotationY", m_rotation.y),
+                cereal::make_nvp("rotationZ", m_rotation.z),
+
+                cereal::make_nvp("scaleX", m_scale.x),
+                cereal::make_nvp("scaleY", m_scale.y),
+                cereal::make_nvp("scaleZ", m_scale.z)
+            );
+
+            archive.setNextName("children");
+            archive.startNode();
+            {
+                int32 count = 0;
+                archive(count);
+                for (int32 i = 0; i < count; ++i)
+                {
+                    Transform* child = Manager::Scene()->Instantiate(this);
+                    child->Load(archive);
+                }
+            }
+            archive.finishNode();
+        }
+        archive.finishNode();
+    }
+}
+
+void Transform::Save(cereal::JSONOutputArchive& archive)
+{
+    if (m_isScene)
+    {
+        archive(m_children.size());
+        for (auto c : m_children)
+        {
+            c->Save(archive);
+        }
+    }
+    else
+    {
+        archive.startNode();
+        {
+            archive(
+                cereal::make_nvp("name", m_name),
+
+                cereal::make_nvp("isEnabled", m_isEnabled),
+                cereal::make_nvp("isStatic", m_isStaic),
+
+                cereal::make_nvp("positionX", m_position.x),
+                cereal::make_nvp("positionY", m_position.y),
+                cereal::make_nvp("positionZ", m_position.z),
+
+                cereal::make_nvp("rotationX", m_rotation.x),
+                cereal::make_nvp("rotationY", m_rotation.y),
+                cereal::make_nvp("rotationZ", m_rotation.z),
+
+                cereal::make_nvp("scaleX", m_scale.x),
+                cereal::make_nvp("scaleY", m_scale.y),
+                cereal::make_nvp("scaleZ", m_scale.z)
+            );
+
+            archive.setNextName("children");
+            archive.startNode();
+            {
+                archive.makeArray();
+                archive(m_children.size());
+                for (auto c : m_children)
+                {
+                    c->Save(archive);
+                }
+            }
+            archive.finishNode();
+        }
+        archive.finishNode();
+    }
 }
 } // namespace snack
