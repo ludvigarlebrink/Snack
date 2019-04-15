@@ -1,10 +1,13 @@
 #include "ScriptManager.hpp"
 #include "Manager.hpp"
+#include "Scripting/ScriptObject.hpp"
 #include "Transform.hpp"
 
 namespace snack
 {
 ScriptManager::ScriptManager()
+    : m_state(nullptr)
+    , m_nextInstanceID(0)
 {
     SetUp();
 }
@@ -14,27 +17,64 @@ ScriptManager::~ScriptManager()
     TearDown();
 }
 
+ScriptObject* ScriptManager::CreateBehaviorObject(const std::string& className)
+{
+    ScriptObject* scriptObject = new ScriptObject(m_state, className, m_nextInstanceID);
+    if (scriptObject->IsValid())
+    {
+        ++m_nextInstanceID;
+        m_behaviorObjects[className].push_back(scriptObject);
+        return scriptObject;
+    }
+
+    delete scriptObject;
+    return nullptr;
+}
+
 void ScriptManager::Tick(f32 deltaTime)
 {
-    lua.do_file("Data/Player.lua");
-    lua["Lemon"]["new"]();
+    m_state->do_file("Data/Player.lua");
 
-    auto f = lua["Lemon"]["new"];
-    if (f.valid())
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+    CreateBehaviorObject("Player");
+
+    for (auto v : m_behaviorObjects)
     {
-        f();
+        for (auto s : v.second)
+        {
+            s->Call("OnTick", deltaTime);
+        }
     }
 }
 
 void ScriptManager::PostTick(f32 deltaTime)
 {
-
+    for (auto v : m_behaviorObjects)
+    {
+        for (auto s : v.second)
+        {
+            s->Call("OnPostTick", deltaTime);
+        }
+    }
 }
 
 void ScriptManager::SetUp()
 {
+    m_state = new sol::state();
+
     // Open libraries.
-    lua.open_libraries(sol::lib::base, sol::lib::package);
+    m_state->open_libraries(sol::lib::base, sol::lib::package, sol::lib::math);
+
+    std::string packagePath = (*m_state)["package"]["path"];
+    (*m_state)["package"]["path"] = (packagePath + ";Data/middleclass.lua").c_str();
 
     SetUpMath();
     SetUpEngine();
@@ -42,7 +82,7 @@ void ScriptManager::SetUp()
 
 void ScriptManager::SetUpEngine()
 {
-    lua.new_usertype<Transform>("Transform",
+    m_state->new_usertype<Transform>("Transform",
         "new", sol::no_constructor,
 
         "GetLocalPosition", &Transform::GetLocalPosition,
@@ -54,7 +94,7 @@ void ScriptManager::SetUpEngine()
         "SetWorldPosition", sol::resolve<f32, f32, f32>(&Transform::SetWorldPosition)
     );
 
-    lua.set_function("Instantiate", sol::overload(
+    m_state->set_function("Instantiate", sol::overload(
         []()->Transform* { return Manager::Scene()->Instantiate(); },
         [](Transform* parent)->Transform* { return Manager::Scene()->Instantiate(parent); }
     ));
@@ -63,7 +103,7 @@ void ScriptManager::SetUpEngine()
 void ScriptManager::SetUpMath()
 {
     // Vec2.
-    lua.new_usertype<glm::vec2>("Vec2",
+    m_state->new_usertype<glm::vec2>("Vec2",
         sol::constructors<
             glm::vec2(),
             glm::vec2(const glm::vec2&),
@@ -79,7 +119,7 @@ void ScriptManager::SetUpMath()
     );
 
     // Vec3.
-    lua.new_usertype<glm::vec3>("Vec3",
+    m_state->new_usertype<glm::vec3>("Vec3",
         sol::constructors<
             glm::vec3(),
             glm::vec3(const glm::vec3&),
@@ -97,7 +137,7 @@ void ScriptManager::SetUpMath()
     );
 
     // Vec3.
-    lua.new_usertype<glm::vec4>("Vec4",
+    m_state->new_usertype<glm::vec4>("Vec4",
         sol::constructors<
         glm::vec4(),
         glm::vec4(const glm::vec4&),

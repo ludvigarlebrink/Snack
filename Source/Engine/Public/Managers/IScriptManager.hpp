@@ -2,9 +2,12 @@
 
 #include "BaseTypes.hpp"
 
+#include <string>
+
 namespace snack
 {
 class Engine;
+class ScriptObject;
 
 class IScriptManager
 {
@@ -13,6 +16,8 @@ class IScriptManager
 public:
 
     virtual ~IScriptManager() = default;
+
+    virtual ScriptObject* CreateBehaviorObject(const std::string& className) = 0;
 
 protected:
 

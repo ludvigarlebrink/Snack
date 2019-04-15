@@ -29,6 +29,10 @@ public:
 
     Transform* InstantiateFromPrototype(Transform* prototype) override;
 
+    bool Load(const std::string& filename) override;
+
+    bool Save(const std::string& filename) override;
+
 private:
 
     void InstantiateFromPrototypeChildren(Transform* parent, Transform* prototype);

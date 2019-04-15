@@ -1,12 +1,13 @@
 #pragma once
 
-
 #include "Managers/IScriptManager.hpp"
+#include "InstanceID.hpp"
 
 #include <glm/glm.hpp>
+#include <iostream>
+#include <unordered_map>
 
 #define SOL_CHECK_ARGUMENTS 1
-#include <iostream>
 #include <sol/sol.hpp>
 
 namespace snack
@@ -18,6 +19,8 @@ public:
     ScriptManager();
 
     ~ScriptManager();
+
+    ScriptObject* CreateBehaviorObject(const std::string& className) override;
 
 protected:
 
@@ -37,6 +40,9 @@ private:
 
 private:
 
-    sol::state lua;
+    sol::state* m_state;
+    InstanceID m_nextInstanceID;
+
+    std::unordered_map<std::string, std::vector<ScriptObject*>> m_behaviorObjects;
 };
 } // namespace snack

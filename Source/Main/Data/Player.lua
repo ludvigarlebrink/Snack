@@ -1,23 +1,23 @@
-class = require 'Data/middleclass'
+local class = require 'middleclass'
+Player = class('Player')
+Player.someVar = 2
 
-Fruit = class('Fruit')
-
-function Fruit:initialize(sweetness)
-    self.sweetness = sweetness
+function Player:initialize()
+    print('TestClass Created!')
+    self.someVar = math.random(60, 90)
 end
 
-Fruit.static.sweetness_threshold = 5
-
-function Fruit:isSweet()
-    print(self.sweetness > Fruit.sweetness_threshold)
+-- Called when the object is created.
+function Player:OnBegin(deltaTime)
+    print(self.someVar)
 end
 
-Lemon = class('Lemon', Fruit)
-
-function Lemon:initialize()
-    Fruit.initialize(self, 4)
-    print(true)
+-- Called when the object is destroyed.
+function Player:OnEnd(deltaTime)
+    print(self.someVar)
 end
 
-some = Lemon:new(32)
-some:isSweet()
+-- Called once every frame.
+function Player:OnTick(deltaTime)
+    print(self.someVar)
+end

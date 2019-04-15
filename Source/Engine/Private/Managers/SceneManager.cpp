@@ -1,6 +1,11 @@
 #include "SceneManager.hpp"
 #include "Transform.hpp"
 
+#include <cereal/cereal.hpp>
+#include <cereal/archives/json.hpp>
+#include <fstream>
+#include <sstream>
+
 namespace snack
 {
 SceneManager::SceneManager()
@@ -80,6 +85,56 @@ Transform* SceneManager::InstantiateFromPrototype(Transform* prototype)
         InstantiateFromPrototypeChildren(child, p);
     }
     return transform;
+}
+
+bool SceneManager::Load(const std::string& filename)
+{
+    std::ifstream f(filename);
+    if (!f.is_open())
+    {
+        return false;
+    }
+
+    delete m_scene;
+
+    m_scene = new Transform(nullptr, m_nextInstanceID);
+    m_scene->m_isScene = true;
+    m_scene->m_name = "Scene";
+    ++m_nextInstanceID;
+
+    std::stringstream ss;
+    {
+        std::string source((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+        ss << source;
+    }
+
+    cereal::JSONInputArchive archive(ss);
+    m_scene->Load(archive);
+
+    return true;
+}
+
+bool SceneManager::Save(const std::string& filename)
+{
+    std::stringstream ss;
+
+    {
+        cereal::JSONOutputArchive archive(ss);
+        archive.makeArray();
+        m_scene->Save(archive);
+    }
+
+    std::ofstream f(filename);
+    if (!f.is_open())
+    {
+        return false;
+    }
+
+    f << ss.str();
+
+    f.close();
+
+    return true;
 }
 
 void SceneManager::InstantiateFromPrototypeChildren(Transform* parent, Transform* prototype)

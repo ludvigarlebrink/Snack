@@ -4,6 +4,8 @@
 #include "InstanceID.hpp"
 #include "Log.hpp"
 
+#include <cereal/cereal.hpp>
+#include <cereal/archives/json.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
@@ -116,6 +118,12 @@ public:
     void SetWorldPosition(const glm::vec3& position);
 
     void SetWorldPosition(f32 x, f32 y, f32 z);
+
+private:
+
+    void Load(cereal::JSONInputArchive& archive);
+
+    void Save(cereal::JSONOutputArchive& archive);
 
 private:
 

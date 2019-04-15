@@ -46,11 +46,46 @@ void InspectorWindow::OnDraw(f32 deltaTime)
                 Manager::Class()->GetAllComponentInfo(m_componentInfos);
             }
 
+            Sketch::SameLine();
+            
+            if (Sketch::Button("Add Script"))
+            {
+                SketchPopup::OpenPopup("Add Script");
+                m_componentInfos.clear();
+                Manager::Class()->GetAllComponentInfo(m_componentInfos);
+            }
+
             if (SketchPopup::BeginModal("Add Component", glm::vec2(400.0f, 300.0f)))
             {
                 Sketch::TextField("Search", m_search);
 
                 SketchWindow::BeginChild("Add Component List", true);
+                {
+                    for (auto& c : m_componentInfos)
+                    {
+                        if (c.constructable && !transform->HasComponent(c.id) &&
+                            (m_search.empty() || m_search == c.name.substr(0, m_search.length())))
+                        {
+                            if (Sketch::Selectable(c.name))
+                            {
+                                transform->AddComponent(c.id);
+                                m_search.clear();
+                                SketchPopup::Close();
+                                break;
+                            }
+                        }
+                    }
+                }
+                SketchWindow::EndChild();
+
+                SketchPopup::End();
+            }
+
+            if (SketchPopup::BeginModal("Add Script", glm::vec2(400.0f, 300.0f)))
+            {
+                Sketch::TextField("Search", m_search);
+
+                SketchWindow::BeginChild("Add Script List", true);
                 {
                     for (auto& c : m_componentInfos)
                     {

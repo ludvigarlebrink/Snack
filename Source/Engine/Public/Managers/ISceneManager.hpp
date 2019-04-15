@@ -2,6 +2,8 @@
 
 #include "BaseTypes.hpp"
 
+#include <string>
+
 namespace snack
 {
 class Transform;
@@ -28,5 +30,9 @@ public:
     virtual Transform* Instantiate(Transform* parent) = 0;
 
     virtual Transform* InstantiateFromPrototype(Transform* prototype) = 0;
+
+    virtual bool Load(const std::string& filename) = 0;
+
+    virtual bool Save(const std::string& filename) = 0;
 };
 } // namespace snack
