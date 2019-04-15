@@ -237,8 +237,8 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             }
             else if (SketchPopup::Dialog("Create Scene", "Scene Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetRelativePath() + inputText + ".scene";
-                FileSystem::CreateFile(filepath);
+                std::string filepath = folderNode->GetRelativePath() + inputText + ".scn";
+                FileSystem::CreateFile(filepath, "[]");
                 inputText.clear();
                 m_refresh = true;
             }

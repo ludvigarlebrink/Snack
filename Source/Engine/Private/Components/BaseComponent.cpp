@@ -24,6 +24,11 @@ bool BaseComponent::IsEnabled() const
     return m_isEnabled;
 }
 
+void BaseComponent::Load(cereal::JSONInputArchive& archive)
+{
+    archive(cereal::make_nvp("isEnabled", m_isEnabled));
+}
+
 void BaseComponent::OnEditorGizmo()
 {
     // Do nothing...
@@ -32,6 +37,11 @@ void BaseComponent::OnEditorGizmo()
 void BaseComponent::OnEditorInspector()
 {
     Sketch::Checkbox("Enabled", m_isEnabled);
+}
+
+void BaseComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    archive(cereal::make_nvp("isEnabled", m_isEnabled));
 }
 
 void BaseComponent::SetEnabled(bool enabled)

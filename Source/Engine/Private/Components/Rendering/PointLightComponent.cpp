@@ -33,6 +33,11 @@ f32 PointLightComponent::GetIntensity() const
     return m_intensity;
 }
 
+void PointLightComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
 #ifdef SPY_EDITOR
 void PointLightComponent::OnEditorInspector()
 {
@@ -40,6 +45,11 @@ void PointLightComponent::OnEditorInspector()
     Sketch::FloatField("Intensity", m_intensity);
 }
 #endif
+
+void PointLightComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+}
 
 void PointLightComponent::SetIntensity(f32 intensity)
 {

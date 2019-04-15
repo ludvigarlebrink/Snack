@@ -27,6 +27,10 @@ public:
 
     f32 GetSphereRadius() const;
 
+    void Load(cereal::JSONInputArchive& archive) override;
+
+    void Save(cereal::JSONOutputArchive& archive) override;
+
     void SetMaterial(Material* material);
 
     void SetMaterial(std::string path);

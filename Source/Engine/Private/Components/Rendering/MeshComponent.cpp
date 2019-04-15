@@ -244,6 +244,16 @@ f32 MeshComponent::GetSphereRadius() const
     return m_sphereRadius * maxScale;
 }
 
+void MeshComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
+void MeshComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+}
+
 void MeshComponent::SetMaterial(Material * material)
 {
     m_material = material;

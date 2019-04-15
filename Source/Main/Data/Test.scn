@@ -1,5 +1,4 @@
 [
-    2,
     {
         "name": "Transform",
         "isEnabled": true,
@@ -13,8 +12,8 @@
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0,
+        "components": [],
         "children": [
-            1,
             {
                 "name": "Transform",
                 "isEnabled": true,
@@ -28,9 +27,29 @@
                 "scaleX": 1.0,
                 "scaleY": 1.0,
                 "scaleZ": 1.0,
-                "children": [
-                    0
-                ]
+                "components": [
+                    {
+                        "type": "class snack::MeshComponent",
+                        "isEnabled": true
+                    }
+                ],
+                "children": []
+            },
+            {
+                "name": "Transform",
+                "isEnabled": true,
+                "isStatic": false,
+                "positionX": 0.0,
+                "positionY": 0.0,
+                "positionZ": 0.0,
+                "rotationX": 0.0,
+                "rotationY": 0.0,
+                "rotationZ": 0.0,
+                "scaleX": 1.0,
+                "scaleY": 1.0,
+                "scaleZ": 1.0,
+                "components": [],
+                "children": []
             }
         ]
     },
@@ -47,25 +66,18 @@
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0,
-        "children": [
-            1,
+        "components": [
             {
-                "name": "Transform",
+                "type": "class snack::CameraComponent",
                 "isEnabled": true,
-                "isStatic": false,
-                "positionX": 0.0,
-                "positionY": 0.0,
-                "positionZ": 0.0,
-                "rotationX": 0.0,
-                "rotationY": 0.0,
-                "rotationZ": 0.0,
-                "scaleX": 1.0,
-                "scaleY": 1.0,
-                "scaleZ": 1.0,
-                "children": [
-                    0
-                ]
+                "projection": 1,
+                "renderMode": 1,
+                "fieldOfView": 45.0,
+                "nearPlane": 0.10000000149011612,
+                "farPlane": 1000.0,
+                "size": 20.0
             }
-        ]
+        ],
+        "children": []
     }
 ]

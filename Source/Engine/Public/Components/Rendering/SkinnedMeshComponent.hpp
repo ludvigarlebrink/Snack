@@ -19,13 +19,17 @@ public:
 
     Material* GetMaterial() const;
 
-    void SetMaterial(Material* material);
-
-    void SetMaterial(std::string path);
+    void Load(cereal::JSONInputArchive& archive) override;
 
 #ifdef SPY_EDITOR
     void OnEditorInspector() override;
 #endif
+
+    void Save(cereal::JSONOutputArchive& archive) override;
+
+    void SetMaterial(Material* material);
+
+    void SetMaterial(std::string path);
 
 private:
     

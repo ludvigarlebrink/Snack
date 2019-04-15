@@ -33,6 +33,11 @@ Terrain* TerrainComponent::GetTerrain()
     return m_terrain;
 }
 
+void TerrainComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
 #ifdef SPY_EDITOR
 void TerrainComponent::OnEditorInspector()
 {
@@ -62,6 +67,11 @@ void TerrainComponent::OnEditorInspector()
     }
 }
 #endif
+
+void TerrainComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+}
 
 void TerrainComponent::SetTerrain(const std::string& filename)
 {

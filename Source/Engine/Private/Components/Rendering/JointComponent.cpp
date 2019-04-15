@@ -19,9 +19,19 @@ std::string JointComponent::GetComponentID()
     return typeid(JointComponent).name();
 }
 
+void JointComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
 #ifdef SPY_EDITOR
 void JointComponent::OnEditorInspector()
 {
+}
+
+void JointComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
 }
 } // namespace snack
 #endif

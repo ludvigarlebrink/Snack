@@ -24,7 +24,23 @@ Material* SkinnedMeshComponent::GetMaterial() const
     return m_material;
 }
 
-void SkinnedMeshComponent::SetMaterial(Material * material)
+void SkinnedMeshComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
+#ifdef SPY_EDITOR
+void SkinnedMeshComponent::OnEditorInspector()
+{
+}
+#endif
+
+void SkinnedMeshComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+}
+
+void SkinnedMeshComponent::SetMaterial(Material* material)
 {
     m_material = material;
 }
@@ -33,10 +49,4 @@ void SkinnedMeshComponent::SetMaterial(std::string path)
 {
     // TODO maybe?
 }
-
-#ifdef SPY_EDITOR
-void SkinnedMeshComponent::OnEditorInspector()
-{
-}
-#endif
 } // namespace snack

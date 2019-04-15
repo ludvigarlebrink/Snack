@@ -31,6 +31,11 @@ f32 DirectionalLightComponent::GetIntensity() const
     return m_intensity;
 }
 
+void DirectionalLightComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
 #ifdef SPY_EDITOR
 void DirectionalLightComponent::OnEditorGizmo()
 {
@@ -61,6 +66,11 @@ void DirectionalLightComponent::OnEditorInspector()
     Sketch::FloatField("Intensity", m_intensity);
 }
 #endif
+
+void DirectionalLightComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+}
 
 void DirectionalLightComponent::SetIntensity(f32 intensity)
 {

@@ -78,6 +78,26 @@ glm::mat4 CameraComponent::GetViewMatrix() const
     return glm::lookAt(glm::vec3(model[3]), glm::vec3(model[0]) + glm::vec3(model[3]), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
+void CameraComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+
+    uint32 projection;
+    uint32 renderMode;
+
+    archive(
+        cereal::make_nvp("projection", projection),
+        cereal::make_nvp("renderMode", renderMode),
+        cereal::make_nvp("fieldOfView", m_fieldOfView),
+        cereal::make_nvp("nearPlane", m_nearPlane),
+        cereal::make_nvp("farPlane", m_farPlane),
+        cereal::make_nvp("size", m_size)
+    );
+
+    m_projection = static_cast<Projection>(projection);
+    m_renderMode = static_cast<RenderMode>(m_renderMode);
+}
+
 #ifdef SPY_EDITOR
 void CameraComponent::OnEditorGizmo()
 {
@@ -153,6 +173,20 @@ void CameraComponent::OnEditorInspector()
     }
 }
 #endif
+
+void CameraComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+
+    archive(
+        cereal::make_nvp("projection", static_cast<uint32>(m_projection)),
+        cereal::make_nvp("renderMode", static_cast<uint32>(m_renderMode)),
+        cereal::make_nvp("fieldOfView", m_fieldOfView),
+        cereal::make_nvp("nearPlane", m_nearPlane),
+        cereal::make_nvp("farPlane", m_farPlane),
+        cereal::make_nvp("size", m_size)
+    );
+}
 
 void CameraComponent::SetFarPlane(f32 farPlane)
 {

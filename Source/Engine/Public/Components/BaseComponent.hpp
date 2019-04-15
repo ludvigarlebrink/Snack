@@ -2,6 +2,8 @@
 
 #include "BaseTypes.hpp"
 
+#include <cereal/cereal.hpp>
+#include <cereal/archives/json.hpp>
 #include <typeinfo>
 #include <string>
 
@@ -32,9 +34,13 @@ public:
 
     bool IsEnabled() const;
 
+    virtual void Load(cereal::JSONInputArchive& archive);
+
     virtual void OnEditorGizmo();
 
     virtual void OnEditorInspector();
+
+    virtual void Save(cereal::JSONOutputArchive& archive);
 
     void SetEnabled(bool enabled);
 

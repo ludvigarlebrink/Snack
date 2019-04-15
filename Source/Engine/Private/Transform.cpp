@@ -340,9 +340,9 @@ void Transform::Load(cereal::JSONInputArchive& archive)
 {
     if (m_isScene)
     {
-        int32 count = 0;
-        archive(count);
-        for (int32 i = 0; i < count; ++i)
+        cereal::size_type size;
+        archive.loadSize(size);
+        for (int32 i = 0; i < size; ++i)
         {
             Transform* child = Manager::Scene()->Instantiate(this);
             child->Load(archive);
@@ -371,12 +371,34 @@ void Transform::Load(cereal::JSONInputArchive& archive)
                 cereal::make_nvp("scaleZ", m_scale.z)
             );
 
+            archive.setNextName("components");
+            archive.startNode();
+            {
+                cereal::size_type size;
+                archive.loadSize(size);
+                for (int32 i = 0; i < size; ++i)
+                {
+                    archive.startNode();
+                    {
+                        std::string componentType;
+                        archive(cereal::make_nvp("type", componentType));
+                        BaseComponent* component = AddComponent(componentType);
+                        if (component)
+                        {
+                            component->Load(archive);
+                        }
+                    }
+                    archive.finishNode();
+                }
+            }
+            archive.finishNode();
+
             archive.setNextName("children");
             archive.startNode();
             {
-                int32 count = 0;
-                archive(count);
-                for (int32 i = 0; i < count; ++i)
+                cereal::size_type size;
+                archive.loadSize(size);
+                for (int32 i = 0; i < size; ++i)
                 {
                     Transform* child = Manager::Scene()->Instantiate(this);
                     child->Load(archive);
@@ -392,7 +414,6 @@ void Transform::Save(cereal::JSONOutputArchive& archive)
 {
     if (m_isScene)
     {
-        archive(m_children.size());
         for (auto c : m_children)
         {
             c->Save(archive);
@@ -421,11 +442,26 @@ void Transform::Save(cereal::JSONOutputArchive& archive)
                 cereal::make_nvp("scaleZ", m_scale.z)
             );
 
+            archive.setNextName("components");
+            archive.startNode();
+            {
+                archive.makeArray();
+                for (auto c : m_components)
+                {
+                    archive.startNode();
+                    {
+                        archive(cereal::make_nvp("type", c.first));
+                        c.second->Save(archive);
+                    }
+                    archive.finishNode();
+                }
+            }
+            archive.finishNode();
+
             archive.setNextName("children");
             archive.startNode();
             {
                 archive.makeArray();
-                archive(m_children.size());
                 for (auto c : m_children)
                 {
                     c->Save(archive);

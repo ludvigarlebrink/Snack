@@ -11,7 +11,7 @@ class ENGINE_API CameraComponent final : public BaseComponent
 {
 public:
 
-    enum class RenderMode
+    enum class RenderMode : uint32
     {
         /**
          * @brief Render in deferred mode.
@@ -24,7 +24,7 @@ public:
         FORWARD,
     };
 
-    enum class Projection
+    enum class Projection : uint32
     {
         /**
          * @brief Orthographic projection.
@@ -59,11 +59,15 @@ public:
 
     glm::mat4 GetViewMatrix() const;
 
+    void Load(cereal::JSONInputArchive& archive) override;
+
 #ifdef SPY_EDITOR
     void OnEditorGizmo() override;
 
     void OnEditorInspector() override;
 #endif
+
+    void Save(cereal::JSONOutputArchive& archive) override;
 
     void SetFarPlane(f32 farPlane);
 

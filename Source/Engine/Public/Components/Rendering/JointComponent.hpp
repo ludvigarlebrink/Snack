@@ -17,6 +17,12 @@ public:
 
     std::string GetComponentID() override;
 
+    void Load(cereal::JSONInputArchive& archive) override;
+
+#ifdef SPY_EDITOR
     void OnEditorInspector() override;
+#endif
+
+    void Save(cereal::JSONOutputArchive& archive) override;
 };
 } // namespace snack

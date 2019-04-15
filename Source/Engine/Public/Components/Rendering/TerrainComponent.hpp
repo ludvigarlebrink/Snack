@@ -20,9 +20,13 @@ public:
 
     Terrain* GetTerrain();
 
+    void Load(cereal::JSONInputArchive& archive) override;
+
 #ifdef SPY_EDITOR
     void OnEditorInspector() override;
 #endif
+
+    void Save(cereal::JSONOutputArchive& archive) override;
 
     void SetTerrain(const std::string& filename);
 

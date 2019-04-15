@@ -10,6 +10,8 @@ public:
 
     static bool CreateFile(const std::string& filename);
 
+    static bool CreateFile(const std::string& filename, const std::string& data);
+
     static bool CreateFolder(const std::string& folderpath);
 
     static bool DeleteFolder(const std::string& folderpath);

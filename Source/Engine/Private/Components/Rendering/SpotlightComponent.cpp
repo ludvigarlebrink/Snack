@@ -30,12 +30,22 @@ f32 SpotlightComponent::GetIntensity() const
     return m_intensity;
 }
 
+void SpotlightComponent::Load(cereal::JSONInputArchive& archive)
+{
+    BaseComponent::Load(archive);
+}
+
 #ifdef SPY_EDITOR
 void SpotlightComponent::OnEditorInspector()
 {
     Sketch::FloatField("Intensity", m_intensity);
 }
 #endif
+
+void SpotlightComponent::Save(cereal::JSONOutputArchive& archive)
+{
+    BaseComponent::Save(archive);
+}
 
 void SpotlightComponent::SetIntensity(f32 intensity)
 {

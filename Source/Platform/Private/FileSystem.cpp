@@ -17,6 +17,21 @@ bool FileSystem::CreateFile(const std::string& filename)
     return false;
 }
 
+bool FileSystem::CreateFile(const std::string & filename, const std::string & data)
+{
+    {
+        std::ofstream f(filename);
+        if (f.is_open())
+        {
+            f << data;
+            f.close();
+            return true;
+        }
+
+        return false;
+    }
+}
+
 bool FileSystem::CreateFolder(const std::string & folderpath)
 {
     return std::filesystem::create_directory(folderpath);

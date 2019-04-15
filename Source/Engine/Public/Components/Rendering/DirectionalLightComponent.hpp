@@ -18,11 +18,15 @@ public:
 
     f32 GetIntensity() const;
 
+    void Load(cereal::JSONInputArchive& archive) override;
+
 #ifdef SPY_EDITOR
     void OnEditorGizmo() override;
 
     void OnEditorInspector() override;
 #endif
+
+    void Save(cereal::JSONOutputArchive& archive) override;
 
     void SetIntensity(f32 intensity);
 
