@@ -48,7 +48,7 @@ void Editor::Run()
         SketchWindow::BaseDockSpace();
         editorWindowManager->Tick(deltaTime);
 
-        isRunning = !SketchEvent::CloseRequest();
+        isRunning = !SketchEvent::WantsToClose();
         
         SketchInternal::Render(renderWindow);
         renderWindow->Present();
