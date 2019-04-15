@@ -1,0 +1,71 @@
+[
+    {
+        "name": "Transform",
+        "isEnabled": true,
+        "isStatic": false,
+        "positionX": 0.0,
+        "positionY": 0.0,
+        "positionZ": 0.0,
+        "rotationX": 0.0,
+        "rotationY": 0.0,
+        "rotationZ": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 1.0,
+        "scaleZ": 1.0,
+        "components": [
+            {
+                "type": "MeshComponent",
+                "isEnabled": true
+            }
+        ],
+        "children": []
+    },
+    {
+        "name": "Transform",
+        "isEnabled": true,
+        "isStatic": false,
+        "positionX": -0.7239999771118164,
+        "positionY": 0.04355025291442871,
+        "positionZ": 0.01914118230342865,
+        "rotationX": 0.0,
+        "rotationY": 0.0,
+        "rotationZ": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 1.0,
+        "scaleZ": 1.0,
+        "components": [
+            {
+                "type": "PointLightComponent",
+                "isEnabled": true
+            }
+        ],
+        "children": []
+    },
+    {
+        "name": "Transform",
+        "isEnabled": true,
+        "isStatic": false,
+        "positionX": -5.6570000648498539,
+        "positionY": 0.0,
+        "positionZ": -2.1760001182556154,
+        "rotationX": 0.0,
+        "rotationY": 0.0,
+        "rotationZ": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 1.0,
+        "scaleZ": 1.0,
+        "components": [
+            {
+                "type": "CameraComponent",
+                "isEnabled": true,
+                "projection": 1,
+                "renderMode": 0,
+                "fieldOfView": 45.0,
+                "nearPlane": 0.10000000149011612,
+                "farPlane": 1000.0,
+                "size": 20.0
+            }
+        ],
+        "children": []
+    }
+]

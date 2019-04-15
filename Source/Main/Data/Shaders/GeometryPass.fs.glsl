@@ -12,5 +12,5 @@ void main()
 {    
     gPosition = vec4(WorldPosition_FS_in, 1.0);
     gNormal = vec4(normalize(Normal_FS_in), 1.0);
-    gAlbedo = vec4(0.2, 0.2, 0.2, 1.0);
+    gAlbedo = vec4(0.4, 0.4, 0.4, 1.0);
 } 

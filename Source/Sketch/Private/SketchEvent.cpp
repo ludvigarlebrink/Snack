@@ -15,7 +15,7 @@ Button SketchEvent::m_buttonsUp[KEY_COUNT];
 int32 SketchEvent::m_buttonDownCount = 0;
 int32 SketchEvent::m_buttonUpCount = 0;
 
-bool SketchEvent::m_closeRequest = false;
+bool SketchEvent::m_wantsToClose = false;
 bool SketchEvent::m_dropFile = false;
 
 std::string SketchEvent::m_filename = "";
@@ -45,11 +45,6 @@ bool SketchEvent::ButtonUp(Button button)
         return true;
     }
     return false;
-}
-
-bool SketchEvent::CloseRequest()
-{
-    return m_closeRequest;
 }
 
 bool SketchEvent::DropFile()
@@ -140,6 +135,11 @@ bool SketchEvent::ModRepeat(Mod mod)
 void SketchEvent::ShowPointer(bool show)
 {
     SDL_ShowCursor(show ? SDL_ENABLE : SDL_DISABLE);
+}
+
+bool SketchEvent::WantsToClose()
+{
+    return m_wantsToClose;
 }
 
 void SketchEvent::WrapPointerGlobal(const glm::vec2& position)
@@ -285,7 +285,7 @@ void SketchEvent::UpdateEvents()
     }
     m_buttonUpCount = 0;
 
-    m_closeRequest = false;
+    m_wantsToClose = false;
     m_dropFile = false;
     m_filename = "";
 }
@@ -340,7 +340,7 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
     }
     case SDL_QUIT:
     {
-        m_closeRequest = true;
+        m_wantsToClose = true;
         break;
     }
     case SDL_DROPFILE:
