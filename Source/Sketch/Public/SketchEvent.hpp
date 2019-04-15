@@ -89,7 +89,7 @@ private:
     static int32 m_buttonDownCount;
     static int32 m_buttonUpCount;
 
-    static bool m_closeRequest;
+    static bool m_wantsToClose;
     static bool m_dropFile;
 
     static std::string m_filename;
