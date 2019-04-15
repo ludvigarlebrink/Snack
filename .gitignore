@@ -20,6 +20,7 @@
 !*.css
 !*.js
 !*.png
+!*.ico
 !.git*
 
 # Special files
@@ -35,3 +36,4 @@
 # Engine files
 !Source/Main/Data/**
 !Source/Main/EditorData/**
+!Source/Main/Shaders/**

@@ -296,16 +296,29 @@ project "Editor"
 project "Main"
     kind "ConsoleApp"
     location "Source/Main"
+    
     files {
         "Source/Main/**.hpp",
         "Source/Main/**.cpp"
     }
+
     filter { "configurations:Debug" }
         UseEngine()
+        targetname "SnackEngine"
     filter { "configurations:Release" }
         UseEngine()
+        targetname "SnackEngine"
     filter { "configurations:Debug_Editor" }
         UseEditor()
+        targetname "SnackEditor"
     filter { "configurations:Release_Editor" }
         UseEditor()
+        targetname "SnackEditor"
+    filter {}
+
+    filter { "system:windows", "action:vs*" }
+        file = io.open("Source/Main/resources.rc", "w");
+        file:write("MAIN ICON \"Icon.ico\"")
+        file:close();
+        files { "Source/Main/resources.rc" }
     filter {}    

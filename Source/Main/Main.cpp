@@ -4,6 +4,9 @@
 #include "Engine.hpp"
 #endif
 
+#include <string>
+#include <vector>
+
 using namespace snack;
 
 #ifdef SPY_EDITOR
@@ -17,7 +20,7 @@ int main(int argc, char* argv[])
     }
 
     Editor editor;
-    editor.SetUp();
+    editor.SetUp(args);
     editor.Run();
     editor.TearDown();
 }

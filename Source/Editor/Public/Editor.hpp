@@ -4,6 +4,9 @@
 #include "EngineForward.hpp"
 #include "EditorManager.hpp"
 
+#include <string>
+#include <vector>
+
 namespace snack
 {
 class EDITOR_API Editor final
@@ -16,7 +19,7 @@ public:
 
     void Run();
     
-    void SetUp(std::vector<std::string&> args);
+    void SetUp(std::vector<std::string>& args);
 
     void TearDown();
 

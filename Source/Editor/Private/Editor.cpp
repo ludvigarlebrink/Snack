@@ -55,7 +55,7 @@ void Editor::Run()
     }
 }
 
-void Editor::SetUp(std::vector<std::string&> args)
+void Editor::SetUp(std::vector<std::string>& args)
 {
     m_engine.SetUp();
 
