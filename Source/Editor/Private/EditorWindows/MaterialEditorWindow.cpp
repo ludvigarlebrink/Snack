@@ -27,20 +27,19 @@ void MaterialEditorWindow::OnDraw(f32 deltaTime)
     if (m_material)
     {
         bool isMaterial = false;
+        glm::vec4 colorz;
 
         std::vector<std::string> textureList;
         textureList = m_material->GetIds();
 
         Sketch::Text("Textures:");
-        int32 y = 0;
         for (auto& it : textureList)
         {
             Sketch::Text(it);
             Sketch::SameLine();
-            Sketch::Vec4Field("Color", m_color);
-            y++;
+            colorz = m_material->GetColor(it);
+            Sketch::Vec4Field("Color", colorz);
         }
-        Sketch::Text("Is this working?!");
     }
 }
 
