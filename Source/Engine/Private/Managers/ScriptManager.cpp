@@ -1,4 +1,13 @@
 #include "ScriptManager.hpp"
+#include "Components/Rendering/CameraComponent.hpp"
+#include "Components/Rendering/DirectionalLightComponent.hpp"
+#include "Components/Rendering/JointComponent.hpp"
+#include "Components/Rendering/MeshComponent.hpp"
+#include "Components/Rendering/PointLightComponent.hpp"
+#include "Components/Rendering/SkinnedMeshComponent.hpp"
+#include "Components/Rendering/SkyComponent.hpp"
+#include "Components/Rendering/SpotlightComponent.hpp"
+#include "Components/Rendering/TerrainComponent.hpp"
 #include "Manager.hpp"
 #include "Scripting/ScriptObject.hpp"
 #include "Transform.hpp"
@@ -85,13 +94,29 @@ void ScriptManager::SetUpEngine()
     m_state->new_usertype<Transform>("Transform",
         "new", sol::no_constructor,
 
+        "AddComponent", &Transform::AddComponent,
+
         "GetLocalPosition", &Transform::GetLocalPosition,
         "GetWorldPosition", &Transform::GetWorldPosition,
+
+        "RemoveComponent", &Transform::RemoveComponent,
 
         "SetLocalPosition", sol::resolve<const glm::vec3&>(&Transform::SetLocalPosition),
         "SetLocalPosition", sol::resolve<f32, f32, f32>(&Transform::SetLocalPosition),
         "SetWorldPosition", sol::resolve<const glm::vec3&>(&Transform::SetWorldPosition),
         "SetWorldPosition", sol::resolve<f32, f32, f32>(&Transform::SetWorldPosition)
+    );
+
+    // Rendering components.
+    m_state->new_usertype<BaseComponent>("BaseComponent",
+        "new", sol::no_constructor,
+        "enabled", sol::property(&BaseComponent::IsEnabled, &BaseComponent::SetEnabled)
+    );
+
+    m_state->new_usertype<CameraComponent>("CameraComponent",
+        sol::base_classes, sol::bases<BaseComponent>(),
+        "new", sol::no_constructor,
+        "fieldOfView", sol::property(&CameraComponent::GetFieldOfView, &CameraComponent::SetFieldOfView)
     );
 
     m_state->set_function("Instantiate", sol::overload(

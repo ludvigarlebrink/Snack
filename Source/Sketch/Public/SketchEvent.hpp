@@ -34,8 +34,6 @@ public:
 
     static bool ButtonUp(Button button);
 
-    static bool CloseRequest();
-
     static bool DropFile();
 
     static std::string DropFilename();
@@ -59,6 +57,8 @@ public:
     static bool ModRepeat(Mod mod);
 
     static void ShowPointer(bool show);
+
+    static bool WantsToClose();
 
     static void WrapPointerGlobal(const glm::vec2& position);
 

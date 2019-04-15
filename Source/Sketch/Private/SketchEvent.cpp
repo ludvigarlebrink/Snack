@@ -47,11 +47,6 @@ bool SketchEvent::ButtonUp(Button button)
     return false;
 }
 
-bool SketchEvent::CloseRequest()
-{
-    return m_closeRequest;
-}
-
 bool SketchEvent::DropFile()
 {
     return m_dropFile;
@@ -352,5 +347,10 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
     default:
         break;
     }
+}
+
+bool SketchEvent::WantsToClose()
+{
+    return m_closeRequest;
 }
 } // namespace snack
