@@ -353,4 +353,9 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
         break;
     }
 }
+
+bool SketchEvent::WantsToClose()
+{
+    return m_closeRequest;
+}
 } // namespace snack
