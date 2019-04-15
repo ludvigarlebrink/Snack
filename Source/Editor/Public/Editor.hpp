@@ -16,7 +16,7 @@ public:
 
     void Run();
     
-    void SetUp();
+    void SetUp(std::vector<std::string&> args);
 
     void TearDown();
 

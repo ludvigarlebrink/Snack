@@ -10,6 +10,12 @@ using namespace snack;
 
 int main(int argc, char* argv[])
 {
+    std::vector<std::string> args;
+    for (int32 i = 0; i < argc; ++i)
+    {
+        args.push_back(argv[i]);
+    }
+
     Editor editor;
     editor.SetUp();
     editor.Run();
