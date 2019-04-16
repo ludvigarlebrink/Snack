@@ -150,7 +150,7 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                         {
                             // @todo Check if the current scene is saved?
                             // Load the scene.
-                            Manager::Scene()->Load(fileInfo.fullRelativePath);
+                            Manager::Scene()->Load(fileInfo.relativePath);
                         }
                         Sketch::Seperator();
                     }

@@ -44,17 +44,6 @@ void ScriptManager::Tick(f32 deltaTime)
 {
     m_state->do_file("Data/Player.lua");
 
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-    CreateBehaviorObject("Player");
-
     for (auto v : m_behaviorObjects)
     {
         for (auto s : v.second)

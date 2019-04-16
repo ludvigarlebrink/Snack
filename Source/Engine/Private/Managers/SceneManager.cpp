@@ -101,7 +101,12 @@ bool SceneManager::Load(const std::string& filename)
         return false;
     }
 
-    delete m_scene;
+    if (m_scene)
+    {
+        delete m_scene;
+        m_scene = nullptr;
+    }
+
 
     m_scene = new Transform(nullptr, m_nextInstanceID);
     m_scene->m_isScene = true;
@@ -170,6 +175,7 @@ void SceneManager::TearDown()
     if (m_scene)
     {
         delete m_scene;
+        m_scene = nullptr;
     }
 }
 } // namespace snack
