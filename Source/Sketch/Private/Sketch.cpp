@@ -17,7 +17,13 @@ bool Sketch::Checkbox(const std::string& label, bool& value)
 
 bool Sketch::CollapsingHeader(const std::string& label)
 {
-    return ImGui::CollapsingHeader(label.c_str());
+    return ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+}
+
+
+bool Sketch::CollapsingHeader(const std::string& label, bool& isOpen)
+{
+    return ImGui::CollapsingHeader(label.c_str(), &isOpen, ImGuiTreeNodeFlags_DefaultOpen);
 }
 
 bool Sketch::FloatField(const std::string& label, f32& value)

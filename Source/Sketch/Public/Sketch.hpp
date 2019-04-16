@@ -19,6 +19,8 @@ public:
 
     static bool CollapsingHeader(const std::string& label);
 
+    static bool CollapsingHeader(const std::string& label, bool& isOpen);
+
     static bool FloatField(const std::string& label, f32& value);
 
     static bool FloatField(const std::string& label, f32& value, f32 width);

@@ -117,9 +117,15 @@ void InspectorWindow::OnDraw(f32 deltaTime)
             transform->GetAllComponents(components);
             for (auto c : components)
             {
-                if (Sketch::CollapsingHeader(Manager::Class()->GetComponentName(c->GetComponentID())))
+                bool isOpen = true;
+                if (Sketch::CollapsingHeader(Manager::Class()->GetComponentName(c->GetComponentID()), isOpen))
                 {
                     c->OnEditorInspector();
+                }
+
+                if (!isOpen)
+                {
+                    transform->RemoveComponent(c->GetComponentID());
                 }
             }
         }
