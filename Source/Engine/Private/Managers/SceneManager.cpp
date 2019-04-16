@@ -118,10 +118,15 @@ bool SceneManager::Load(const std::string& filename)
         std::string source((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
         ss << source;
     }
+
+    // We can close the file now.
     f.close();
 
-    cereal::JSONInputArchive archive(ss);
-    m_scene->Load(archive);
+    // Open the JSON input archive.
+    {
+        cereal::JSONInputArchive archive(ss);
+        m_scene->Load(archive);
+    }
 
     m_filename = filename;
 
