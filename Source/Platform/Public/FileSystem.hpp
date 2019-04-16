@@ -33,6 +33,8 @@ public:
      */
     static bool CreateFolder(const std::string& folderpath);
 
+    static bool DeleteFile(const std::string& filepath);
+
     static bool DeleteFolder(const std::string& folderpath);
 
     static std::string GetRelativeDataPath();

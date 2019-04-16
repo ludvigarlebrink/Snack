@@ -19,22 +19,25 @@ bool FileSystem::CreateFile(const std::string& filepath)
 
 bool FileSystem::CreateFile(const std::string& filepath, const std::string& data)
 {
+    std::ofstream f(filepath);
+    if (f.is_open())
     {
-        std::ofstream f(filepath);
-        if (f.is_open())
-        {
-            f << data;
-            f.close();
-            return true;
-        }
-
-        return false;
+        f << data;
+        f.close();
+        return true;
     }
+
+    return false;
 }
 
 bool FileSystem::CreateFolder(const std::string & folderpath)
 {
     return std::filesystem::create_directory(folderpath);
+}
+
+bool FileSystem::DeleteFile(const std::string& filepath)
+{
+    return std::filesystem::remove(filepath);
 }
 
 bool FileSystem::DeleteFolder(const std::string& folderpath)

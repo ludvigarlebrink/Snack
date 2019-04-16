@@ -176,7 +176,8 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
 
                     if (SketchMenu::Item("Delete"))
                     {
-
+                        FileSystem::DeleteFile(fileInfo.fullRelativePath);
+                        m_refresh = true;
                     }
                     
                     if (SketchMenu::Item("Rename"))
@@ -285,9 +286,10 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
         if (folderNode->GetFullRelativePath() != FileSystem::GetRelativeDataPath() &&
             folderNode->GetFullRelativePath() != FileSystem::GetRelativeEditorDataPath())
         {
+       
+            SketchPopup::MenuItemOpenPopup("Delete", "Delete Folder");
             SketchPopup::MenuItemOpenPopup("Rename", "Rename Folder");
 
-            SketchPopup::MenuItemOpenPopup("Delete", "Delete Folder");
             if (SketchPopup::DialogYesNo("Delete Folder", "Are you sure?\nThis will delete this folder all\nof its subfolders permanently."))
             {
                 FileSystem::DeleteFolder(folderNode->GetFullRelativePath().substr(0, folderNode->GetFullRelativePath().find_last_of('/')));
@@ -296,8 +298,8 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
         }
         else
         {
-            SketchMenu::Item("Rename", false);
             SketchMenu::Item("Delete", false);
+            SketchMenu::Item("Rename", false);
         }
 
         SketchPopup::End();

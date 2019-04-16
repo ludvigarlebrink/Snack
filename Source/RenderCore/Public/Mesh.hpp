@@ -165,8 +165,8 @@ public:
     /**
      * @brief This class will load (or copy) data from the ram to the v-ram.
      * @param vertexData
-     * @param vertexSize
      * @param vertexCount
+     * @param vertexSize
      * @param elementData
      * @param elementCount
      */
