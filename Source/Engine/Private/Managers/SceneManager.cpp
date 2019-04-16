@@ -118,6 +118,7 @@ bool SceneManager::Load(const std::string& filename)
         std::string source((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
         ss << source;
     }
+    f.close();
 
     cereal::JSONInputArchive archive(ss);
     m_scene->Load(archive);
