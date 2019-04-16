@@ -31,9 +31,9 @@ public:
 
     Transform* InstantiateFromPrototype(Transform* prototype) override;
 
-    bool Load(const std::string& filename) override;
+    bool Load(const std::string& filepath) override;
 
-    bool Save(const std::string& filename) override;
+    bool Save(const std::string& filepath) override;
 
 private:
 

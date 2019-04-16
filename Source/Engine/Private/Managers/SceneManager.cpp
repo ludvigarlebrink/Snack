@@ -93,9 +93,9 @@ Transform* SceneManager::InstantiateFromPrototype(Transform* prototype)
     return transform;
 }
 
-bool SceneManager::Load(const std::string& filename)
+bool SceneManager::Load(const std::string& filepath)
 {
-    std::ifstream f(FileSystem::GetRelativeDataPath(filename));
+    std::ifstream f(FileSystem::GetRelativeDataPath(filepath));
     if (!f.is_open())
     {
         return false;
@@ -128,12 +128,12 @@ bool SceneManager::Load(const std::string& filename)
         m_scene->Load(archive);
     }
 
-    m_filename = filename;
+    m_filename = filepath;
 
     return true;
 }
 
-bool SceneManager::Save(const std::string& filename)
+bool SceneManager::Save(const std::string& filepath)
 {
     std::stringstream ss;
 
@@ -143,7 +143,7 @@ bool SceneManager::Save(const std::string& filename)
         m_scene->Save(archive);
     }
 
-    std::ofstream f(FileSystem::GetRelativeDataPath(filename));
+    std::ofstream f(FileSystem::GetRelativeDataPath(filepath));
     if (!f.is_open())
     {
         return false;
@@ -153,7 +153,7 @@ bool SceneManager::Save(const std::string& filename)
 
     f.close();
 
-    m_filename = filename;
+    m_filename = filepath;
 
     return true;
 }

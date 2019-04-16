@@ -15,7 +15,7 @@ private:
     
     struct TextureProperty 
     {
-        std::string filename;
+        std::string filepath;
         Texture* texture;
         glm::vec4 color;
     };
@@ -36,21 +36,21 @@ public:
     
     /**
      * @brief Load the material.
-     * @param filename File to load from
+     * @param filepath File to load from
      * @ return False, is unsuccessful
      */
-    bool Load(const std::string& filename);
+    bool Load(const std::string& filepath);
     
-    Texture* LoadTexture(const std::string& filename, const std::string& id);
+    Texture* LoadTexture(const std::string& filepath, const std::string& id);
     
-    Texture* LoadTexture(const std::string& filename, const std::string& id, const glm::vec4& color);
+    Texture* LoadTexture(const std::string& filepath, const std::string& id, const glm::vec4& color);
 
     /**
      * @brief Save the material.
-     * @param filename File to save to.
+     * @param filepath File to save to.
      * @return False, is unsuccessful.
      */
-    bool Save(const std::string& filename);
+    bool Save(const std::string& filepath);
 
     void SetColor(const std::string& id, const glm::vec4& color);
 

@@ -48,19 +48,19 @@ void TerrainComponent::OnEditorInspector()
         SketchDragDrop::Payload payload;
         if (SketchDragDrop::AcceptPayload("Filename", payload))
         {
-            std::string filename = static_cast<char*>(payload.data);
+            std::string filepath = static_cast<char*>(payload.data);
 
-            if (filename.substr(filename.find_last_of('.')) == ".trn")
+            if (filepath.substr(filepath.find_last_of('.')) == ".trn")
             {
                 if (m_terrain)
                 {
                     Manager::Asset()->DestroyTerrain(m_filename);
                 }
 
-                m_terrain = Manager::Asset()->LoadTerrain(filename);
+                m_terrain = Manager::Asset()->LoadTerrain(filepath);
                 if (m_terrain)
                 {
-                    m_filename = filename;
+                    m_filename = filepath;
                 }
             }
         }
@@ -74,7 +74,7 @@ void TerrainComponent::Save(cereal::JSONOutputArchive& archive)
     BaseComponent::Save(archive);
 }
 
-void TerrainComponent::SetTerrain(const std::string& filename)
+void TerrainComponent::SetTerrain(const std::string& filepath)
 {
 }
 } // namespace snack

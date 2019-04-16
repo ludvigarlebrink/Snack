@@ -27,7 +27,7 @@ Index of this file:
 
 #pragma once
 
-// Configuration file with compile-time options (edit imconfig.h or define IMGUI_USER_CONFIG to your own filename)
+// Configuration file with compile-time options (edit imconfig.h or define IMGUI_USER_CONFIG to your own filepath)
 #ifdef IMGUI_USER_CONFIG
 #include IMGUI_USER_CONFIG
 #endif
@@ -603,7 +603,7 @@ namespace ImGui
     // Logging/Capture
     // - All text output from the interface can be captured into tty/file/clipboard. By default, tree nodes are automatically opened during logging.
     IMGUI_API void          LogToTTY(int auto_open_depth = -1);                                 // start logging to tty (stdout)
-    IMGUI_API void          LogToFile(int auto_open_depth = -1, const char* filename = NULL);   // start logging to file
+    IMGUI_API void          LogToFile(int auto_open_depth = -1, const char* filepath = NULL);   // start logging to file
     IMGUI_API void          LogToClipboard(int auto_open_depth = -1);                           // start logging to OS clipboard
     IMGUI_API void          LogFinish();                                                        // stop logging (close file, etc.)
     IMGUI_API void          LogButtons();                                                       // helper to display buttons for logging to tty/file/clipboard
@@ -2103,7 +2103,7 @@ struct ImFontAtlas
     IMGUI_API ~ImFontAtlas();
     IMGUI_API ImFont*           AddFont(const ImFontConfig* font_cfg);
     IMGUI_API ImFont*           AddFontDefault(const ImFontConfig* font_cfg = NULL);
-    IMGUI_API ImFont*           AddFontFromFileTTF(const char* filename, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);
+    IMGUI_API ImFont*           AddFontFromFileTTF(const char* filepath, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);
     IMGUI_API ImFont*           AddFontFromMemoryTTF(void* font_data, int font_size, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL); // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
     IMGUI_API ImFont*           AddFontFromMemoryCompressedTTF(const void* compressed_font_data, int compressed_font_size, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL); // 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
     IMGUI_API ImFont*           AddFontFromMemoryCompressedBase85TTF(const char* compressed_font_data_base85, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);              // 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.

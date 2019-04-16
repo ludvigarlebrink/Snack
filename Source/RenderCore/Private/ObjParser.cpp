@@ -18,15 +18,15 @@ std::string ObjParser::GetError() const
     return std::string();
 }
 
-bool ObjParser::Parse(const std::string& filename, std::vector<glm::vec3>& positions, std::vector<glm::vec3>& normals,
+bool ObjParser::Parse(const std::string& filepath, std::vector<glm::vec3>& positions, std::vector<glm::vec3>& normals,
     std::vector<glm::vec2>& textureCoordiantes, std::vector<uint32>& elements)
 {
-    if (filename.substr(filename.size() - 4, 4) != ".obj")
+    if (filepath.substr(filepath.size() - 4, 4) != ".obj")
     {
         return false;
     }
 
-    std::ifstream f(filename);
+    std::ifstream f(filepath);
 
     if (!f.is_open())
     {

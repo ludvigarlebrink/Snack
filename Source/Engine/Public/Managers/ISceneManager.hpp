@@ -33,8 +33,8 @@ public:
 
     virtual Transform* InstantiateFromPrototype(Transform* prototype) = 0;
 
-    virtual bool Load(const std::string& filename) = 0;
+    virtual bool Load(const std::string& filepath) = 0;
 
-    virtual bool Save(const std::string& filename) = 0;
+    virtual bool Save(const std::string& filepath) = 0;
 };
 } // namespace snack

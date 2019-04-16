@@ -42,6 +42,6 @@ public:
 
     virtual void Close() = 0;
 
-    virtual bool Open(const std::string& filename) = 0;
+    virtual bool Open(const std::string& filepath) = 0;
 };
 } // namespace snack

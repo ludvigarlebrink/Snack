@@ -15,17 +15,17 @@ public:
 
     ~AssetManager();
 
-    void DestroyTerrain(const std::string& filename) override;
+    void DestroyTerrain(const std::string& filepath) override;
 
-    void DestroyTexture(const std::string& filename) override;
+    void DestroyTexture(const std::string& filepath) override;
 
     Material* GetDefaultMaterial() override;
 
-    Material* LoadMaterial(const std::string& filename) override;
+    Material* LoadMaterial(const std::string& filepath) override;
 
-    Terrain* LoadTerrain(const std::string& filename) override;
+    Terrain* LoadTerrain(const std::string& filepath) override;
 
-    Texture* LoadTexture(const std::string& filename) override;
+    Texture* LoadTexture(const std::string& filepath) override;
 
 private:
 

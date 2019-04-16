@@ -73,7 +73,7 @@ public:
 
     int32 GetWidth() const;
     
-    bool LoadFromFile(const std::string& filename, InternalFormat internalFormat, Format format, Type type);
+    bool LoadFromFile(const std::string& filepath, InternalFormat internalFormat, Format format, Type type);
 
     void SetData(int32 width, int32 height, InternalFormat internalFormat, Format format, Type type, void* pixels);
 

@@ -40,12 +40,12 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
 
     if (SketchEvent::DropFile())
     {
-        std::string filename = SketchEvent::DropFilename();
-        std::string extension = filename.substr(filename.find_last_of('.'));
+        std::string filepath = SketchEvent::DropFilename();
+        std::string extension = filepath.substr(filepath.find_last_of('.'));
         if (extension == ".obj" || extension == ".fbx")
         {
             ModelImporterWindow* modelImporter = EditorManager::Window()->OpenWindow<ModelImporterWindow>();
-            modelImporter->SetFile(filename);
+            modelImporter->SetFile(filepath);
         }
 
         if (extension == ".png" || extension == ".bmp" || extension == ".jpg" || extension == ".jpeg")
@@ -135,10 +135,10 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                 if (SketchDragDrop::BeginSource(fileInfo.name))
                 {
                     // @todo This is a bit clunky, maybe make this better?
-                    char filename[512];
-                    memset(filename, '\0', 512);
-                    memcpy(filename, fileInfo.relativePath.c_str(), fileInfo.relativePath.size());
-                    SketchDragDrop::SetPayload("Filename", filename, 512);
+                    char filepath[512];
+                    memset(filepath, '\0', 512);
+                    memcpy(filepath, fileInfo.relativePath.c_str(), fileInfo.relativePath.size());
+                    SketchDragDrop::SetPayload("Filename", filepath, 512);
                     SketchDragDrop::EndSource();
                 }
 

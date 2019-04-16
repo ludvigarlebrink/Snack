@@ -23,15 +23,15 @@ std::string TerrainEditorWindow::GetTitle()
     return "Terrain Editor";
 }
 
-void TerrainEditorWindow::SetTerrain(const std::string& filename)
+void TerrainEditorWindow::SetTerrain(const std::string& filepath)
 {
     if (m_terrain)
     {
-        Manager::Asset()->DestroyTerrain(filename);
+        Manager::Asset()->DestroyTerrain(filepath);
     }
 
-    m_terrain = Manager::Asset()->LoadTerrain(filename);
-    m_filename = filename;
+    m_terrain = Manager::Asset()->LoadTerrain(filepath);
+    m_filename = filepath;
 }
 
 void TerrainEditorWindow::OnDraw(f32 deltaTime)

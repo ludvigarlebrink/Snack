@@ -17,7 +17,7 @@ public:
 
     std::string GetTitle() override;
 
-    void SetFile(const std::string& filename);
+    void SetFile(const std::string& filepath);
 
 protected:
 

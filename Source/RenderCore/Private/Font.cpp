@@ -38,7 +38,7 @@ Texture* Font::GetTexture() const
     return m_texture;
 }
 
-void Font::LoadTTF(const std::string& filename, int32 fontSize)
+void Font::LoadTTF(const std::string& filepath, int32 fontSize)
 {
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
@@ -47,7 +47,7 @@ void Font::LoadTTF(const std::string& filename, int32 fontSize)
     }
 
     FT_Face face;
-    if (FT_New_Face(ft, filename.c_str(), 0, &face))
+    if (FT_New_Face(ft, filepath.c_str(), 0, &face))
     {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
     }

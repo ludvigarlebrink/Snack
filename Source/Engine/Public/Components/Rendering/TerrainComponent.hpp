@@ -28,7 +28,7 @@ public:
 
     void Save(cereal::JSONOutputArchive& archive) override;
 
-    void SetTerrain(const std::string& filename);
+    void SetTerrain(const std::string& filepath);
 
 private:
 

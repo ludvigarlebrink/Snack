@@ -22,7 +22,7 @@ public:
 
     bool LoadStaticMesh(const std::string& name, std::vector<StaticVertex>& vertices, std::vector<uint32>& elements);
 
-    bool Open(const std::string& filename) override;
+    bool Open(const std::string& filepath) override;
 
 private:
 

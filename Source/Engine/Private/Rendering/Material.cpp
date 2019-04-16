@@ -52,9 +52,9 @@ Texture* Material::GetTexture(const std::string& id)
     return nullptr;
 }
 
-bool Material::Load(const std::string& filename)
+bool Material::Load(const std::string& filepath)
 {
-    std::ifstream f(filename);
+    std::ifstream f(filepath);
     if (!f.is_open())
     {
         f.close();
@@ -101,19 +101,19 @@ bool Material::Load(const std::string& filename)
     return true;
 }
 
-Texture* Material::LoadTexture(const std::string& filename, const std::string& id)
+Texture* Material::LoadTexture(const std::string& filepath, const std::string& id)
 {
-    return LoadTexture(filename, id, glm::vec4(1.0, 1.0, 1.0, 1.0));
+    return LoadTexture(filepath, id, glm::vec4(1.0, 1.0, 1.0, 1.0));
 }
 
-Texture* Material::LoadTexture(const std::string& filename, const std::string& id, const glm::vec4& color)
+Texture* Material::LoadTexture(const std::string& filepath, const std::string& id, const glm::vec4& color)
 {
-    Texture* texture = Manager::Asset()->LoadTexture(filename);
-    m_textures.insert({ id, { filename, texture, color } });
+    Texture* texture = Manager::Asset()->LoadTexture(filepath);
+    m_textures.insert({ id, { filepath, texture, color } });
     return texture;
 }
 
-bool Material::Save(const std::string& filename)
+bool Material::Save(const std::string& filepath)
 {
     std::stringstream ss;
     {
@@ -143,7 +143,7 @@ bool Material::Save(const std::string& filename)
                     ar(cereal::make_nvp("id", t.first));
                     if (t.second.texture)
                     {
-                        ar(cereal::make_nvp("texture", t.second.filename));
+                        ar(cereal::make_nvp("texture", t.second.filepath));
                     }
                     ar(cereal::make_nvp("rColor", t.second.color.r));
                     ar(cereal::make_nvp("gColor", t.second.color.g));
@@ -156,7 +156,7 @@ bool Material::Save(const std::string& filename)
         }
     }
 
-    std::ofstream f(filename);
+    std::ofstream f(filepath);
     if (!f.is_open())
     {
         f.close();

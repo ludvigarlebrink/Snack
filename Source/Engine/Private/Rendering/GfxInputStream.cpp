@@ -44,9 +44,9 @@ bool GfxInputStream::LoadStaticMesh(const std::string& name, std::vector<StaticV
     return false;
 }
 
-bool GfxInputStream::Open(const std::string& filename)
+bool GfxInputStream::Open(const std::string& filepath)
 {
-    m_file.open(filename, std::ios::in | std::ios::binary);
+    m_file.open(filepath, std::ios::in | std::ios::binary);
     if (!m_file.is_open())
     {
         m_file.close();

@@ -160,8 +160,8 @@ IMGUI_API int           ImTextCountUtf8BytesFromStr(const ImWchar* in_text, cons
 // Helpers: Misc
 IMGUI_API ImU32         ImHashData(const void* data, size_t data_size, ImU32 seed = 0);
 IMGUI_API ImU32         ImHashStr(const char* data, size_t data_size, ImU32 seed = 0);
-IMGUI_API void*         ImFileLoadToMemory(const char* filename, const char* file_open_mode, size_t* out_file_size = NULL, int padding_bytes = 0);
-IMGUI_API FILE*         ImFileOpen(const char* filename, const char* file_open_mode);
+IMGUI_API void*         ImFileLoadToMemory(const char* filepath, const char* file_open_mode, size_t* out_file_size = NULL, int padding_bytes = 0);
+IMGUI_API FILE*         ImFileOpen(const char* filepath, const char* file_open_mode);
 static inline bool      ImCharIsBlankA(char c)          { return c == ' ' || c == '\t'; }
 static inline bool      ImCharIsBlankW(unsigned int c)  { return c == ' ' || c == '\t' || c == 0x3000; }
 static inline bool      ImIsPowerOfTwo(int v)           { return v != 0 && (v & (v - 1)) == 0; }

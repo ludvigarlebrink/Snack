@@ -36,7 +36,7 @@ public:
 
     Texture* GetTexture() const;
 
-    void LoadTTF(const std::string& filename, int32 fontSize);
+    void LoadTTF(const std::string& filepath, int32 fontSize);
 
 private:
 

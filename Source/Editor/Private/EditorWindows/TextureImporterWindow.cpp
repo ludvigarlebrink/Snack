@@ -16,7 +16,7 @@ std::string TextureImporterWindow::GetTitle()
     return "Texture Importer";
 }
 
-void TextureImporterWindow::SetFile(const std::string& filename)
+void TextureImporterWindow::SetFile(const std::string& filepath)
 {
 }
 

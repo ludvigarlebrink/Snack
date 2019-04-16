@@ -1554,32 +1554,32 @@ ImU32 ImHashStr(const char* data_p, size_t data_size, ImU32 seed)
     return ~crc;
 }
 
-FILE* ImFileOpen(const char* filename, const char* mode)
+FILE* ImFileOpen(const char* filepath, const char* mode)
 {
 #if defined(_WIN32) && !defined(__CYGWIN__) && !defined(__GNUC__)
     // We need a fopen() wrapper because MSVC/Windows fopen doesn't handle UTF-8 filenames. Converting both strings from UTF-8 to wchar format (using a single allocation, because we can)
-    const int filename_wsize = ImTextCountCharsFromUtf8(filename, NULL) + 1;
+    const int filename_wsize = ImTextCountCharsFromUtf8(filepath, NULL) + 1;
     const int mode_wsize = ImTextCountCharsFromUtf8(mode, NULL) + 1;
     ImVector<ImWchar> buf;
     buf.resize(filename_wsize + mode_wsize);
-    ImTextStrFromUtf8(&buf[0], filename_wsize, filename, NULL);
+    ImTextStrFromUtf8(&buf[0], filename_wsize, filepath, NULL);
     ImTextStrFromUtf8(&buf[filename_wsize], mode_wsize, mode, NULL);
     return _wfopen((wchar_t*)&buf[0], (wchar_t*)&buf[filename_wsize]);
 #else
-    return fopen(filename, mode);
+    return fopen(filepath, mode);
 #endif
 }
 
 // Load file content into memory
 // Memory allocated with ImGui::MemAlloc(), must be freed by user using ImGui::MemFree()
-void* ImFileLoadToMemory(const char* filename, const char* file_open_mode, size_t* out_file_size, int padding_bytes)
+void* ImFileLoadToMemory(const char* filepath, const char* file_open_mode, size_t* out_file_size, int padding_bytes)
 {
-    IM_ASSERT(filename && file_open_mode);
+    IM_ASSERT(filepath && file_open_mode);
     if (out_file_size)
         *out_file_size = 0;
 
     FILE* f;
-    if ((f = ImFileOpen(filename, file_open_mode)) == NULL)
+    if ((f = ImFileOpen(filepath, file_open_mode)) == NULL)
         return NULL;
 
     long file_size_signed;
@@ -9599,7 +9599,7 @@ void ImGui::LogToTTY(int auto_open_depth)
 }
 
 // Start logging/capturing text output to given file
-void ImGui::LogToFile(int auto_open_depth, const char* filename)
+void ImGui::LogToFile(int auto_open_depth, const char* filepath)
 {
     ImGuiContext& g = *GImGui;
     if (g.LogEnabled)
@@ -9608,11 +9608,11 @@ void ImGui::LogToFile(int auto_open_depth, const char* filename)
     // FIXME: We could probably open the file in text mode "at", however note that clipboard/buffer logging will still 
     // be subject to outputting OS-incompatible carriage return if within strings the user doesn't use IM_NEWLINE.
     // By opening the file in binary mode "ab" we have consistent output everywhere.
-    if (!filename)
-        filename = g.IO.LogFilename;
-    if (!filename || !filename[0])
+    if (!filepath)
+        filepath = g.IO.LogFilename;
+    if (!filepath || !filepath[0])
         return;
-    FILE* f = ImFileOpen(filename, "ab");
+    FILE* f = ImFileOpen(filepath, "ab");
     if (f == NULL)
     {
         IM_ASSERT(0);

@@ -76,14 +76,12 @@ public:
 
     /**
      * @brief Enables an attribute.
-     *
      * @param index Index of attribute to enable.
      */
     void EnableAttribute(int32 index);
 
     /**
      * @brief Maps the array buffer for reading.
-     *
      * @return Void pointer to array buffer.
      *
      * Call unmap once done reading.
@@ -142,7 +140,6 @@ public:
 
     /**
      * @brief Render this vertex array.
-     *
      * @param count Number of vertices to render.
      */
     void Render(Mode mode, int32 count);
@@ -151,7 +148,6 @@ public:
 
     /**
      * @brief Reserve data.
-     *
      */
     void Reserve(int32 vertexCount, int32 vertexSize, int32 elementCount);
 
@@ -168,7 +164,6 @@ public:
 
     /**
      * @brief This class will load (or copy) data from the ram to the v-ram.
-     *
      * @param vertexData
      * @param vertexSize
      * @param vertexCount

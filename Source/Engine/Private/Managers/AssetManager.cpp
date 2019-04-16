@@ -16,30 +16,30 @@ AssetManager::~AssetManager()
 {
 }
 
-void AssetManager::DestroyTerrain(const std::string& filename)
+void AssetManager::DestroyTerrain(const std::string& filepath)
 {
-    auto itr = m_terrains.find(filename);
+    auto itr = m_terrains.find(filepath);
     if (itr != m_terrains.end())
     {
         itr->second.first--;
         if (itr->second.first <= 0)
         {
             delete itr->second.second;
-            m_terrains.erase(filename);
+            m_terrains.erase(filepath);
         }
     }
 }
 
-void AssetManager::DestroyTexture(const std::string& filename)
+void AssetManager::DestroyTexture(const std::string& filepath)
 {
-    auto itr = m_textures.find(filename);
+    auto itr = m_textures.find(filepath);
     if (itr != m_textures.end())
     {
         itr->second.first--;
         if (itr->second.first <= 0)
         {
             delete itr->second.second;
-            m_textures.erase(filename);
+            m_textures.erase(filepath);
         }
     }
 }
@@ -49,9 +49,9 @@ Material* AssetManager::GetDefaultMaterial()
     return m_defaultMaterial;
 }
 
-Material * AssetManager::LoadMaterial(const std::string & filename)
+Material * AssetManager::LoadMaterial(const std::string & filepath)
 {
-    auto itr = m_materials.find(filename);
+    auto itr = m_materials.find(filepath);
     if (itr != m_materials.end())
     {
         itr->second.first++;
@@ -59,14 +59,14 @@ Material * AssetManager::LoadMaterial(const std::string & filename)
     }
 
     Material* material = new Material();
-    material->Load(FileSystem::GetRelativeDataPath(filename));
-    m_materials.insert({ filename, { 1, material } });
+    material->Load(FileSystem::GetRelativeDataPath(filepath));
+    m_materials.insert({ filepath, { 1, material } });
     return material;
 }
 
-Terrain* AssetManager::LoadTerrain(const std::string& filename)
+Terrain* AssetManager::LoadTerrain(const std::string& filepath)
 {
-    auto itr = m_terrains.find(filename);
+    auto itr = m_terrains.find(filepath);
     if (itr != m_terrains.end())
     {
         itr->second.first++;
@@ -74,14 +74,14 @@ Terrain* AssetManager::LoadTerrain(const std::string& filename)
     }
 
     Terrain* terrain = new Terrain();
-    terrain->Load(filename);
-    m_terrains.insert({ filename, { 1, terrain } });
+    terrain->Load(filepath);
+    m_terrains.insert({ filepath, { 1, terrain } });
     return terrain;
 }
 
-Texture* AssetManager::LoadTexture(const std::string& filename)
+Texture* AssetManager::LoadTexture(const std::string& filepath)
 {
-    auto itr = m_textures.find(filename);
+    auto itr = m_textures.find(filepath);
     if (itr != m_textures.end())
     {
         itr->second.first++;
@@ -89,8 +89,8 @@ Texture* AssetManager::LoadTexture(const std::string& filename)
     }
 
     Texture* pTexture = new Texture();
-    pTexture->LoadFromFile(FileSystem::GetRelativeDataPath(filename), Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
-    m_textures.insert({ filename, std::pair<int32, Texture*>(1, pTexture) });
+    pTexture->LoadFromFile(FileSystem::GetRelativeDataPath(filepath), Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE);
+    m_textures.insert({ filepath, std::pair<int32, Texture*>(1, pTexture) });
     return pTexture;
 }
 } // namespace snack

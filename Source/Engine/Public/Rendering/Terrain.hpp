@@ -32,13 +32,13 @@ public:
 
     int32 GetSize() const;
 
-    bool Load(const std::string& filename);
+    bool Load(const std::string& filepath);
 
     void Refresh();
 
     void Render();
 
-    bool Save(const std::string& filename);
+    bool Save(const std::string& filepath);
 
     void SetSize(int32 size);
 

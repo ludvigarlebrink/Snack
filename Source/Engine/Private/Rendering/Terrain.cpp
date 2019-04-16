@@ -24,9 +24,9 @@ int32 Terrain::GetSize() const
     return m_size;
 }
 
-bool Terrain::Load(const std::string& filename)
+bool Terrain::Load(const std::string& filepath)
 {
-    std::ifstream f(filename, std::ios::in | std::ios::binary);
+    std::ifstream f(filepath, std::ios::in | std::ios::binary);
     if (!f.is_open())
     {
         return false;
@@ -97,9 +97,9 @@ void Terrain::Render()
     m_mesh->Render(Mesh::Mode::PATCHES);
 }
 
-bool Terrain::Save(const std::string& filename)
+bool Terrain::Save(const std::string& filepath)
 {
-    std::ofstream f(FileSystem::GetRelativeDataPath(filename), std::ios::out | std::ios::binary);
+    std::ofstream f(FileSystem::GetRelativeDataPath(filepath), std::ios::out | std::ios::binary);
     if (!f.is_open())
     {
         return false;

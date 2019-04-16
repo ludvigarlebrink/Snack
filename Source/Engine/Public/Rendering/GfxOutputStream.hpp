@@ -20,7 +20,7 @@ public:
 
     void Close() override;
 
-    bool Open(const std::string& filename) override;
+    bool Open(const std::string& filepath) override;
 
     /**
      * @return Id, -1 if something went wrong.

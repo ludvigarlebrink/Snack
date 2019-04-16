@@ -16,7 +16,7 @@ public:
 
     std::string GetTitle() override;
 
-    void SetTerrain(const std::string& filename);
+    void SetTerrain(const std::string& filepath);
 
 protected:
 

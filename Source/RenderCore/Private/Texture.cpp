@@ -52,7 +52,7 @@ int32 Texture::GetWidth() const
     return m_width;
 }
 
-bool Texture::LoadFromFile(const std::string& filename, InternalFormat internalFormat, Format format, Type type)
+bool Texture::LoadFromFile(const std::string& filepath, InternalFormat internalFormat, Format format, Type type)
 {
     int32 sformat = 0;
     uint8* pData = nullptr;
@@ -60,16 +60,16 @@ bool Texture::LoadFromFile(const std::string& filename, InternalFormat internalF
     switch (internalFormat)
     {
     case InternalFormat::R:
-        pData = stbi_load(filename.c_str(), &m_width, &m_height, &sformat, STBI_grey);
+        pData = stbi_load(filepath.c_str(), &m_width, &m_height, &sformat, STBI_grey);
         break;
     case InternalFormat::RG:
-        pData = stbi_load(filename.c_str(), &m_width, &m_height, &sformat, STBI_grey_alpha);
+        pData = stbi_load(filepath.c_str(), &m_width, &m_height, &sformat, STBI_grey_alpha);
         break;
     case InternalFormat::RGB:
-        pData = stbi_load(filename.c_str(), &m_width, &m_height, &sformat, STBI_rgb);
+        pData = stbi_load(filepath.c_str(), &m_width, &m_height, &sformat, STBI_rgb);
         break;
     case  InternalFormat::RGBA:
-        pData = stbi_load(filename.c_str(), &m_width, &m_height, &sformat, STBI_rgb_alpha);
+        pData = stbi_load(filepath.c_str(), &m_width, &m_height, &sformat, STBI_rgb_alpha);
         break;
     default:
         break;

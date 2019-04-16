@@ -33,14 +33,14 @@ void SceneGraphWindow::OnDraw(f32 deltaTime)
         if (SketchEvent::KeyDown(Key::S, Mod::CTRL))
         {
             EditorManager::Scene()->ClearSelectedTransforms();
-            std::string filename = Manager::Scene()->GetFilename();
-            if (filename.empty())
+            std::string filepath = Manager::Scene()->GetFilename();
+            if (filepath.empty())
             {
                 SketchPopup::OpenPopup("Save Scene As");
             }
             else
             {
-                Manager::Scene()->Save(filename);
+                Manager::Scene()->Save(filepath);
             }
         }
 

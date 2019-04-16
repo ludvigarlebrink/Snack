@@ -5,9 +5,9 @@
 
 namespace snack
 {
-bool FileSystem::CreateFile(const std::string& filename)
+bool FileSystem::CreateFile(const std::string& filepath)
 {
-    std::ofstream f(filename);
+    std::ofstream f(filepath);
     if (f.is_open())
     {
         f.close();
@@ -17,10 +17,10 @@ bool FileSystem::CreateFile(const std::string& filename)
     return false;
 }
 
-bool FileSystem::CreateFile(const std::string& filename, const std::string& data)
+bool FileSystem::CreateFile(const std::string& filepath, const std::string& data)
 {
     {
-        std::ofstream f(filename);
+        std::ofstream f(filepath);
         if (f.is_open())
         {
             f << data;
@@ -47,9 +47,9 @@ std::string FileSystem::GetRelativeDataPath()
     return "Data/";
 }
 
-std::string FileSystem::GetRelativeDataPath(const std::string& filename)
+std::string FileSystem::GetRelativeDataPath(const std::string& filepath)
 {
-    return "Data/" + filename;
+    return "Data/" + filepath;
 }
 
 std::string FileSystem::GetRelativeEditorDataPath()
@@ -57,8 +57,8 @@ std::string FileSystem::GetRelativeEditorDataPath()
     return "EditorData/";
 }
 
-std::string FileSystem::GetRelativeEditorDataPath(const std::string& filename)
+std::string FileSystem::GetRelativeEditorDataPath(const std::string& filepath)
 {
-    return "EditorData/" + filename;
+    return "EditorData/" + filepath;
 }
 } // namespace snack

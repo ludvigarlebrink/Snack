@@ -40,9 +40,9 @@ void GfxOutputStream::Close()
     m_bufferCapacity = 0; 
 }
 
-bool GfxOutputStream::Open(const std::string& filename)
+bool GfxOutputStream::Open(const std::string& filepath)
 {
-    m_file.open(filename, std::ios::in | std::ios::binary);
+    m_file.open(filepath, std::ios::in | std::ios::binary);
     if (!m_file.is_open())
     {
         return false;
