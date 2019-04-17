@@ -15,7 +15,7 @@ uniform mat4 ViewProjection = mat4(1.0);
 void main()
 {
     TextureCoordinates_FS_in = TextureCoordinates_VS_in;
-	Normal_FS_in = Normal_VS_in;
+	Normal_FS_in = normalize(mat3(transpose(inverse(Model))) * Normal_VS_in);
     vec4 worldPosition = Model * vec4(Position_VS_in, 1.0);
 	WorldPosition_FS_in = worldPosition.xyz;
     gl_Position = ViewProjection * worldPosition;
