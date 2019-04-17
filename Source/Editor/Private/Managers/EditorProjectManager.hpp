@@ -12,6 +12,8 @@ public:
 
     ~EditorProjectManager();
 
+    bool Load(const std::string& filepath) override;
+
 private:
 
 
