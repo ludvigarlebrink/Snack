@@ -215,11 +215,27 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
     m_mesh->EnableAttribute(2);
 
     // Create font texture.
-    ImFontConfig fontConfig;
-    fontConfig.OversampleH = 5;
-    fontConfig.OversampleV = 5;
-    fontConfig.RasterizerMultiply = 1.6f;
-    io.Fonts->AddFontFromFileTTF("Fonts/FiraMono-Regular.ttf", 14.0f, &fontConfig);
+    {
+        ImFontConfig fontConfig;
+        fontConfig.OversampleH = 1;
+        fontConfig.OversampleV = 1;
+        fontConfig.RasterizerMultiply = 1.6f;
+        fontConfig.PixelSnapH = true;
+        fontConfig.MergeMode = false;
+        io.Fonts->AddFontFromFileTTF("Fonts/FiraMono-Regular.ttf", 14.0f, &fontConfig);
+    }
+
+    {
+        ImFontConfig fontConfig;
+        fontConfig.OversampleH = 1;
+        fontConfig.OversampleV = 1;
+        fontConfig.RasterizerMultiply = 1.6f;
+        fontConfig.PixelSnapH = true;
+        fontConfig.MergeMode = false;
+        io.Fonts->AddFontFromFileTTF("Fonts/FiraMono-Regular.ttf", 24.0f, &fontConfig);
+    }
+
+//    io.Fonts->Build();
 
     uchar* pixels = nullptr;
     int32 width = 0;
@@ -227,6 +243,10 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
     io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
     m_fontTexture = new Texture();
+    m_fontTexture->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_fontTexture->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_fontTexture->SetMagFilter(Texture::MagFilter::NEAREST);
+    m_fontTexture->SetMinFilter(Texture::MinFilter::NEAREST);
     m_fontTexture->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, pixels);
     io.Fonts->TexID = static_cast<ImTextureID>(m_fontTexture);
 

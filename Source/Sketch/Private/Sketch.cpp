@@ -69,6 +69,11 @@ bool Sketch::IntField(const std::string& label, int32& value)
     return ImGui::DragInt(label.c_str(), &value);
 }
 
+void Sketch::ResetFont()
+{
+    ImGui::PopFont();
+}
+
 bool Sketch::Selectable(const std::string& label)
 {
     return ImGui::Selectable(label.c_str());
@@ -87,6 +92,11 @@ void Sketch::SameLine()
 void Sketch::Seperator()
 {
     ImGui::Separator();
+}
+
+void Sketch::SetFont(Font font)
+{
+    ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[static_cast<uint32>(font)]);
 }
 
 void Sketch::Text(const std::string& text)

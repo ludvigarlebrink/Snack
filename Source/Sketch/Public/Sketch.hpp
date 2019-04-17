@@ -13,6 +13,14 @@ class SKETCH_API Sketch
 {
 public:
 
+    enum class Font : uint32
+    {
+        FONT0,
+        FONT1
+    };
+
+public:
+
     static bool Button(const std::string& label);
 
     static bool Checkbox(const std::string& label, bool& value);
@@ -33,6 +41,8 @@ public:
 
     static bool IntField(const std::string& label, int32& value);
 
+    static void ResetFont();
+
     static bool Selectable(const std::string& label);
 
     static bool Selectable(const std::string& label, bool isSelected);
@@ -40,6 +50,8 @@ public:
     static void SameLine();
 
     static void Seperator();
+
+    static void SetFont(Font font);
 
     static void Text(const std::string& text);
 
