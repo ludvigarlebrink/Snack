@@ -216,8 +216,8 @@ void SketchInternal::SetUp(RenderWindow* renderWindow)
 
     // Create font texture.
     ImFontConfig fontConfig;
-    fontConfig.OversampleH = 1;
-    fontConfig.OversampleV = 1;
+    fontConfig.OversampleH = 5;
+    fontConfig.OversampleV = 5;
     fontConfig.RasterizerMultiply = 1.6f;
     io.Fonts->AddFontFromFileTTF("Fonts/FiraMono-Regular.ttf", 14.0f, &fontConfig);
 
