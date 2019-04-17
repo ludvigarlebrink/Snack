@@ -7,6 +7,7 @@ in vec2 TexCoords_FS_in;
 uniform sampler2D GPosition;
 uniform sampler2D GNormal;
 uniform sampler2D GAlbedo;
+uniform sampler2D GMRA;
 
 struct DirectonalLight 
 {
@@ -72,14 +73,15 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 
 void main()
 {             
-	float metallic = 1.0;
-	float roughness = 1.0;
-	float ao = 0.0;
-
 	vec4 WorldPosition = texture(GPosition, TexCoords_FS_in);
 	vec4 Normal = texture(GNormal, TexCoords_FS_in);
 	vec4 Albedo = texture(GAlbedo, TexCoords_FS_in);
 	vec3 viewDir = normalize(ViewPosition - WorldPosition.xyz);
+
+	vec4 MRA = texture(GMRA, TexCoords_FS_in);
+	float metallic = MRA.x;
+	float roughness = MRA.y;
+	float ao = MRA.z;
 
 	vec3 Lo = vec3(0.0);
 

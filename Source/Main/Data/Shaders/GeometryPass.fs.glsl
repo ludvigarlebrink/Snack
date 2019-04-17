@@ -3,6 +3,7 @@
 layout (location = 0) out vec4 gPosition;
 layout (location = 1) out vec4 gNormal;
 layout (location = 2) out vec4 gAlbedo;
+layout (location = 3) out vec4 gMRA;
 
 in vec2 TextureCoordinates_FS_in;
 in vec3 WorldPosition_FS_in;
@@ -13,4 +14,5 @@ void main()
     gPosition = vec4(WorldPosition_FS_in, 1.0);
     gNormal = vec4(normalize(Normal_FS_in), 1.0);
     gAlbedo = vec4(0.4, 0.4, 0.4, 1.0);
+	gMRA = vec4(0.9, 20.0, 1.0, 1.0);
 } 

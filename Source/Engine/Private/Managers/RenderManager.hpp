@@ -78,6 +78,7 @@ private:
     Texture* m_gAlbedo;
     Texture* m_gNormal;
     Texture* m_gPosition;
+    Texture* m_gMRA;
     Shader* m_geometryPassShader;
     Shader* m_lightingPassShader;
     FullScreenQuad* m_fullScreenQuad;
