@@ -255,12 +255,12 @@ void MeshComponent::Save(cereal::JSONOutputArchive& archive)
     BaseComponent::Save(archive);
 }
 
-void MeshComponent::SetMaterial(Material * material)
+void MeshComponent::SetMaterial(Material* material)
 {
     m_material = material;
 }
 
-void MeshComponent::SetMaterial(std::string path)
+void MeshComponent::SetMaterial(const std::string& filepath)
 {
     //TODO (maybe?)
 }
@@ -307,7 +307,15 @@ void MeshComponent::OnEditorGizmo()
 
 void MeshComponent::OnEditorInspector()
 {
+    Sketch::TextField("Material", m_materialName);
 
+    std::string filepath = "";
+    if (SketchDragDrop::TextTarget("Filename", filepath))
+    {
+        if (filepath.substr(filepath.find_last_of('.')) == ".mat")
+        {
+        }
+    }
 }
 #endif
 } // namespace snack
