@@ -18,7 +18,7 @@ int32 SketchEvent::m_buttonUpCount = 0;
 bool SketchEvent::m_wantsToClose = false;
 bool SketchEvent::m_dropFile = false;
 
-std::string SketchEvent::m_filename = "";
+std::string SketchEvent::m_filepath = "";
 
 bool SketchEvent::ButtonDown(Button button)
 {
@@ -54,7 +54,7 @@ bool SketchEvent::DropFile()
 
 std::string SketchEvent::DropFilename()
 {
-    return m_filename;
+    return m_filepath;
 }
 
 glm::vec2 SketchEvent::GetPointerDelta()
@@ -287,7 +287,7 @@ void SketchEvent::UpdateEvents()
 
     m_wantsToClose = false;
     m_dropFile = false;
-    m_filename = "";
+    m_filepath = "";
 }
 
 void SketchEvent::ProcessEvent(SDL_Event* event)
@@ -345,7 +345,7 @@ void SketchEvent::ProcessEvent(SDL_Event* event)
     }
     case SDL_DROPFILE:
     {
-        m_filename = event->drop.file;
+        m_filepath = event->drop.file;
         m_dropFile = true;
         break;
     }

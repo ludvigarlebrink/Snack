@@ -18,7 +18,7 @@ TerrainComponent::~TerrainComponent()
 {
     if (m_terrain)
     {
-        Manager::Asset()->DestroyTerrain(m_filename);
+        Manager::Asset()->DestroyTerrain(m_filepath);
     }
 
     Manager::Render()->DeregisterTerrainComponent(this);
@@ -42,29 +42,24 @@ void TerrainComponent::Load(cereal::JSONInputArchive& archive)
 #ifdef SPY_EDITOR
 void TerrainComponent::OnEditorInspector()
 {
-    Sketch::TextField("Terrain", m_filename);
-    if (SketchDragDrop::BeginTarget())
+    Sketch::TextField("Terrain", m_filepath);
+
+    std::string filepath = "";
+    if (SketchDragDrop::TextTarget("Filename", filepath))
     {
-        SketchDragDrop::Payload payload;
-        if (SketchDragDrop::AcceptPayload("Filename", payload))
+        if (filepath.substr(filepath.find_last_of('.')) == ".trn")
         {
-            std::string filepath = static_cast<char*>(payload.data);
-
-            if (filepath.substr(filepath.find_last_of('.')) == ".trn")
+            if (m_terrain)
             {
-                if (m_terrain)
-                {
-                    Manager::Asset()->DestroyTerrain(m_filename);
-                }
+                Manager::Asset()->DestroyTerrain(m_filepath);
+            }
 
-                m_terrain = Manager::Asset()->LoadTerrain(filepath);
-                if (m_terrain)
-                {
-                    m_filename = filepath;
-                }
+            m_terrain = Manager::Asset()->LoadTerrain(filepath);
+            if (m_terrain)
+            {
+                m_filepath = filepath;
             }
         }
-        SketchDragDrop::EndTarget();
     }
 }
 #endif

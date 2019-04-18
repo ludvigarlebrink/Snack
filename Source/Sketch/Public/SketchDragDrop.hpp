@@ -29,13 +29,32 @@ public:
 
     static bool BeginTarget();
 
+    /**
+     * @brief End the source.
+     */
     static void EndSource();
 
+    /**
+     * @brief Ends the target.
+     */
     static void EndTarget();
 
+    /**
+     * @brief Set a drag n drop payload.
+     */
     static void SetPayload(const std::string& type, void* data);
 
+    /**
+     * @brief Set a drag n drop payload.
+     */
     static void SetPayload(const std::string& type, void* data, uint64 size);
+
+    /**
+     * @brief Quick drag n drop for texts.
+     */
+    static bool TextSource(const std::string& label, const std::string& type, const std::string& data);
+
+    static bool TextTarget(const std::string& type, std::string& data);
 };
 } // namespace snack
 

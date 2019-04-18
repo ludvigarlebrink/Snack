@@ -51,7 +51,7 @@ void SceneManager::DestroyImmediate(Transform* transform)
 
 std::string SceneManager::GetFilename() const
 {
-    return m_filename;
+    return m_filepath;
 }
 
 Transform* SceneManager::GetSceneRoot()
@@ -128,7 +128,7 @@ bool SceneManager::Load(const std::string& filepath)
         m_scene->Load(archive);
     }
 
-    m_filename = filepath;
+    m_filepath = filepath;
 
     return true;
 }
@@ -153,7 +153,7 @@ bool SceneManager::Save(const std::string& filepath)
 
     f.close();
 
-    m_filename = filepath;
+    m_filepath = filepath;
 
     return true;
 }

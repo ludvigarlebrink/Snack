@@ -33,7 +33,7 @@ public:
 
     void SetMaterial(Material* material);
 
-    void SetMaterial(std::string path);
+    void SetMaterial(const std::string& path);
 
 #ifdef SPY_EDITOR
     void OnEditorGizmo() override;
@@ -45,6 +45,7 @@ private:
 
     Mesh* m_mesh;
     Material* m_material;
+    std::string m_materialName;
     f32 m_sphereRadius;
     glm::vec3 m_aabbMax;
     glm::vec3 m_aabbMin;

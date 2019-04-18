@@ -31,7 +31,7 @@ void TerrainEditorWindow::SetTerrain(const std::string& filepath)
     }
 
     m_terrain = Manager::Asset()->LoadTerrain(filepath);
-    m_filename = filepath;
+    m_filepath = filepath;
 }
 
 void TerrainEditorWindow::OnDraw(f32 deltaTime)
@@ -53,7 +53,7 @@ void TerrainEditorWindow::OnDraw(f32 deltaTime)
 
     if (Sketch::Button("Save"))
     {
-        m_terrain->Save(m_filename);
+        m_terrain->Save(m_filepath);
     }
 }
 
