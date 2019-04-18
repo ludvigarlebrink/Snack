@@ -37,6 +37,18 @@ public:
         RGBA32F
     };
 
+    enum class MagFilter
+    {
+        LINEAR,
+        NEAREST
+    };
+
+    enum class MinFilter
+    {
+        LINEAR,
+        NEAREST
+    };
+
     enum class Type
     {
         FLOAT,
@@ -61,12 +73,19 @@ public:
      */
     virtual ~Texture();
 
+    /**
+     * @brief Manually bind this texture.
+     */
     void Bind();
 
     void Bind(uint32 location);
 
     InternalFormat GetInternalFormat() const;
 
+    /**
+     * @brief Get the native api handle.
+     * @return Native api handle.
+     */
     uint32 GetHandle() const;
 
     int32 GetHeight() const;
@@ -76,6 +95,16 @@ public:
     bool LoadFromFile(const std::string& filepath, InternalFormat internalFormat, Format format, Type type);
 
     void SetData(int32 width, int32 height, InternalFormat internalFormat, Format format, Type type, void* pixels);
+
+    /**
+     * @brief Set the magnification filter.
+     * @param magFilter Magnification filter to set.
+     *
+     * The default magnification filter is linear.
+     */
+    void SetMagFilter(MagFilter magFilter);
+
+    void SetMinFilter(MinFilter minFilter);
 
     void SetSubData(int32 xOffset, int32 yOffset, int32 width, int32 height, Format format, void* pixels);
 

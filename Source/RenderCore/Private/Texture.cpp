@@ -1,5 +1,6 @@
 #include "Texture.hpp"
 #include "RenderSM.hpp"
+#include "RenderError.hpp"
 #include "glad/glad.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -101,18 +102,55 @@ void Texture::SetData(int32 width, int32 height, InternalFormat internalFormat, 
     m_type = type;
     Bind();
     glTexImage2D(GL_TEXTURE_2D, 0, ToGLInternalFormat(m_internalFormat), m_width, m_height, 0, ToGLFormat(format), ToGLType(type), pixels);
+    SPY_CHECK_RENDER_ERROR();
+}
+
+void Texture::SetMagFilter(MagFilter magFilter)
+{
+    Bind();
+    switch (magFilter)
+    {
+    case MagFilter::LINEAR:
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        break;
+    case MagFilter::NEAREST:
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        break;
+    default:
+        break;
+    }
+    SPY_CHECK_RENDER_ERROR();
+}
+
+void Texture::SetMinFilter(MinFilter minFilter)
+{
+    Bind();
+    switch (minFilter)
+    {
+    case MinFilter::LINEAR:
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        break;
+    case MinFilter::NEAREST:
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        break;
+    default:
+        break;
+    }
+    SPY_CHECK_RENDER_ERROR();
 }
 
 void Texture::SetSubData(int32 xOffset, int32 yOffset, int32 width, int32 height, Format format, void* pixels)
 {
     Bind();
     glTexSubImage2D(GL_TEXTURE_2D, 0, xOffset, yOffset, width, height, ToGLFormat(format), GL_UNSIGNED_BYTE, pixels);
+    SPY_CHECK_RENDER_ERROR();
 }
 
 void Texture::SetSWrapping(Wrapping wrapping)
 {
     Bind();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ToGLWrapping(wrapping));
+    SPY_CHECK_RENDER_ERROR();
     m_sWrapping = wrapping;
 }
 
@@ -120,6 +158,7 @@ void Texture::SetTWrapping(Wrapping wrapping)
 {
     Bind();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ToGLWrapping(wrapping));
+    SPY_CHECK_RENDER_ERROR();
     m_tWrapping = wrapping;
 }
 

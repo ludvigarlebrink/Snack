@@ -2,6 +2,7 @@
 #include "EditorManager.hpp"
 #include "Manager.hpp"
 #include "EngineInclude.hpp"
+#include "PlatformInclude.hpp"
 #include "SketchInclude.hpp"
 
 namespace snack
@@ -47,7 +48,7 @@ void InspectorWindow::OnDraw(f32 deltaTime)
             }
 
             Sketch::SameLine();
-            
+
             if (Sketch::Button("Add Script"))
             {
                 SketchPopup::OpenPopup("Add Script");
@@ -87,27 +88,13 @@ void InspectorWindow::OnDraw(f32 deltaTime)
 
                 SketchWindow::BeginChild("Add Script List", true);
                 {
-                    for (auto& c : m_componentInfos)
-                    {
-                        if (c.constructable && !transform->HasComponent(c.id) &&
-                            (m_search.empty() || m_search == c.name.substr(0, m_search.length())))
-                        {
-                            if (Sketch::Selectable(c.name))
-                            {
-                                transform->AddComponent(c.id);
-                                m_search.clear();
-                                SketchPopup::Close();
-                                break;
-                            }
-                        }
-                    }
+
                 }
                 SketchWindow::EndChild();
 
                 SketchPopup::End();
             }
 
-            bool isEnabled = transform->IsEnabled();
             if (Sketch::CollapsingHeader("Transform"))
             {
                 transform->OnEditorInspector();
@@ -115,17 +102,23 @@ void InspectorWindow::OnDraw(f32 deltaTime)
 
             std::vector<BaseComponent*> components;
             transform->GetAllComponents(components);
-            for (auto c : components)
+            if (!components.empty())
             {
-                bool isOpen = true;
-                if (Sketch::CollapsingHeader(Manager::Class()->GetComponentName(c->GetComponentID()), isOpen))
+                if (Sketch::CollapsingHeader("Components"))
                 {
-                    c->OnEditorInspector();
-                }
+                    for (auto c : components)
+                    {
+                        bool isOpen = true;
+                        if (Sketch::CollapsingHeader(Manager::Class()->GetComponentName(c->GetComponentID()), isOpen))
+                        {
+                            c->OnEditorInspector();
+                        }
 
-                if (!isOpen)
-                {
-                    transform->RemoveComponent(c->GetComponentID());
+                        if (!isOpen)
+                        {
+                            transform->RemoveComponent(c->GetComponentID());
+                        }
+                    }
                 }
             }
         }

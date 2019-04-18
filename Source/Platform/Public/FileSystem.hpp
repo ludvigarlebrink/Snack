@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace snack
 {
@@ -37,6 +38,12 @@ public:
 
     static bool DeleteFolder(const std::string& folderpath);
 
+    static void GetFilesByExtension(const std::string& folderpath, const std::string& extension, std::vector<std::string>& filepaths, bool recursive);
+
+    /**
+     * @brief Get the relative path to the data folder.
+     * @return Relative path to the data folder.
+     */
     static std::string GetRelativeDataPath();
 
     static std::string GetRelativeDataPath(const std::string& filepath);

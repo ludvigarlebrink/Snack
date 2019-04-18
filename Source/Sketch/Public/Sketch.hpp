@@ -13,6 +13,14 @@ class SKETCH_API Sketch
 {
 public:
 
+    enum class Font : uint32
+    {
+        FONT0,
+        FONT1
+    };
+
+public:
+
     static bool Button(const std::string& label);
 
     static bool Checkbox(const std::string& label, bool& value);
@@ -31,7 +39,11 @@ public:
 
     static bool ImageButton(Texture* texture, bool flip, const glm::vec4& color);
 
+    static void Indent();
+
     static bool IntField(const std::string& label, int32& value);
+
+    static void ResetFont();
 
     static bool Selectable(const std::string& label);
 
@@ -41,10 +53,14 @@ public:
 
     static void Seperator();
 
+    static void SetFont(Font font);
+
     static void Text(const std::string& text);
 
     static bool TextField(const std::string& label, std::string& text);
  
+    static void Unindent();
+
     static bool Vec2Field(const std::string& label, glm::vec2& value);
 
     static bool Vec3Field(const std::string& label, glm::vec3& value);
