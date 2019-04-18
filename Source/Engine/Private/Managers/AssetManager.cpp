@@ -10,6 +10,10 @@ AssetManager::AssetManager()
 {
     m_defaultMaterial = new Material();
     m_defaultMaterial->SetColor("Albedo", { 1.0, 1.0, 1.0, 1.0 });
+    m_defaultMaterial->SetColor("Normal", { 1.0, 1.0, 1.0, 1.0 });
+    m_defaultMaterial->SetColor("Metallic", { 1.0, 1.0, 1.0, 1.0 });
+    m_defaultMaterial->SetColor("Roughness", { 1.0, 1.0, 1.0, 1.0 });
+    m_defaultMaterial->SetColor("AO", { 1.0, 1.0, 1.0, 1.0 });
 }
 
 AssetManager::~AssetManager()

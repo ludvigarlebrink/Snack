@@ -222,6 +222,47 @@ void RenderManager::DeferredGeometryPass(CameraComponent* camera)
         {
             Mesh* mesh = m->GetMesh();
             m_geometryPassShader->SetMat4Slow("Model", m->GetTransform()->GetWorldMatrix());
+            Material* material = nullptr;
+            if (material = m->GetMaterial())
+            {
+                Texture* albedo = nullptr;
+                if (albedo = material->GetTexture("Albedo"))
+                {
+                    m_geometryPassShader->SetIntSlow("AlbedoMap", 0);
+                    albedo->Bind(0);
+                }
+                Texture* normal = nullptr;
+                if (normal = material->GetTexture("Normal"))
+                {
+                    m_geometryPassShader->SetIntSlow("NormalMap", 1);
+                    albedo->Bind(1);
+                }
+                Texture* metallic = nullptr;
+                if (metallic = material->GetTexture("Metallic"))
+                {
+                    m_geometryPassShader->SetIntSlow("MetallicMap", 2);
+                    albedo->Bind(2);
+                }
+                Texture* roughness = nullptr;
+                if (roughness = material->GetTexture("Roughness"))
+                {
+                    m_geometryPassShader->SetIntSlow("RoughnessMap", 3);
+                    albedo->Bind(3);
+                }
+                Texture* ao = nullptr;
+                if (ao = material->GetTexture("AO"))
+                {
+                    m_geometryPassShader->SetIntSlow("AOMap", 4);
+                    albedo->Bind(4);
+                }
+
+                m_geometryPassShader->SetVec4Slow("AlbedoColor", material->GetColor("Albedo"));
+                m_geometryPassShader->SetVec4Slow("NormalColor", material->GetColor("Normal"));
+                m_geometryPassShader->SetVec4Slow("MetallicColor", material->GetColor("Metallic"));
+                m_geometryPassShader->SetVec4Slow("RoughnessColor", material->GetColor("Roughness"));
+                m_geometryPassShader->SetVec4Slow("AOColor", material->GetColor("AO"));
+            }
+
             mesh->Render(Mesh::Mode::TRIANGLES);
         }
     }
