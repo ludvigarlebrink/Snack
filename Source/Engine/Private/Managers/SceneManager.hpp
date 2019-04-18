@@ -49,6 +49,6 @@ private:
     Transform* m_scene;
 
     std::vector<Transform*> m_toBeDestroyed;
-    std::string m_filename;
+    std::string m_filepath;
 };
 } // namespace snack

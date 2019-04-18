@@ -92,6 +92,6 @@ private:
     static bool m_wantsToClose;
     static bool m_dropFile;
 
-    static std::string m_filename;
+    static std::string m_filepath;
 };
 } // namespace snack

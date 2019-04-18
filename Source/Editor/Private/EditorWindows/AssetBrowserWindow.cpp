@@ -132,15 +132,7 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                     }
                 }
 
-                if (SketchDragDrop::BeginSource(fileInfo.name))
-                {
-                    // @todo This is a bit clunky, maybe make this better?
-                    char filepath[512];
-                    memset(filepath, '\0', 512);
-                    memcpy(filepath, fileInfo.relativePath.c_str(), fileInfo.relativePath.size());
-                    SketchDragDrop::SetPayload("Filename", filepath, 512);
-                    SketchDragDrop::EndSource();
-                }
+                SketchDragDrop::TextSource(fileInfo.name, "Filename", fileInfo.relativePath);
 
                 if (SketchPopup::BeginContext(fileInfo.name + fileInfo.extension))
                 {
@@ -154,7 +146,7 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                         }
                         Sketch::Seperator();
                     }
-                    else if (fileInfo.extension == ".mt")
+                    else if (fileInfo.extension == ".mat")
                     {
                         SketchMenu::Item("Open");
                         Sketch::Seperator();
@@ -252,7 +244,7 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             }
             else if (SketchPopup::Dialog("Create Material", "Material Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".mt";
+                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".mat";
                 FileSystem::CreateFile(filepath);
                 inputText.clear();
                 m_refresh = true;

@@ -33,6 +33,6 @@ public:
 private:
 
     Terrain* m_terrain;
-    std::string m_filename;
+    std::string m_filepath;
 };
 } // namespace snack

@@ -34,6 +34,6 @@ private:
     Texture* m_elevationBrushIcon;
     Texture* m_paintBrushIcon;
 
-    std::string m_filename;
+    std::string m_filepath;
 };
 } // namespace snack
