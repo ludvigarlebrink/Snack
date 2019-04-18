@@ -36,4 +36,5 @@
 # Engine files
 !Source/Main/Data/**
 !Source/Main/EditorData/**
+!Source/Main/Fonts/**
 !Source/Main/Shaders/**
