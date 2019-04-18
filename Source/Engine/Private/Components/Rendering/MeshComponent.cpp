@@ -111,35 +111,35 @@ MeshComponent::MeshComponent(Transform* transform)
     vertices[22].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
     vertices[23].tangent = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    vertices[0].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[0].textureCoordinate = glm::vec2(0.0f, 0.0f);
     vertices[1].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[2].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[3].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[2].textureCoordinate = glm::vec2(1.0f, 1.0f);
+    vertices[3].textureCoordinate = glm::vec2(1.0f, 0.0f);
 
-    vertices[4].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[4].textureCoordinate = glm::vec2(0.0f, 0.0f);
     vertices[5].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[6].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[7].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[6].textureCoordinate = glm::vec2(1.0f, 1.0f);
+    vertices[7].textureCoordinate = glm::vec2(1.0f, 0.0f);
 
-    vertices[8].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[8].textureCoordinate = glm::vec2(0.0f, 0.0f);
     vertices[9].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[10].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[11].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[10].textureCoordinate = glm::vec2(1.0f, 1.0f);
+    vertices[11].textureCoordinate = glm::vec2(1.0f, 0.0f);
 
-    vertices[12].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[12].textureCoordinate = glm::vec2(0.0f, 0.0f);
     vertices[13].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[14].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[15].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[14].textureCoordinate = glm::vec2(1.0f, 1.0f);
+    vertices[15].textureCoordinate = glm::vec2(1.0f, 0.0f);
 
-    vertices[16].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[16].textureCoordinate = glm::vec2(0.0f, 0.0f);
     vertices[17].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[18].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[19].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[18].textureCoordinate = glm::vec2(1.0f, 1.0f);
+    vertices[19].textureCoordinate = glm::vec2(1.0f, 0.0f);
     
-    vertices[20].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[20].textureCoordinate = glm::vec2(0.0f, 0.0f);
     vertices[21].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[22].textureCoordinate = glm::vec2(0.0f, 1.0f);
-    vertices[24].textureCoordinate = glm::vec2(0.0f, 1.0f);
+    vertices[22].textureCoordinate = glm::vec2(1.0f, 1.0f);
+    vertices[24].textureCoordinate = glm::vec2(1.0f, 0.0f);
 
     uint32 elements[36] = {
         0u,
@@ -255,7 +255,7 @@ void MeshComponent::Save(cereal::JSONOutputArchive& archive)
     BaseComponent::Save(archive);
 }
 
-void MeshComponent::SetMaterial(Material * material)
+void MeshComponent::SetMaterial(Material* material)
 {
     m_material = material;
 }

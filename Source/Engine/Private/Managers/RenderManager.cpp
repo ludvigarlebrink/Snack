@@ -60,7 +60,7 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
         m_gPosition->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
         m_gNormal->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
         m_gAlbedo->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
-        m_gMRA->SetData(width, height, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+        m_gMRA->SetData(width, height, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
         m_depthStencil->SetData(width, height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     }
 
@@ -305,7 +305,7 @@ void RenderManager::SetUp()
     m_deferredFrameBuffer->AttachTexture(2, m_gAlbedo);
 
     m_gMRA = new Texture();
-    m_gMRA->SetData(512, 512, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_gMRA->SetData(512, 512, Texture::InternalFormat::RGBA, Texture::Format::RGBA, Texture::Type::UNSIGNED_BYTE, nullptr);
     m_gMRA->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
     m_gMRA->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
     m_deferredFrameBuffer->AttachTexture(3, m_gMRA);
