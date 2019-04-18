@@ -26,9 +26,9 @@ void main()
 	float metallic = vec4(texture(MetallicMap, TextureCoordinates_FS_in) * MetallicColor).r;
 	float roughness = vec4(texture(RoughnessMap, TextureCoordinates_FS_in) * RoughnessColor).r;
 	float ao = vec4(texture(AOMap, TextureCoordinates_FS_in) * AOColor).r;
-    gPosition = vec4(WorldPosition_FS_in, 1.0);
+	vec3 albedo = pow(texture(AlbedoMap, TextureCoordinates_FS_in).rbg, vec3(2.2));
+	gPosition = vec4(WorldPosition_FS_in, 1.0);
     gNormal = vec4(normalize(Normal_FS_in), 1.0);
-    gAlbedo = vec4(0.1, 0.,1, 0.1, 0.1);
-	vec3 albedo = pow(texture(AlbedoMap, TextureCoordinates_FS_in).rgb, 2.2);
+    gAlbedo = vec4(albedo * AlbedoColor, 0.1);
 	gMRA = vec4(metallic, roughness, ao, 1.0);
 } 

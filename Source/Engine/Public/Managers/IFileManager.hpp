@@ -3,6 +3,7 @@
 #include "BaseTypes.hpp"
 
 #include <string>
+#include <vector>
 
 namespace snack
 {
