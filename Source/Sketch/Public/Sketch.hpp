@@ -39,6 +39,8 @@ public:
 
     static bool ImageButton(Texture* texture, bool flip, const glm::vec4& color);
 
+    static void Indent();
+
     static bool IntField(const std::string& label, int32& value);
 
     static void ResetFont();
@@ -57,6 +59,8 @@ public:
 
     static bool TextField(const std::string& label, std::string& text);
  
+    static void Unindent();
+
     static bool Vec2Field(const std::string& label, glm::vec2& value);
 
     static bool Vec3Field(const std::string& label, glm::vec3& value);

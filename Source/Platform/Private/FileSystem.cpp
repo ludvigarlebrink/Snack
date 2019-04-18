@@ -45,6 +45,26 @@ bool FileSystem::DeleteFolder(const std::string& folderpath)
     return std::filesystem::remove_all(folderpath);
 }
 
+void FileSystem::GetFilesByExtension(const std::string& folderpath, const std::string& extension, std::vector<std::string>& filepaths, bool recursive)
+{
+    for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+    {
+        if (entry.is_regular_file())
+        {
+            std::string ext = entry.path().generic_u8string();
+            ext = ext.substr(ext.find_last_of("."));
+            if (ext == extension)
+            {
+                filepaths.push_back(entry.path().generic_u8string());
+            }
+        }
+        else if (entry.is_directory() && recursive)
+        {
+            GetFilesByExtension(entry.path().generic_u8string(), extension, filepaths, true);
+        }
+    }
+}
+
 std::string FileSystem::GetRelativeDataPath()
 {
     return "Data/";

@@ -9,6 +9,7 @@
 #include "Components/Rendering/SpotlightComponent.hpp"
 #include "Components/Rendering/TerrainComponent.hpp"
 #include "Manager.hpp"
+#include "PlatformInclude.hpp"
 #include "Scripting/ScriptObject.hpp"
 #include "Transform.hpp"
 
@@ -76,6 +77,8 @@ void ScriptManager::SetUp()
 
     SetUpMath();
     SetUpEngine();
+
+
 }
 
 void ScriptManager::SetUpEngine()

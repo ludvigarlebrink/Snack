@@ -63,6 +63,10 @@ bool Sketch::ImageButton(Texture* texture, bool flip, const glm::vec4& color)
     return ImGui::ImageButton(static_cast<ImTextureID>(texture), ImVec2(texture->GetHeight(), texture->GetWidth()), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(color.x, color.y, color.z, color.w));
 }
 
+void Sketch::Indent()
+{
+    ImGui::Indent();
+}
 
 bool Sketch::IntField(const std::string& label, int32& value)
 {
@@ -107,6 +111,11 @@ void Sketch::Text(const std::string& text)
 bool Sketch::TextField(const std::string& label, std::string& text)
 {
     return ImGui::InputText(label.c_str(), &text);
+}
+
+void Sketch::Unindent()
+{
+    ImGui::Unindent();
 }
 
 bool Sketch::Vec2Field(const std::string& label, glm::vec2& value)
