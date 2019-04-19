@@ -6,6 +6,6 @@ class IPhysics2DManager
 {
 public:
 
-    ~IPhysics2DManager() = default
+    ~IPhysics2DManager() = default;
 };
 } // namespace snack
