@@ -23,7 +23,7 @@ IClassManager* Manager::Class()
 
 IFileManager* Manager::File()
 {
-    return nullptr;
+    return m_fileManager;
 }
 
 IInputManager* Manager::Input()
