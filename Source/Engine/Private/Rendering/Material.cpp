@@ -67,14 +67,16 @@ bool Material::Load(const std::string& filepath)
         cereal::JSONInputArchive ar(ss);
 
         int32 size = 0;
-        while (const char* name = ar.getNodeName()) {
+        while (const char* name = ar.getNodeName())
+        {
             ar.startNode();
-            if (std::strcmp(name, "textures_size") == 0) {
+            if (std::strcmp(name, "textures_size") == 0)
+            {
                 ar(cereal::make_nvp("size", size));
             }
             else if (std::strcmp(name, "textures") == 0)
             {
-                for (int i = 0; i < size; ++i) 
+                for (int i = 0; i < size; ++i)
                 {
                     ar.startNode();
                     std::string id;
@@ -82,7 +84,8 @@ bool Material::Load(const std::string& filepath)
 
                     std::string texturename;
                     name = ar.getNodeName();
-                    if (std::strcmp(name, "texture") == 0) {
+                    if (std::strcmp(name, "texture") == 0)
+                    {
                         ar(cereal::make_nvp("texture", texturename));
                     }
 

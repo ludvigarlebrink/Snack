@@ -27,7 +27,7 @@ class ENGINE_API Transform final
 
 public:
 
-    Transform(Transform* pParent, InstanceID instanceId);
+    Transform(Transform* parent, InstanceID instanceId);
 
     ~Transform();
 
@@ -35,6 +35,8 @@ public:
     T* AddComponent();
 
     BaseComponent* AddComponent(const std::string& id);
+
+    ScriptObject* AddScript(const std::string& name);
 
     void GetAllComponents(std::vector<BaseComponent*>& components);
 

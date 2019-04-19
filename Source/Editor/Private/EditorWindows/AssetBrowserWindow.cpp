@@ -3,6 +3,7 @@
 #include "EditorWindows/ModelImporterWindow.hpp"
 #include "EditorWindows/TextureImporterWindow.hpp"
 #include "EditorWindows/TerrainEditorWindow.hpp"
+#include "EditorWindows/ScriptEditorWindow.hpp"
 #include "EngineInclude.hpp"
 #include "PlatformInclude.hpp"
 #include "SketchInclude.hpp"
@@ -28,6 +29,41 @@ AssetBrowserWindow::~AssetBrowserWindow()
 std::string AssetBrowserWindow::GetTitle()
 {
     return "Asset Browser";
+}
+
+void AssetBrowserWindow::Refresh()
+{
+    std::string currentFolder;
+    if (m_selectedFolder)
+    {
+        currentFolder = m_selectedFolder->GetFullRelativePath();
+        m_selectedFolder = nullptr;
+    }
+
+    if (m_editorData)
+    {
+        delete m_editorData;
+        m_editorData = nullptr;
+    }
+
+    if (m_data)
+    {
+        delete m_data;
+        m_data = nullptr;
+    }
+
+    m_data = new FolderNode(FileSystem::GetRelativeDataPath());
+    m_editorData = new FolderNode(FileSystem::GetRelativeEditorDataPath());
+
+    if (!currentFolder.empty() && !FindSelectedFolderByName(m_data, currentFolder))
+    {
+        if (!FindSelectedFolderByName(m_editorData, currentFolder))
+        {
+            m_selectedFiles.clear();
+        }
+    }
+
+    Manager::File()->Refresh();
 }
 
 void AssetBrowserWindow::OnDraw(f32 deltaTime)
@@ -146,6 +182,15 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
                         }
                         Sketch::Seperator();
                     }
+                    else if (fileInfo.extension == ".lua")
+                    {
+                        if (SketchMenu::Item("Open"))
+                        {
+                            ScriptEditorWindow* scriptWindow = EditorManager::Window()->OpenWindow<ScriptEditorWindow>();
+                            scriptWindow->OpenScript(fileInfo.name + fileInfo.extension);
+                        }
+                        Sketch::Seperator();
+                    }
                     else if (fileInfo.extension == ".mat")
                     {
                         SketchMenu::Item("Open");
@@ -186,6 +231,26 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
     SketchWindow::EndChild();
 }
 
+std::string AssetBrowserWindow::CreateLuaScript(const std::string& name)
+{
+    std::string script = "-- Called when the object is created.\n";
+    script += "function " + name + ":OnBegin(transform)\n";
+    script += "\t-- Code is placed here.\n";
+    script += "end\n\n";
+
+    script += "-- Called when the object is destroyed.\n";
+    script += "function " + name + ":OnEnd(transform)\n";
+    script += "\t-- Code is placed here.\n";
+    script += "end\n\n";
+
+    script += "-- Called once every frame.\n";
+    script += "function " + name + ":OnTick(transform, deltaTime)\n";
+    script += "\t-- Code is placed here.\n";
+    script += "end\n";
+    
+    return script;
+}
+
 void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
 {
     bool isOpen = false;
@@ -219,7 +284,6 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             SketchPopup::MenuItemOpenPopup("Terrain", "Create Terrain");
             SketchPopup::MenuItemOpenPopup("Text File", "Create Text File");
 
-
             static std::string inputText = "";
             if (SketchPopup::Dialog("Create Folder", "Folder Name:", "Create", "Cancel", inputText))
             {
@@ -231,16 +295,20 @@ void AssetBrowserWindow::DrawFolderNode(FolderNode* folderNode)
             else if (SketchPopup::Dialog("Create Scene", "Scene Name:", "Create", "Cancel", inputText))
             {
                 std::string filepath = folderNode->GetFullRelativePath() + inputText + ".scn";
-                FileSystem::CreateFile(filepath, "[]");
+                FileSystem::CreateFile(filepath, "[\n]");
                 inputText.clear();
                 m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Lua Script", "Lua Script Name:", "Create", "Cancel", inputText))
             {
-                std::string filepath = folderNode->GetFullRelativePath() + inputText + ".lua";
-                FileSystem::CreateFile(filepath);
+                // Make sure the script is unique.
+                if (!Manager::File()->ScriptExists(inputText + ".lua"))
+                {
+                    std::string filepath = folderNode->GetFullRelativePath() + inputText + ".lua";
+                    FileSystem::CreateFile(filepath, CreateLuaScript(inputText));
+                    m_refresh = true;
+                }
                 inputText.clear();
-                m_refresh = true;
             }
             else if (SketchPopup::Dialog("Create Material", "Material Name:", "Create", "Cancel", inputText))
             {
@@ -325,39 +393,6 @@ bool AssetBrowserWindow::FindSelectedFolderByName(FolderNode* folderNode, const 
     }
 
     return false;
-}
-
-void AssetBrowserWindow::Refresh()
-{
-    std::string currentFolder;
-    if (m_selectedFolder)
-    {
-        currentFolder = m_selectedFolder->GetFullRelativePath();
-        m_selectedFolder = nullptr;
-    }
-
-    if (m_editorData)
-    {
-        delete m_editorData;
-        m_editorData = nullptr;
-    }
-
-    if (m_data)
-    {
-        delete m_data;
-        m_data = nullptr;
-    }
-
-    m_data = new FolderNode(FileSystem::GetRelativeDataPath());
-    m_editorData = new FolderNode(FileSystem::GetRelativeEditorDataPath());
-
-    if (!currentFolder.empty() && !FindSelectedFolderByName(m_data, currentFolder))
-    {
-        if (!FindSelectedFolderByName(m_editorData, currentFolder))
-        {
-            m_selectedFiles.clear();
-        }
-    }
 }
 
 void AssetBrowserWindow::SetUp()

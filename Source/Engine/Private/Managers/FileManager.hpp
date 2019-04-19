@@ -34,6 +34,16 @@ public:
 
     bool GetTexturePath(const std::string& filename, std::string& filepath) override;
 
+    bool PrefabExists(const std::string& filename) override;
+
+    bool SceneExists(const std::string& filename) override;
+
+    bool ScriptExists(const std::string& filename) override;
+
+    bool TerrainExists(const std::string& filename) override;
+
+    bool TextureExists(const std::string& filename) override;
+
     void Refresh() override;
 
 private:

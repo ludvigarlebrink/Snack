@@ -52,8 +52,8 @@ void InspectorWindow::OnDraw(f32 deltaTime)
             if (Sketch::Button("Add Script"))
             {
                 SketchPopup::OpenPopup("Add Script");
-                m_componentInfos.clear();
-                Manager::Class()->GetAllComponentInfo(m_componentInfos);
+                m_scriptFiles.clear();
+                Manager::File()->GetAllScriptNames(m_scriptFiles);
             }
 
             if (SketchPopup::BeginModal("Add Component", glm::vec2(400.0f, 300.0f)))
@@ -88,7 +88,18 @@ void InspectorWindow::OnDraw(f32 deltaTime)
 
                 SketchWindow::BeginChild("Add Script List", true);
                 {
-
+                    for (auto& f : m_scriptFiles)
+                    {
+                        if (m_search.empty() || m_search == f.substr(0, m_search.length()))
+                        {
+                            if (Sketch::Selectable(f))
+                            {
+                                m_search.clear();
+                                SketchPopup::Close();
+                                break;
+                            }
+                        }
+                    }
                 }
                 SketchWindow::EndChild();
 
