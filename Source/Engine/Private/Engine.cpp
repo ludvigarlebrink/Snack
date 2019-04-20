@@ -2,6 +2,7 @@
 #include "Manager.hpp"
 #include "Managers/AssetManager.hpp"
 #include "Managers/ClassManager.hpp"
+#include "Managers/FileManager.hpp"
 #include "Managers/InputManager.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SceneManager.hpp"
@@ -54,6 +55,7 @@ void Engine::Run()
 void Engine::SetUp()
 {
     // Create the managers.
+    m_fileManager = new FileManager();
     m_assetManager = new AssetManager();
     m_classManager = new ClassManager();
     m_inputManager = new InputManager();
@@ -63,6 +65,7 @@ void Engine::SetUp()
 
     Manager::m_assetManager = m_assetManager;
     Manager::m_classManager = m_classManager;
+    Manager::m_fileManager = m_fileManager;
     Manager::m_inputManager = m_inputManager;
     Manager::m_renderManager = m_renderManager;
     Manager::m_sceneManager = m_sceneManager;

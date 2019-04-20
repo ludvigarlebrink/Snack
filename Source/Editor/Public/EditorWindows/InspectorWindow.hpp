@@ -24,5 +24,6 @@ private:
 
     std::string m_search;
     std::vector<IClassManager::ComponentInfo> m_componentInfos;
+    std::vector<std::string> m_scriptFiles;
 };
 } // namespace snack

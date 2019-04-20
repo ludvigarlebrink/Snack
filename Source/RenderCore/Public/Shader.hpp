@@ -40,17 +40,19 @@ public:
 
     /**
      * @brief Get the location of a uniform.
-     *
      * @param name Name of the uniform.
      * @return Location of a uniform.
      */
     uint32 GetUniformLocation(const std::string& name) const;
 
+    /**
+     * @brief Link shader program.
+     * @return True if successfully linked, false if not.
+     */
     bool LinkProgram();
 
     /**
      * @brief Load shader from a file.
-     *
      * @param vertexShaderFilename Name and path to the vertex shader file.
      * @param type Type of shader.
      * @return True if everything went successfully. False if not.
@@ -59,7 +61,6 @@ public:
 
     /**
      * @brief Load shader from a string.
-     *
      * @param vertexShaderSource Vertex shader source code.
      * @param type Type of shader.
      * @return True if everything went successfully. False if not.
@@ -68,7 +69,6 @@ public:
 
     /**
      * @brief Set a float uniform.
-     *
      * @param location Location of uniform.
      * @param value Float.
      */
@@ -76,7 +76,6 @@ public:
 
     /**
      * @brief Set a float uniform, slow.
-     *
      * @param name Name of uniform.
      * @param value Float.
      */
@@ -86,7 +85,6 @@ public:
 
     /**
      * @brief Set a int uniform.
-     *
      * @param location Location of uniform.
      * @param value Int.
      */
@@ -94,7 +92,6 @@ public:
 
     /**
      * @brief Set a int uniform, slow.
-     *
      * @param name Name of uniform.
      * @param value Int.
      */
@@ -102,7 +99,6 @@ public:
 
     /**
      * @brief Set a matrix uniform.
-     *
      * @param location Location of uniform.
      * @param mat Matrix.
      */
@@ -110,7 +106,6 @@ public:
 
     /**
      * @brief Set a matrix uniform, slow.
-     *
      * @param name Name of uniform.
      * @param mat Matrix.
      */
@@ -118,7 +113,6 @@ public:
 
     /**
      * @brief Set a matrix uniform.
-     *
      * @param location Location of uniform.
      * @param mat Matrix.
      */
@@ -126,7 +120,6 @@ public:
 
     /**
      * @brief Set a matrix uniform, slow.
-     *
      * @param name Name of uniform.
      * @param mat Matrix.
      */
@@ -134,7 +127,6 @@ public:
 
     /**
      * @brief Set a matrix uniform.
-     *
      * @param location Location of uniform.
      * @param mat Matrix.
      */
@@ -142,7 +134,6 @@ public:
 
     /**
      * @brief Set a matrix uniform, slow.
-     *
      * @param name Name of uniform.
      * @param mat Matrix.
      */
@@ -150,7 +141,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -158,7 +148,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -166,7 +155,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -174,7 +162,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -182,7 +169,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -190,7 +176,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -198,7 +183,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -206,7 +190,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -216,7 +199,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -224,7 +206,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -232,7 +213,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -240,7 +220,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -248,7 +227,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -256,7 +234,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -264,7 +241,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -272,7 +248,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */
@@ -280,7 +255,6 @@ public:
 
     /**
      * @brief Set a vector uniform.
-     *
      * @param location Location of uniform.
      * @param vec Vector.
      */
@@ -288,7 +262,6 @@ public:
 
     /**
      * @brief Set a vector uniform, slow.
-     *
      * @param name Name of uniform.
      * @param vec Vector.
      */

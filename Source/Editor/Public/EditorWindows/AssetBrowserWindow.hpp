@@ -18,17 +18,19 @@ public:
 
     std::string GetTitle() override;
 
+    void Refresh();
+
 protected:
 
     void OnDraw(f32 deltaTime) override;
 
 private:
 
+    std::string CreateLuaScript(const std::string& name);
+
     void DrawFolderNode(FolderNode* folderNode);
 
     bool FindSelectedFolderByName(FolderNode* folderNode, const std::string& folderpath);
-
-    void Refresh();
 
     void SetUp();
 

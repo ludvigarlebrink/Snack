@@ -72,6 +72,18 @@ BaseComponent* Transform::AddComponent(const std::string& id)
     return component;
 }
 
+ScriptObject* Transform::AddScript(const std::string& name)
+{
+    ScriptObject* scriptObject = Manager::Script()->CreateBehaviorObject(name);
+    if (scriptObject)
+    {
+        m_scripts.insert({ name, scriptObject });
+        return scriptObject;
+    }
+
+    return nullptr;
+}
+
 void Transform::GetAllComponents(std::vector<BaseComponent*>& components)
 {
     for (auto c : m_components)

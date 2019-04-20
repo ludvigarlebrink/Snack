@@ -33,6 +33,16 @@ public:
 
     virtual bool GetTexturePath(const std::string& filename, std::string& filepath) = 0;
 
+    virtual bool PrefabExists(const std::string& filename) = 0;
+
+    virtual bool SceneExists(const std::string& filename) = 0;
+
+    virtual bool ScriptExists(const std::string& filename) = 0;
+
+    virtual bool TerrainExists(const std::string& filename) = 0;
+
+    virtual bool TextureExists(const std::string& filename) = 0;
+
     virtual void Refresh() = 0;
 };
 } // namespace snack
