@@ -62,6 +62,8 @@ private:
 
     void DeferredLightingPass(CameraComponent* camera);
 
+    void RenderToShadowMap(DirectionalLightComponent* light);
+
     void SetUp();
 
     void TearDown();
@@ -82,6 +84,11 @@ private:
     Shader* m_geometryPassShader;
     Shader* m_lightingPassShader;
     FullScreenQuad* m_fullScreenQuad;
+
+    Framebuffer* m_shadowMapFrameBuffer;
+    Texture* m_shadowMap;
+    Shader* m_depthShader;
+    int m_shadowWidth = 1024, m_shadowHeight = 1024;
 
     std::set<CameraComponent*> m_cameraComponents;
     std::set<DirectionalLightComponent*> m_directionalLightComponents;

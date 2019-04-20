@@ -17,6 +17,15 @@ Framebuffer::~Framebuffer()
     TearDown();
 }
 
+void Framebuffer::AttachDepthBuffer(Texture* buffer)
+{
+    Bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, buffer->GetHandle(), 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    SPY_CHECK_RENDER_ERROR();
+}
+
 void Framebuffer::AttachDepthStencil(Renderbuffer* renderbuffer)
 {
     Bind();

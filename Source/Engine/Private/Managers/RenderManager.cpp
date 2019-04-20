@@ -64,6 +64,15 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
         m_depthStencil->SetData(width, height, Renderbuffer::InternalFormat::DEPTH24_STENCIL8);
     }
 
+    for (auto l : m_directionalLightComponents)
+    {
+        if (l->IsEnabled())
+        {
+            RenderToShadowMap(l);
+            break;
+        }
+    }
+
     for (auto c : m_cameraComponents)
     {
         if (c->GetRenderMode() == CameraComponent::RenderMode::DEFERRED)
@@ -307,6 +316,34 @@ void RenderManager::DeferredLightingPass(CameraComponent* camera)
     m_fullScreenQuad->Render();
 }
 
+void RenderManager::RenderToShadowMap(DirectionalLightComponent* light)
+{
+    float near_plane = 1.0f, far_plane = 7.5f;
+    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+
+    glm::mat4 lightView = glm::lookAt(light->GetTransform()->GetWorldPosition(),
+        glm::vec3(0.0f),
+        glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+    m_depthShader->SetMat4Slow("lightSpaceMatrix", lightSpaceMatrix);
+
+    m_renderWindow->SetViewport(0, 0, m_shadowWidth, m_shadowHeight);
+    m_shadowMapFrameBuffer->Bind();
+    m_renderWindow->ClearDepthBuffer();
+    
+
+    for (auto meshComponent : m_meshComponents)
+    {
+        Mesh* mesh = meshComponent->GetMesh();
+        m_meshShader->SetMat4Slow("Model", meshComponent->GetTransform()->GetWorldMatrix());
+        mesh->Render(Mesh::Mode::TRIANGLES);
+    }
+
+    m_shadowMapFrameBuffer->Unbind();
+}
+
 void RenderManager::SetUp()
 {
     m_renderWindow = new RenderWindow("Snack Editor", 1280, 720);
@@ -371,6 +408,20 @@ void RenderManager::SetUp()
     m_lightingPassShader->LinkProgram();
 
     m_fullScreenQuad = new FullScreenQuad();
+
+    // Shadow Maps
+    m_shadowMapFrameBuffer = new Framebuffer();
+
+    m_shadowMap = new Texture();
+    m_shadowMap->SetData(m_shadowWidth, m_shadowHeight, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_shadowMap->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_shadowMap->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
+    m_shadowMapFrameBuffer->AttachDepthBuffer(m_shadowMap);
+
+    m_depthShader = new Shader();
+    m_depthShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/SimpleDepth.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_depthShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/SimpleDepth.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_depthShader->LinkProgram();
 }
 
 void RenderManager::TearDown()

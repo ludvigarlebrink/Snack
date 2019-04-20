@@ -20,6 +20,8 @@ public:
 
     ~Framebuffer();
 
+    void AttachDepthBuffer(Texture* buffer);
+
     void AttachDepthStencil(Renderbuffer* renderbuffer);
 
     void AttachTexture(uint32 attachment, Texture* texture);
