@@ -94,6 +94,8 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
             {
                 m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
                 m_renderWindow->Clear();
+
+                ForwardPass(c);
             }
             framebuffer->Unbind();
         }
@@ -244,25 +246,25 @@ void RenderManager::DeferredGeometryPass(CameraComponent* camera)
                 if (normal = material->GetTexture("Normal"))
                 {
                     m_geometryPassShader->SetIntSlow("NormalMap", 1);
-                    albedo->Bind(1);
+                    normal->Bind(1);
                 }
                 Texture* metallic = nullptr;
                 if (metallic = material->GetTexture("Metallic"))
                 {
                     m_geometryPassShader->SetIntSlow("MetallicMap", 2);
-                    albedo->Bind(2);
+                    metallic->Bind(2);
                 }
                 Texture* roughness = nullptr;
                 if (roughness = material->GetTexture("Roughness"))
                 {
                     m_geometryPassShader->SetIntSlow("RoughnessMap", 3);
-                    albedo->Bind(3);
+                    roughness->Bind(3);
                 }
                 Texture* ao = nullptr;
                 if (ao = material->GetTexture("AO"))
                 {
                     m_geometryPassShader->SetIntSlow("AOMap", 4);
-                    albedo->Bind(4);
+                    ao->Bind(4);
                 }
 
                 m_geometryPassShader->SetVec4Slow("AlbedoColor", material->GetColor("Albedo"));
@@ -316,6 +318,85 @@ void RenderManager::DeferredLightingPass(CameraComponent* camera)
     m_fullScreenQuad->Render();
 }
 
+void RenderManager::ForwardPass(CameraComponent* camera)
+{
+    m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    m_renderWindow->Clear();
+
+    m_pbrShader->Use();
+
+    int32 lightCount = 0;
+    for (auto directionalLight : m_directionalLightComponents)
+    {
+        glm::mat4 model = directionalLight->GetTransform()->GetWorldMatrix();
+        m_pbrShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].direction", glm::normalize(glm::vec3(-model[0])));
+        m_pbrShader->SetVec3Slow("DirectionalLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_pbrShader->SetFloatSlow("DirectionalLights[" + std::to_string(lightCount) + "].intensity", directionalLight->GetIntensity());
+        ++lightCount;
+    }
+    m_pbrShader->SetIntSlow("DirectionalLightCount", lightCount);
+    lightCount = 0;
+    for (auto pointLight : m_pointLightComponents)
+    {
+        glm::mat4 model = pointLight->GetTransform()->GetWorldMatrix();
+        m_pbrShader->SetVec3Slow("PointLights[" + std::to_string(lightCount) + "].position", glm::vec3(model[3]));
+        m_pbrShader->SetVec3Slow("PointLights[" + std::to_string(lightCount) + "].color", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_pbrShader->SetFloatSlow("PointLights[" + std::to_string(lightCount) + "].intensity", pointLight->GetIntensity());
+        ++lightCount;
+    }
+    m_pbrShader->SetIntSlow("PointLightCount", lightCount);
+    m_pbrShader->SetVec3Slow("ViewPosition", camera->GetTransform()->GetWorldPosition());
+
+    m_pbrShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(m_gPosition->GetWidth(), m_gPosition->GetHeight()) * camera->GetViewMatrix());
+    for (auto m : m_meshComponents)
+    {
+        Mesh* mesh = m->GetMesh();
+        m_pbrShader->SetMat4Slow("Model", m->GetTransform()->GetWorldMatrix());
+        Material* material = nullptr;
+        if (material = m->GetMaterial())
+        {
+            Texture* albedo = nullptr;
+            if (albedo = material->GetTexture("Albedo"))
+            {
+                m_pbrShader->SetIntSlow("AlbedoMap", 0);
+                albedo->Bind(0);
+            }
+            Texture* normal = nullptr;
+            if (normal = material->GetTexture("Normal"))
+            {
+                m_pbrShader->SetIntSlow("NormalMap", 1);
+                normal->Bind(1);
+            }
+            Texture* metallic = nullptr;
+            if (metallic = material->GetTexture("Metallic"))
+            {
+                m_pbrShader->SetIntSlow("MetallicMap", 2);
+                metallic->Bind(2);
+            }
+            Texture* roughness = nullptr;
+            if (roughness = material->GetTexture("Roughness"))
+            {
+                m_pbrShader->SetIntSlow("RoughnessMap", 3);
+                roughness->Bind(3);
+            }
+            Texture* ao = nullptr;
+            if (ao = material->GetTexture("AO"))
+            {
+                m_pbrShader->SetIntSlow("AOMap", 4);
+                ao->Bind(4);
+            }
+
+            m_pbrShader->SetVec4Slow("AlbedoColor", material->GetColor("Albedo"));
+            m_pbrShader->SetVec4Slow("NormalColor", material->GetColor("Normal"));
+            m_pbrShader->SetVec4Slow("MetallicColor", material->GetColor("Metallic"));
+            m_pbrShader->SetVec4Slow("RoughnessColor", material->GetColor("Roughness"));
+            m_pbrShader->SetVec4Slow("AOColor", material->GetColor("AO"));
+        }
+
+        mesh->Render(Mesh::Mode::TRIANGLES);
+    }
+}
+
 void RenderManager::RenderToShadowMap(DirectionalLightComponent* light)
 {
     float near_plane = 1.0f, far_plane = 7.5f;
@@ -360,6 +441,11 @@ void RenderManager::SetUp()
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.gs.glsl"), Shader::Type::GEOMETRY_SHADER);
     m_terrainShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/Terrain.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
     m_terrainShader->LinkProgram();
+
+    m_pbrShader = new Shader();
+    m_pbrShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/PBRMesh.vs.glsl"), Shader::Type::VERTEX_SHADER);
+    m_pbrShader->LoadShaderFromFile(FileSystem::GetRelativeDataPath("Shaders/PBRMesh.fs.glsl"), Shader::Type::FRAGMENT_SHADER);
+    m_pbrShader->LinkProgram();
 
     // Deferred rendering.
     m_deferredFrameBuffer = new Framebuffer();

@@ -62,6 +62,8 @@ private:
 
     void DeferredLightingPass(CameraComponent* camera);
 
+    void ForwardPass(CameraComponent* camera);
+
     void RenderToShadowMap(DirectionalLightComponent* light);
 
     void SetUp();
@@ -74,6 +76,8 @@ private:
     Shader* m_meshShader;
     Shader* m_skinnedMeshShader;
     Shader* m_terrainShader;
+
+    Shader* m_pbrShader;
 
     Framebuffer* m_deferredFrameBuffer;
     Renderbuffer* m_depthStencil;
