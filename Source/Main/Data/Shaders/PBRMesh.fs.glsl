@@ -2,7 +2,7 @@
 
 out vec4 FragColor;
 
-in vec2 TexCoords_FS_in;
+in vec2 TextureCoordinates_FS_in;
 in vec3 WorldPos_FS_in;
 
 uniform sampler2D AlbedoMap;
@@ -81,11 +81,11 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 
 void main()
 {		
-	vec3 albedo     = pow(texture(AlbedoMap, TexCoords_FS_in).rgb, vec3(2.2)) * AlbedoColor;
-    vec3 normal     = texture(NormalMap, TexCoords_FS_in).xyz * NormalColor.rgb;
-    float metallic  = vec4(texture(MetallicMap, TexCoords_FS_in) * MetallicColor).r;
-    float roughness = vec4(texture(RoughnessMap, TexCoords_FS_in) * RoughnessColor).r;
-    float ao        = vec4(texture(AOMap, TexCoords_FS_in) * AOColor).r;
+	vec3 albedo     = pow(texture(AlbedoMap, TextureCoordinates_FS_in).rgb, vec3(2.2)) * AlbedoColor;
+    vec3 normal     = texture(NormalMap, TextureCoordinates_FS_in).xyz * NormalColor.rgb;
+    float metallic  = vec4(texture(MetallicMap, TextureCoordinates_FS_in) * MetallicColor).r;
+    float roughness = vec4(texture(RoughnessMap, TextureCoordinates_FS_in) * RoughnessColor).r;
+    float ao        = vec4(texture(AOMap, TextureCoordinates_FS_in) * AOColor).r;
 
     vec3 N = normalize(normal);
     vec3 V = normalize(ViewPosition - WorldPos_FS_in);
