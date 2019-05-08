@@ -4,6 +4,17 @@ function WinSDKVersion()
     if sdk_version ~= nil then return sdk_version end
 end
 
+function IncludeAssimp()
+    includedirs "ThirdParty/assimp/Include"
+end
+
+function LinkAssimp()
+    libdirs "ThirdParty/assimp/Lib/Win64/"
+    filter "kind:not StaticLib"
+        links { "Assimp" }
+    filter {}
+end
+
 function IncludeSDL()
     includedirs "ThirdParty/SDL/Include"
 end
@@ -182,6 +193,10 @@ workspace "SnackEngine"
         os.execute("mkdir \"Builds/Debug\"")
         os.execute("mkdir \"Builds/Release\"")
 
+        -- Assimp
+        os.copyfile("ThirdParty/SDL/Lib/Win64/assimp.dll", "Builds/Debug/assimp.dll")
+        os.copyfile("ThirdParty/SDL/Lib/Win64/assimp.dll", "Builds/Release/assimp.dll")
+
         -- SDL
         os.copyfile("ThirdParty/SDL/Lib/Win64/SDL2.dll", "Builds/Debug/SDL2.dll")
         os.copyfile("ThirdParty/SDL/Lib/Win64/SDL2.dll", "Builds/Release/SDL2.dll")
@@ -291,6 +306,8 @@ project "Editor"
     }
     includedirs { "Source/Editor/Public" }
 
+    IncludeAssimp()
+    LinkAssimp()
     UseEngine()
 
 project "Main"

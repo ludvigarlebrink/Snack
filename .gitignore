@@ -25,7 +25,9 @@
 # Special files
 !premake5.exe
 
-# Third party binaries
+# Third party
+!ThirdParty/Assimp/Include/**
+!ThirdParty/Assimp/Lib/Win64/*
 !ThirdParty/SDL/Lib/Win32/*
 !ThirdParty/SDL/Lib/Win64/*
 !ThirdParty/freetype/Lib/Win32/*
