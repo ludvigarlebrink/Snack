@@ -19,8 +19,5 @@ public:
 protected:
 
     void OnDraw(f32 deltaTime) override;
-
-private:
-
 };
 } // namespace snack

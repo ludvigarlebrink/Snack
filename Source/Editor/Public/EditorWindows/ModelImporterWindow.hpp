@@ -2,7 +2,6 @@
 
 #include "EditorWindow.hpp"
 
-#include <assimp/scene.h>
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -27,10 +26,6 @@ protected:
 private:
 
     bool Import();
-
-    void ProcessMesh(aiMesh* mesh);
-
-    void ProcessNode(aiNode* node, const aiScene* scene);
 
 private:
 

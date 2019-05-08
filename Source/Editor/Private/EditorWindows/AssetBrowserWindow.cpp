@@ -1,6 +1,6 @@
 #include "EditorWindows/AssetBrowserWindow.hpp"
 #include "EditorManager.hpp"
-#include "EditorWindows/ModelImporterWindow.hpp"
+//#include "EditorWindows/ModelImporterWindow.hpp"
 #include "EditorWindows/TextureImporterWindow.hpp"
 #include "EditorWindows/TerrainEditorWindow.hpp"
 #include "EditorWindows/ScriptEditorWindow.hpp"
@@ -80,8 +80,8 @@ void AssetBrowserWindow::OnDraw(f32 deltaTime)
         std::string extension = filepath.substr(filepath.find_last_of('.'));
         if (extension == ".obj" || extension == ".fbx")
         {
-            ModelImporterWindow* modelImporter = EditorManager::Window()->OpenWindow<ModelImporterWindow>();
-            modelImporter->SetFile(filepath);
+        //    ModelImporterWindow* modelImporter = EditorManager::Window()->OpenWindow<ModelImporterWindow>();
+        //    modelImporter->SetFile(filepath);
         }
 
         if (extension == ".png" || extension == ".bmp" || extension == ".jpg" || extension == ".jpeg")

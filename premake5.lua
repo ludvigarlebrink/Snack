@@ -143,6 +143,8 @@ function UseEditor()
     includedirs { "Source/Editor/Public" }
     defines { "EDITOR_API=__declspec(dllimport)" }
 
+--    IncludeAssimp()
+--    LinkAssimp()
     UseEngine()
 
     filter { "kind:not StaticLib" }
@@ -194,8 +196,8 @@ workspace "SnackEngine"
         os.execute("mkdir \"Builds/Release\"")
 
         -- Assimp
-        os.copyfile("ThirdParty/SDL/Lib/Win64/assimp.dll", "Builds/Debug/assimp.dll")
-        os.copyfile("ThirdParty/SDL/Lib/Win64/assimp.dll", "Builds/Release/assimp.dll")
+        os.copyfile("ThirdParty/assimp/Lib/Win64/assimp.dll", "Builds/Debug/assimp.dll")
+        os.copyfile("ThirdParty/assimp/Lib/Win64/assimp.dll", "Builds/Release/assimp.dll")
 
         -- SDL
         os.copyfile("ThirdParty/SDL/Lib/Win64/SDL2.dll", "Builds/Debug/SDL2.dll")
@@ -306,8 +308,8 @@ project "Editor"
     }
     includedirs { "Source/Editor/Public" }
 
-    IncludeAssimp()
-    LinkAssimp()
+--    IncludeAssimp()
+--    LinkAssimp()
     UseEngine()
 
 project "Main"

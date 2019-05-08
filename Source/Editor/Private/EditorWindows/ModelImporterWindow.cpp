@@ -3,8 +3,6 @@
 #include "RenderCoreInclude.hpp"
 #include "SketchInclude.hpp"
 
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
 #include <iostream>
 
 namespace snack
@@ -49,38 +47,22 @@ void ModelImporterWindow::OnDraw(f32 deltaTime)
 
 bool ModelImporterWindow::Import()
 {
-    uint32 flags = aiProcess_Triangulate;
-    if (m_flipTextureCoordiantes)
-    {
-        flags |= aiProcess_FlipUVs;
-    }
+//    uint32 flags = aiProcess_Triangulate;
+//    if (m_flipTextureCoordiantes)
+//    {
+//        flags |= aiProcess_FlipUVs;
+//    }
+//
+//    Assimp::Importer importer;
+//    const aiScene* scene = importer.ReadFile(m_source, flags);
+//    if (!scene)
+//    {
+//        return false;
+//    }
+//
+//    // Process the nodes recursively.
+//    ProcessNode(scene->mRootNode, scene);
 
-    Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(m_source, flags);
-    if (!scene)
-    {
-        return false;
-    }
-
-    // Process the nodes recursively.
-    ProcessNode(scene->mRootNode, scene);
-}
-
-void ModelImporterWindow::ProcessMesh(aiMesh* mesh)
-{
-
-}
-
-void ModelImporterWindow::ProcessNode(aiNode* node, const aiScene* scene)
-{
-    for (int32 i = 0; i < node->mNumMeshes; ++i)
-    {
-        ProcessMesh(node->mMeshes[i]);
-    }
-
-    for (int32 i = 0; i < node->mNumChildren; ++i)
-    {
-        ProcessNode(node->mChildren[i], scene);
-    }
+    return true;
 }
 } // namespace snack
