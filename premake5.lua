@@ -53,6 +53,16 @@ function LinkLua()
     filter {}
 end
 
+function IncludeFBXSDK()
+    local pathfile = io.readfile("fbxconfig.txt")
+    pathfile = pathfile .. "/lib/vs2015/x64/release"
+    io.write(pathfile)
+end
+
+function LinkFBXSDK()
+
+end
+
 function UseUtils()
     includedirs { "Source/Utils/Public" }
     defines { "UTILS_API=__declspec(dllimport)" }
@@ -291,6 +301,7 @@ project "Editor"
     }
     includedirs { "Source/Editor/Public" }
 
+    IncludeFBXSDK()
     UseEngine()
 
 project "Main"
