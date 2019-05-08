@@ -89,13 +89,10 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
         }
         else 
         {
-            // @todo Render forward.
             framebuffer->Bind();
             {
-                m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
-                m_renderWindow->Clear();
-
-                ForwardPass(c);
+                m_renderWindow->SetViewport(0, 0, width, height);
+                ForwardPass(c, width, height);
             }
             framebuffer->Unbind();
         }
@@ -318,7 +315,7 @@ void RenderManager::DeferredLightingPass(CameraComponent* camera)
     m_fullScreenQuad->Render();
 }
 
-void RenderManager::ForwardPass(CameraComponent* camera)
+void RenderManager::ForwardPass(CameraComponent* camera, int32 width, int32 height)
 {
     m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     m_renderWindow->Clear();
@@ -347,7 +344,7 @@ void RenderManager::ForwardPass(CameraComponent* camera)
     m_pbrShader->SetIntSlow("PointLightCount", lightCount);
     m_pbrShader->SetVec3Slow("ViewPosition", camera->GetTransform()->GetWorldPosition());
 
-    m_pbrShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(m_gPosition->GetWidth(), m_gPosition->GetHeight()) * camera->GetViewMatrix());
+    m_pbrShader->SetMat4Slow("ViewProjection", camera->GetProjectionMatrix(width, height) * camera->GetViewMatrix());
     for (auto m : m_meshComponents)
     {
         Mesh* mesh = m->GetMesh();
@@ -399,8 +396,9 @@ void RenderManager::ForwardPass(CameraComponent* camera)
 
 void RenderManager::RenderToShadowMap(DirectionalLightComponent* light)
 {
-    float near_plane = 1.0f, far_plane = 7.5f;
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+    f32 nearPlane = 1.0f;
+    f32 farPlane = 7.5f;
+    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, nearPlane, farPlane);
 
     glm::mat4 lightView = glm::lookAt(light->GetTransform()->GetWorldPosition(),
         glm::vec3(0.0f),

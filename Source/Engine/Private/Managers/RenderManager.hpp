@@ -62,7 +62,7 @@ private:
 
     void DeferredLightingPass(CameraComponent* camera);
 
-    void ForwardPass(CameraComponent* camera);
+    void ForwardPass(CameraComponent* camera, int32 width, int32 height);
 
     void RenderToShadowMap(DirectionalLightComponent* light);
 

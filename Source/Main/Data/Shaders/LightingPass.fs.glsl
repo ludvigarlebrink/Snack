@@ -31,7 +31,7 @@ uniform vec3 ViewPosition = vec3(0.0, 0.0, 0.0);
 
 #define PI 3.14159265359
 
-vec3 fresnelSchlick(float cosTheta, vec3 F0)
+vec3 FresnelSchlick(float cosTheta, vec3 F0)
 {
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
@@ -100,7 +100,7 @@ void main()
 		// BRDF
 		float NDF = DistributionGGX(Normal.xyz, H, roughness);       
 		float G   = GeometrySmith(Normal.xyz, viewDir, L, roughness);
-		vec3 F  = fresnelSchlick(max(dot(H, viewDir), 0.0), F0);
+		vec3 F  = FresnelSchlick(max(dot(H, viewDir), 0.0), F0);
 
 		vec3 numerator    = NDF * G * F;
 		float denominator = 4.0 * max(dot(Normal.xyz, viewDir), 0.0) * max(dot(Normal.xyz, L), 0.0);

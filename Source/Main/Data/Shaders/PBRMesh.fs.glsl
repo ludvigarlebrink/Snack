@@ -3,6 +3,7 @@
 out vec4 FragColor;
 
 in vec2 TextureCoordinates_FS_in;
+in vec3 Normal_FS_in;
 in vec3 WorldPos_FS_in;
 
 uniform sampler2D AlbedoMap;
@@ -39,7 +40,7 @@ uniform vec3 ViewPosition = vec3(0.0, 0.0, 0.0);
 
 #define PI 3.14159265359
   
-vec3 fresnelSchlick(float cosTheta, vec3 F0)
+vec3 FresnelSchlick(float cosTheta, vec3 F0)
 {
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
@@ -81,11 +82,12 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 
 void main()
 {		
-	vec3 albedo     = pow(texture(AlbedoMap, TextureCoordinates_FS_in).rgb, vec3(2.2)) * AlbedoColor;
-    vec3 normal     = texture(NormalMap, TextureCoordinates_FS_in).xyz * NormalColor.rgb;
-    float metallic  = vec4(texture(MetallicMap, TextureCoordinates_FS_in) * MetallicColor).r;
+	vec3 albedo = pow(texture(AlbedoMap, TextureCoordinates_FS_in).rgb, vec3(2.2)) * AlbedoColor;
+    //vec3 normal = texture(NormalMap, TextureCoordinates_FS_in).xyz * NormalColor.rgb;
+	vec3 normal = Normal_FS_in;
+    float metallic = vec4(texture(MetallicMap, TextureCoordinates_FS_in) * MetallicColor).r;
     float roughness = vec4(texture(RoughnessMap, TextureCoordinates_FS_in) * RoughnessColor).r;
-    float ao        = vec4(texture(AOMap, TextureCoordinates_FS_in) * AOColor).r;
+    float ao = vec4(texture(AOMap, TextureCoordinates_FS_in) * AOColor).r;
 
     vec3 N = normalize(normal);
     vec3 V = normalize(ViewPosition - WorldPos_FS_in);
@@ -106,7 +108,7 @@ void main()
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        
         float G   = GeometrySmith(N, V, L, roughness);      
-        vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       
+        vec3 F    = FresnelSchlick(max(dot(H, V), 0.0), F0);       
         
         vec3 kS = F;
         vec3 kD = vec3(1.0) - kS;
