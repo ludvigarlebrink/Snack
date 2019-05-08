@@ -2,6 +2,7 @@
 
 #include "EditorWindow.hpp"
 
+#include <assimp/scene.h>
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -25,7 +26,7 @@ protected:
 
 private:
 
-    void ImportObj();
+    void Import();
 
 private:
 
