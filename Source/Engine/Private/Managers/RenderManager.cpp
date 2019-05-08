@@ -24,6 +24,7 @@ RenderManager::RenderManager()
     , m_gAlbedo(nullptr)
     , m_gNormal(nullptr)
     , m_depthStencil(nullptr)
+  
 {
     SetUp();
 }
@@ -92,6 +93,8 @@ void RenderManager::RenderSceneToTexture(Framebuffer* framebuffer, int32 width, 
             framebuffer->Bind();
             {
                 m_renderWindow->SetViewport(0, 0, width, height);
+                m_renderWindow->EnableCullFace(true);
+                m_renderWindow->EnableDepthTest(true);
                 ForwardPass(c, width, height);
             }
             framebuffer->Unbind();
@@ -406,18 +409,18 @@ void RenderManager::RenderToShadowMap(DirectionalLightComponent* light)
 
     glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
-    m_depthShader->SetMat4Slow("lightSpaceMatrix", lightSpaceMatrix);
+    m_depthShader->Use();
+    m_depthShader->SetMat4Slow("LightSpaceMatrix", lightSpaceMatrix);
 
     m_renderWindow->SetViewport(0, 0, m_shadowWidth, m_shadowHeight);
-    m_shadowMapFrameBuffer->Bind();
     m_renderWindow->ClearDepthBuffer();
-    
+    m_shadowMapFrameBuffer->Bind();
 
     for (auto meshComponent : m_meshComponents)
     {
         Mesh* mesh = meshComponent->GetMesh();
-        m_meshShader->SetMat4Slow("Model", meshComponent->GetTransform()->GetWorldMatrix());
-        mesh->Render(Mesh::Mode::TRIANGLES);
+        m_depthShader->SetMat4Slow("Model", meshComponent->GetTransform()->GetWorldMatrix());
+        //mesh->Render(Mesh::Mode::TRIANGLES);
     }
 
     m_shadowMapFrameBuffer->Unbind();
