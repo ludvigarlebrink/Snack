@@ -3,9 +3,10 @@
 #include "BaseTypes.hpp"
 #include "EngineForward.hpp"
 #include "EditorWindow.hpp"
+#include "RenderCoreForward.hpp"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "RenderCoreForward.hpp"
 #include <vector>
 
 namespace snack
