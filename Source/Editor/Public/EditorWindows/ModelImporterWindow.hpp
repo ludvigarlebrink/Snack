@@ -26,7 +26,11 @@ protected:
 
 private:
 
-    void Import();
+    bool Import();
+
+    void ProcessMesh(aiMesh* mesh);
+
+    void ProcessNode(aiNode* node, const aiScene* scene);
 
 private:
 
@@ -35,5 +39,4 @@ private:
     bool m_generateTangents;
 
     std::string m_source;
-};
 } // namespace snack
