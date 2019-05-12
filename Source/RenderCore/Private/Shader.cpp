@@ -71,10 +71,15 @@ bool Shader::LoadShaderFromFile(const std::string& shaderFilename, Type type)
     std::string source((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
     f.close();
 
-    return LoadShaderFromString(source, type);
+    return LoadShaderFromString(source, "In file " + shaderFilename + "\n", type);
 }
 
 bool Shader::LoadShaderFromString(const std::string& shaderSource, Type type)
+{
+	return LoadShaderFromString(shaderSource, "", type);
+}
+
+bool Shader::LoadShaderFromString(const std::string& shaderSource, const std::string& debugInfo, Type type)
 {
     uint32 shader = 0u;
     switch (type)
@@ -108,7 +113,7 @@ bool Shader::LoadShaderFromString(const std::string& shaderSource, Type type)
     SPY_CHECK_RENDER_ERROR();
     glCompileShader(shader);
     SPY_CHECK_RENDER_ERROR();
-    if (!CheckShaderCompileErrors(shader, "Shader"))
+    if (!CheckShaderCompileErrors(shader, debugInfo))
     {
         for (auto s : m_shaders)
         {
@@ -124,6 +129,7 @@ bool Shader::LoadShaderFromString(const std::string& shaderSource, Type type)
 
     glAttachShader(m_shaderProgram, shader);
     SPY_CHECK_RENDER_ERROR();
+
     m_shaders.push_back(shader);
     
     return true;
