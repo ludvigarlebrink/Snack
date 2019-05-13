@@ -67,6 +67,15 @@ public:
      */
     bool LoadShaderFromString(const std::string& shaderSource, Type type);
 
+	/**
+	 * @brief Load shader from a string.
+	 * @param vertexShaderSource Vertex shader source code.
+	 * @param debugInfo Debug information.
+	 * @param type Type of shader.
+	 * @return True if everything went successfully. False if not.
+	 */
+	bool LoadShaderFromString(const std::string& shaderSource, const std::string& debugInfo, Type type);
+
     /**
      * @brief Set a float uniform.
      * @param location Location of uniform.
