@@ -14,6 +14,9 @@
 #include "Rendering/Terrain.hpp"
 #include "Transform.hpp"
 
+#include <glm/glm.hpp>
+
+
 namespace snack
 {
 RenderManager::RenderManager()
@@ -399,6 +402,13 @@ void RenderManager::ForwardPass(CameraComponent* camera, int32 width, int32 heig
 
 void RenderManager::RenderToShadowMap(DirectionalLightComponent* light)
 {
+    m_shadowMapFrameBuffer->Bind();
+
+    m_renderWindow->SetViewport(0, 0, m_shadowWidth, m_shadowHeight);
+    m_renderWindow->SetClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    
+    m_renderWindow->ClearDepthBuffer();
+
     f32 nearPlane = 1.0f;
     f32 farPlane = 7.5f;
     glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, nearPlane, farPlane);
@@ -412,13 +422,10 @@ void RenderManager::RenderToShadowMap(DirectionalLightComponent* light)
     m_depthShader->Use();
     m_depthShader->SetMat4Slow("LightSpaceMatrix", lightSpaceMatrix);
 
-    m_renderWindow->SetViewport(0, 0, m_shadowWidth, m_shadowHeight);
-    m_renderWindow->ClearDepthBuffer();
-    m_shadowMapFrameBuffer->Bind();
-
     for (auto meshComponent : m_meshComponents)
     {
         Mesh* mesh = meshComponent->GetMesh();
+
         m_depthShader->SetMat4Slow("Model", meshComponent->GetTransform()->GetWorldMatrix());
         //mesh->Render(Mesh::Mode::TRIANGLES);
     }
@@ -500,7 +507,7 @@ void RenderManager::SetUp()
     m_shadowMapFrameBuffer = new Framebuffer();
 
     m_shadowMap = new Texture();
-    m_shadowMap->SetData(m_shadowWidth, m_shadowHeight, Texture::InternalFormat::RGBA16F, Texture::Format::RGBA, Texture::Type::FLOAT, nullptr);
+    m_shadowMap->SetDepthComponent(m_shadowWidth, m_shadowHeight, Texture::Type::FLOAT, nullptr);
     m_shadowMap->SetSWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
     m_shadowMap->SetTWrapping(Texture::Wrapping::CLAMP_TO_EDGE);
     m_shadowMapFrameBuffer->AttachDepthBuffer(m_shadowMap);
