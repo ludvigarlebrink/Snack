@@ -105,6 +105,16 @@ void Texture::SetData(int32 width, int32 height, InternalFormat internalFormat, 
     SPY_CHECK_RENDER_ERROR();
 }
 
+void Texture::SetDepthComponent(int32 width, int32 height, Type type, void * pixels)
+{
+    m_width = width;
+    m_height = height;
+    m_type = type;
+    Bind();
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, m_width, m_height, 0, GL_DEPTH_COMPONENT, ToGLType(type), pixels);
+    SPY_CHECK_RENDER_ERROR();
+}
+
 void Texture::SetMagFilter(MagFilter magFilter)
 {
     Bind();

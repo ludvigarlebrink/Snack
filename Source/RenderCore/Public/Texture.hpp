@@ -96,6 +96,8 @@ public:
 
     void SetData(int32 width, int32 height, InternalFormat internalFormat, Format format, Type type, void* pixels);
 
+    void SetDepthComponent(int32 width, int32 height, Type type, void* pixels);
+
     /**
      * @brief Set the magnification filter.
      * @param magFilter Magnification filter to set.
