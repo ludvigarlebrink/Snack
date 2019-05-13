@@ -342,7 +342,6 @@ void Shader::SetUVec4Slow(const std::string& name, const glm::uvec4& vec)
 void Shader::Use()
 {
     RenderSM::UseShaderProgram(m_shaderProgram);
-    SPY_CHECK_RENDER_ERROR();
 }
 
 bool Shader::CheckProgramLinkErrors(uint32 program)

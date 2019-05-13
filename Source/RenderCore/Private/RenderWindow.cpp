@@ -31,16 +31,19 @@ RenderWindow::~RenderWindow()
 void RenderWindow::Clear()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    SPY_CHECK_RENDER_ERROR();
 }
 
 void RenderWindow::ClearColorBuffer()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    SPY_CHECK_RENDER_ERROR();
 }
 
 void RenderWindow::ClearDepthBuffer()
 {
     glClear(GL_DEPTH_BUFFER_BIT);
+    SPY_CHECK_RENDER_ERROR();
 }
 
 bool RenderWindow::Create(const std::string& title, int32 width, int32 height)
